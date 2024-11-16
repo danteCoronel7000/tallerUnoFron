@@ -1,0 +1,71 @@
+<div class="p-4">
+    <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Foto
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Apellidos y nombres       
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Roles
+          </th>
+          <th scope="col" class="px-6 py-3">
+            estado
+          </th>
+          <th scope="col" class="px-6 py-3">
+            edit
+          </th>
+          <th scope="col" class="px-6 py-3">
+            delete
+          </th>
+          <th scope="col" class="px-6 py-3">
+            print
+          </th>
+          <th scope="col" class="px-6 py-3">
+            reload
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | paginate: { itemsPerPage: 4, currentPage: p }" 
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <img *ngIf="user.persona.image" src="{{ user.persona.image.imageUrl }}" alt="Imagen de usuario" class="h-10 w-10 rounded-full">
+            <span *ngIf="!user.persona.image">No image</span>
+          </th>
+          <td class="px-6 py-4">
+            {{ user.persona.nombre }} {{ user.persona.ap }} {{ user.persona.am }}
+          </td>
+          <td class="px-6 py-4">
+            <span *ngFor="let role of user.rolesList">
+              {{ role.nombre +", "}}
+              <span *ngIf="!role.nombre">------</span>
+            </span>
+          </td>
+          <td class="px-6 py-4">
+            <span *ngIf="user.estado == 1">
+              <i class="fa-solid fa-thumbs-up"></i>
+            </span>
+            <span *ngIf="user.estado == 0">
+              <i class="fa-solid fa-thumbs-down"></i>
+            </span>
+          </td>
+          <td>
+            <i class="fa-solid fa-pen-to-square"></i>
+          </td>
+          <td>
+            <i class="fa-solid fa-trash"></i>
+          </td>
+          <td>
+            <i class="fa-solid fa-print"></i>
+          </td>
+          <td>
+            <i class="fa-solid fa-rotate-right"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>

@@ -1,0 +1,433 @@
+<!-- Open Modal -->
+<div
+  *ngIf="isOpen"
+  id="modal"
+  class="fixed inset-0 z-50 bg-blue-300 bg-opacity-75 flex items-center justify-center"
+>
+  <div class="relative w-full max-w-3xl h-auto mx-auto">
+    <div class="relative bg-white rounded-lg shadow-lg w-full">
+      <!-- Modal header -->
+      <div class="flex justify-between items-center p-5 rounded-t border-b">
+        <h3 class="text-xl font-medium text-gray-900">
+          Formulario Nuevo Texto
+        </h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          (click)="close()"
+        >
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="p-6 space-y-6 overflow-y-auto max-h-[70vh]">
+        <!-- form -->
+
+        <form (ngSubmit)="onSubmit()" #textoForm="ngForm">
+          <!--titulo-->
+          <div class="mb-6">
+            <label
+              for="nombre"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Titulo</label
+            >
+            <input
+              type="text"
+              id="tit"
+              name="titulo"
+              [(ngModel)]="texto.titulo"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="ingrese el titulo del libro"
+              required
+            />
+          </div>
+          <!--isbn and edicion-->
+          <div class="grid md:grid-cols-2 md:gap-6 mb-6">
+            <div>
+              <label
+                for="isbn"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >isbn</label
+              >
+              <input
+                type="text"
+                id="isb-n"
+                name="isbn"
+                [(ngModel)]="texto.isbn"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Código internacional del libro"
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                for="edicion"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Edicion</label
+              >
+              <input
+                type="number"
+                id="edic"
+                name="edicion"
+                [(ngModel)]="texto.edicion"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              />
+            </div>
+          </div>
+          <!--editorial and area-->
+          <div class="grid md:grid-cols-2 md:gap-6 mb-6">
+            <div>
+              <label
+                for="ed"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Editorial</label
+              >
+              <select
+                id="ed"
+                name="editorial"
+                [(ngModel)]="texto.editorial.id_editorial"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              >
+                <option value="" disabled>Seleccione un editorial</option>
+                <option
+                  *ngFor="let editorial of editoriales"
+                  [value]="editorial.id_editorial"
+                >
+                  {{ editorial.nombre }}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                for="countries"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Area</label
+              >
+              <select
+                id="ar"
+                name="area"
+                [(ngModel)]="texto.area.id_area"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              >
+                <option value="" disabled selected>Areas</option>
+                <option *ngFor="let area of areas" [value]="area.id_area">
+                  {{ area.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <!--fechapub and tipo-->
+          <div class="grid md:grid-cols-2 md:gap-6 mb-6">
+            <div>
+              <label
+                for="fechapub"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Fecha Publicacion</label
+              >
+              <input
+                type="date"
+                id="fp"
+                name="fechapub"
+                [(ngModel)]="texto.fechapub"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                for="tipo"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Tipo</label
+              >
+
+              <div class="flex items-center mb-4">
+                <input
+                  id="default-radio-1"
+                  type="radio"
+                  value="impreso"
+                  (change)="onTipoChange('impreso')"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  required
+                />
+                <label
+                  for="default-radio-1"
+                  class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >impreso</label
+                >
+              </div>
+
+              <div class="flex items-center">
+                <input
+                  id="default-radio-2"
+                  type="radio"
+                  value="digital"
+                  (change)="onTipoChange('digital')"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  required
+                />
+                <label
+                  for="default-radio-2"
+                  class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >digital</label
+                >
+              </div>
+            </div>
+          </div>
+          <!--resumen-->
+          <div class="mb-6">
+            <label
+              for="message"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Resumen</label
+            >
+            <textarea
+              id="message"
+              rows="4"
+              name="resumen"
+              [(ngModel)]="texto.resumen"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="ingrese el resumen del libro"
+            ></textarea>
+          </div>
+          <!--autores-->
+          <div class="mb-6">
+            <label
+              for="countries"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Autores</label
+            >
+            <select
+              id="countries"
+              multiple
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              name="autores"
+              [(ngModel)]="selectedAuthorIds"
+              required
+            >
+              <option
+                *ngFor="let autor of autoresList"
+                [value]="autor.id_autor"
+              >
+                {{ autor.nombre }} {{ autor.ap }} {{ autor.am }} {{autor.id_autor}}
+              </option>
+            </select>
+          </div>
+          <!--subir el archivo-->
+          <!-- Sección de carga de archivos, mostrada solo si 'isDigitalSelected' es verdadero -->
+          <div *ngIf="isDigitalSelected" class="mb-6">
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="file_input"
+              >Upload file</label
+            >
+            <input
+              class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              id="file_input"
+              type="file"
+              (change)="onFileSelected($event)"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="textoForm.form.invalid"
+            class="text-white mr-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Eviar
+          </button>
+          <button
+            type="button"
+            (click)="close()"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Cancelar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Close Modal -->
+
+<!-- Modal de éxito -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-400 bg-opacity-50"
+>
+  <div
+    id="alert-additional-content-3"
+    class="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+    role="alert"
+  >
+    <div class="flex items-center">
+      <svg
+        class="flex-shrink-0 w-4 h-4 me-2"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <h1 class="text-lg font-medium">Autor creado con Exito</h1>
+    </div>
+    <div class="mt-2 mb-4 text-sm">
+      More info about this info success goes here. This example text is going to
+      run a bit longer so that you can see how spacing within an alert works
+      with this kind of content.
+    </div>
+  </div>
+</div>
+
+<!--añadir new autor-->
+<!--
+<div [formGroup]="textoForm">
+  <div class="relative z-0 w-full mb-6 group">
+    <div formArrayName="autores">
+      <div
+        *ngFor="let autor of autores.controls; let i = index"
+        [formGroupName]="i"
+        class="mb-4"
+      >
+        <label
+          for="autor-{{ i }}"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Autor {{ i + 1 }}
+        </label>
+        <div class="flex items-center">
+          <div class="relative w-3/4">
+            <div
+              class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+            >
+            
+            </div>
+            <div class="mb-6">
+              <label
+                for="nombre"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >nombre del autor</label
+              >
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                formControlName="nombre"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="ingrese nombre del autor"
+                required
+              />
+            </div>
+  
+            <div class="mb-6">
+              <label
+                for="ap"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Apellido Paterno
+              </label>
+              <input
+                id="ap"
+                type="text"
+                name="ap"
+                formControlName="ap"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="ingrese el apellido paterno"
+              />
+            </div>
+  
+            <div class="mb-6">
+              <label
+                for="am"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Apellido Materno</label
+              >
+              <input
+                type="text"
+                id="am"
+                name="am"
+                formControlName="am"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="ingrese apellido materno"
+                required
+              />
+            </div>
+  
+            <div class="mb-6">
+              
+              <input
+                type="radio"
+                id="genero"
+                name="genero"
+                value="masculino"
+                formControlName="genero"
+                class="w-4 mr-1 h-4 text-blue-600 bg-gray-100 border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                required
+              />
+              <label
+                for="genero"
+                class="mb-2  mr-4 text-sm font-medium text-gray-900 dark:text-white"
+                >masculino</label>
+              
+              <input
+                type="radio"
+                id="genero"
+                name="genero"
+                value="femenino"
+                formControlName="genero"
+                class="w-4 mr-1 h-4 text-blue-600 bg-gray-100 border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                required
+              />
+              <label
+                for="genero"
+                class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >femenino</label>
+            </div>
+          </div>
+          
+        </div>
+        <button
+            type="button"
+            (click)="removeAutor(i)"
+            class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center"
+          >
+            <i class="fa-solid fa-trash mr-2"></i>
+            Eliminar
+          </button>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      (click)="addAutor()"
+      class="text-white bg-gray-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    >
+      <i class="fa-solid fa-plus"></i>
+      Agregar Autor
+    </button>
+  </div>
+</div>
+-->

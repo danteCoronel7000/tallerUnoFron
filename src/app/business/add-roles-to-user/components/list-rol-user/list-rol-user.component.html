@@ -1,0 +1,247 @@
+
+<div class="grid md:grid-cols-2 md:gap-6 mb-6">
+    <!--head para menus-->
+      <div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <tbody>
+              <tr>
+                <td class="w-52 p-4">
+                  <form class="max-w-md mx-auto">
+                    <label
+                      for="default-search"
+                      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                      >Search</label
+                    >
+                    <div class="relative">
+                      <div
+                        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                      >
+                        <svg
+                          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                          />
+                        </svg>
+                      </div>
+                      <input
+                        type="search"
+                        id="default-search"
+                        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="search"
+                        [(ngModel)]="searchValueUsuario"
+                        placeholder="Search Mockups, Logos..."
+                        required
+                      />
+                    </div>
+                  </form>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--head para procesos-->
+      <div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <tbody>
+              <tr>
+                <td class="p-4">
+                  <form class="max-w-md mx-auto">
+                    <label
+                      for="default-search"
+                      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                      >Search</label
+                    >
+                    <div class="relative">
+                      <div
+                        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                      >
+                        <svg
+                          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                          />
+                        </svg>
+                      </div>
+                      <input
+                        type="search"
+                        id="default-search"
+                        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="search"
+                        [(ngModel)]="searchValueRol"
+                        placeholder="Search Mockups, Logos..."
+                        required
+                      />
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  <div class="flex">
+                    <div class="flex items-center me-4">
+                      <input
+                        checked
+                        id="inline-radio"
+                        type="radio"
+                        value=""
+                        name="inline-radio-group"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label
+                        for="inline-radio"
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >Todos</label
+                      >
+                    </div>
+                    <div class="flex items-center me-4">
+                      <input
+                        id="inline-2-radio"
+                        type="radio"
+                        value=""
+                        name="inline-radio-group"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label
+                        for="inline-2-radio"
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >Si Asignados</label
+                      >
+                    </div>
+                    <div class="flex items-center me-4">
+                      <input
+                        id="inline-checked-radio"
+                        type="radio"
+                        value=""
+                        name="inline-radio-group"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label
+                        for="inline-checked-radio"
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >No asignados</label
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+    </div>
+      
+    
+    
+    
+    <div class="grid md:grid-cols-2 md:gap-6 mb-6">
+      <!--listado de usuarios-->
+      <div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="p-4">
+                  <div class="flex items-center">
+                    <h1>N°</h1>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-3">nombre de usuario</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of listUsuarios | searchusuario: searchValueUsuario | paginate : { itemsPerPage: 8, currentPage: p }"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <td class="w-4 p-4">
+                <div class="flex items-center">
+                  <input
+                    type="radio"
+                    id="id_menu"
+                    name="id_menu"
+                    (change)="seleccionarUsuarioPorId(user.id_usuario)"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label class="sr-only">menu</label>
+                </div>
+              </td>
+              <td class="px-6 py-4">{{ user.username }}</td>
+            </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    <!--listado de roles-->
+      <div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="p-4">
+                  <div class="flex items-center">
+                    <h1>N°</h1>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-3">nombre del rol</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+                <tr
+                *ngFor="let rol of listRoles | searchrol : searchValueRol | paginate : { itemsPerPage: 22, currentPage: pp }; let i = index"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td class="w-4 p-4">
+                  <div class="flex items-center">
+                    <input
+                      [id]="'checkbox-table-' + i"
+                      type="checkbox"
+                      [checked]="isRolRelacionado(rol.id_rol)"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      (change)="toggleRol(rol.id_rol, $event.target)"
+                    />
+                    <label [for]="'checkbox-table-' + i" class="sr-only">Checkbox</label>
+                  </div>
+                </td>
+                <td class="px-6 py-4">{{ rol.nombre }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="pp = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+    
+    

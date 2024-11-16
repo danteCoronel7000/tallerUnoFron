@@ -1,0 +1,12 @@
+
+    <p>hola</p>
+    <div class="w-16">
+        <div>
+            <label for="image">imagen</label>
+            <input type="file" id="image" (change)="upload($event)">
+        </div>
+    
+        <div *ngIf="url">
+            <img [src]="url" alt="">
+        </div>
+    </div>

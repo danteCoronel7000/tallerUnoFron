@@ -1,0 +1,88 @@
+
+    <!--Close Button to open the popover user auth -->
+
+    <!--open popover bottom -->
+    <button
+      data-popover-target="popover-bottom"
+      data-popover-placement="bottom"
+      type="button"
+      class="hover:bg-[#AFBFAE] rounded-full focus:outline-none font-medium text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 me-4 h-12 w-12"
+    >
+      <div class="relative">
+        <!-- Agrega el contenedor relativo -->
+        <i class="fa-solid fa-user text-4xl text-[#F5FFFA]"></i>
+        <span
+          *ngIf="authService.isAuthenticated()"
+          class="top-0 start-8 absolute w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"
+        ></span>
+      </div>
+    </button>
+
+    <div
+      data-popover
+      id="popover-bottom"
+      role="tooltip"
+      class="absolute z-10 invisible inline-block w-68 h-38 text-sm text-gray-500 transition-opacity duration-300 bg-[#DCDCDC] border border-gray-400 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+    >
+      <div
+        class="px-3 py-2 bg-[#DCDCDC] border-b border-gray-400 rounded-t-lg dark:border-gray-600 dark:bg-gray-700 segundo-pl"
+      >
+      <h3 class="font-semibold text-gray-900 dark:text-white mt-2">
+        <p>
+          {{  authService.nombreCompleto? authService.nombreCompleto : 'user invited' }}
+        </p>
+      </h3>
+        <!--button login-->
+        <!-- Botón de sign in (cuando no está autenticado) -->
+        <button
+          *ngIf="!authService.isAuthenticated()"
+          (click)="openModal()"
+          popovertarget="my-popover-dan"
+          popover-action="hidden"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm ml-6 px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        >
+          Sign In
+        </button>
+        <!-- Botón de log out (cuando está autenticado) -->
+        <button
+          *ngIf="authService.isAuthenticated()"
+          (click)="logOut()"
+          popovertarget="my-popover-dan"
+          popover-action="hidden"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 ml-6 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        >
+          Log Out
+        </button>
+      </div>
+      <div class="px-3 py-2">
+        <p></p>
+        <div class="user-photo-container">
+          <!-- Muestra la imagen del usuario o una imagen predeterminada si no hay imagen -->
+      
+          <img 
+          class="w-16 h-16 rounded-full"
+          [src]="authService.photoUser || 'simple-user-default.png'" 
+          alt="User Photo">
+
+
+          <!-- Botón personalizado para subir archivo -->
+          <button (click)="fileInput.click()">
+            <i class="fa-solid fa-pen-to-square text-[#96A694] text-4xl"></i>
+          </button>
+
+          <!-- Input de archivo oculto -->
+          <input
+            #fileInput
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelectede($event)"
+            class="hidden"
+          />
+
+          
+        </div>
+      </div>
+      <div data-popper-arrow></div>
+    </div>
+    <!--close popover bottom -->

@@ -1,0 +1,137 @@
+<!-- Open Modal -->
+<div
+  *ngIf="modalService.modalState()"
+  id="modal"
+  class="fixed top-0 left-0 right-0 z-50 w-full h-full"
+>
+  <div class="relative p-4 w-full max-w-md h-full md:h-auto mx-auto mt-20">
+    <div class="relative bg-white rounded-lg shadow">
+      <!-- Modal header -->
+      <div class="flex justify-between items-center p-5 rounded-t border-b">
+        <h3 class="text-xl font-medium text-gray-900">Form Login</h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          (click)="closeModal()"
+        >
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="p-6 space-y-6">
+        <!-- form -->
+        <form [formGroup]="formAuth()">
+          <!-- Username Input -->
+          <label
+            for="input-group-1"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Username</label
+          >
+          <div class="relative mb-6">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            >
+              <i class="fas fa-user text-gray-500 dark:text-gray-400"></i>
+            </div>
+            <input
+              formControlName="username"
+              type="text"
+              id="input-group-1"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter username"
+              #username
+            />
+          </div>
+          <!-- Alert for invalid username -->
+          <div
+            *ngIf="
+              formAuth().controls['username'].invalid &&
+              formAuth().controls['username'].touched
+            "
+            class="text-red-500 text-sm"
+          >
+            <p *ngIf="formAuth().controls['username'].errors?.['required']">
+              Username is required.
+            </p>
+            <p *ngIf="formAuth().controls['username'].errors?.['minlength']">
+              Username must be at least 3 characters long.
+            </p>
+          </div>
+
+          <!-- Password Input -->
+          <label
+            for="input-group-1"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Password</label
+          >
+          <div class="relative mb-6">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            >
+              <i class="fas fa-lock text-gray-500 dark:text-gray-400"></i>
+            </div>
+            <input
+              formControlName="password"
+              type="password"
+              id="input-group-1"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter password"
+            />
+          </div>
+
+          <!-- Alert for invalid password -->
+          <div
+            *ngIf="
+              formAuth().controls['password'].invalid &&
+              formAuth().controls['password'].touched
+            "
+            class="text-red-500 text-sm"
+          >
+            <p *ngIf="formAuth().controls['password'].errors?.['required']">
+              Password is required.
+            </p>
+          </div>
+        </form>
+        <!-- Close form -->
+      </div>
+
+      <!-- Modal footer -->
+      <div
+        class="flex items-center justify-end p-6 space-x-2 border-t border-gray-200 rounded-b"
+      >
+        <button
+          [disabled]="formAuth().invalid"
+          [ngClass]="{
+            'opacity-50 cursor-not-allowed': formAuth().invalid,
+            'opacity-100 cursor-pointer': formAuth().valid
+          }"
+          class="bg-[#000000] text-white font-bold py-2 px-4 rounded"
+          (click)="login()"
+        >
+          Sign in
+        </button>
+        <button
+          class="bg-[#000000] text-white font-bold py-2 px-4 rounded"
+          (click)="closeModal()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Close Modal -->

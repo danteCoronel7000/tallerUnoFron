@@ -1,0 +1,85 @@
+
+.button-popover {
+    font-size: 100%;
+    padding: 0.75rem;
+    background:  #185a6d;
+    transition-duration: 0.3s;
+    border: 2px solid #fff;
+    border-radius: 2rem;
+    &:hover,
+    &:focus {
+      background: #fff;
+      color: #000;
+      border: 2px solid #000;
+    }
+  }
+
+  #my-popover-dan{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .primer-pl{
+    display: flex;
+    align-items: center;
+  }
+  .segundo-pl{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+  [popover] {
+    background: #ADD8E6;
+    color: white;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    width: 20vw;
+    height: 13vw;
+    line-height: 1.4;
+    top: 2rem;
+    margin: 0 auto;
+  }
+  
+  /* Animating the popover in */
+  
+  /*   IS-OPEN STATE   */
+  [popover]:popover-open {
+    translate: 0 0;
+  }
+  
+  /*   EXIT STATE   */
+  [popover] {
+    transition: translate 0.4s ease-out, display 0.4s ease-out allow-discrete;
+    translate: 0 -42rem;
+  }
+  
+  /*   0. BEFORE-OPEN STATE   */
+  @starting-style {
+    [popover]:popover-open {
+      translate: 0 -22rem;
+    }
+  }
+
+
+  /* src/app/user-photo.component.css */
+.user-photo-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  
+}
+
+.user-photo-flex{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+}
+
+.nombre-user{
+  padding: 8px;
+  margin: 8px;
+}

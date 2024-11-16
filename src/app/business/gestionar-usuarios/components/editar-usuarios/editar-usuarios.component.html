@@ -1,0 +1,303 @@
+<!-- Open Modal -->
+<div
+  *ngIf="modalService.modalStateEditUser()"
+  id="modal"
+  class="fixed inset-0 z-50 bg-blue-300 bg-opacity-75 flex items-center justify-center"
+>
+  <div class="relative w-full max-w-3xl h-auto mx-auto">
+    <div class="relative bg-white rounded-lg shadow-lg w-full">
+      <!-- Modal header -->
+      <div class="flex justify-between items-center p-5 rounded-t border-b">
+        <h3 class="text-xl font-medium text-gray-900">Formulario Personas</h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          (click)="closeModal()"
+        >
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="p-6 space-y-6 overflow-y-auto max-h-[70vh]">
+        <!-- form -->
+
+        <form
+        [formGroup]="personaForm"
+        class="max-w-full mx-auto"
+      >
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div>
+            <label
+              for="ci"
+              class="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+              >carnet de identidad</label
+            >
+            <div formGroupName="datos" class="relative z-0 mb-4 me-60">
+              <input
+                formControlName="ci"
+                type="text"
+                name="ci"
+                id="ci"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+              />
+              <label
+                for="ci"
+                class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                >CI</label
+              >
+              <div *ngIf="personaForm.get('datos.ci')?.invalid && personaForm.get('datos.ci')?.touched">
+                <small *ngIf="personaForm.get('datos.ci')?.errors?.['required']">CI es obligatorio.</small>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="genero"
+              class="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+              >Genero</label
+            >
+            <div class="flex mb-4 mt-6">
+              <div class="flex items-center me-4">
+                <input
+                  formControlName="genero"
+                  id="genero"
+                  type="radio"
+                  value="masculino"
+                  name="genero"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="inline-radio"
+                  class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300"
+                  >masculino</label
+                >
+              </div>
+
+              <div class="flex items-center me-4">
+                <input
+                  formControlName="genero"
+                  id="genero"
+                  type="radio"
+                  value="femenino"
+                  name="genero"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="genero"
+                  class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300"
+                  >femenino</label
+                >
+              </div>
+              <div *ngIf="personaForm.get('genero')?.invalid && (personaForm.get('genero')?.touched || personaForm.get('genero')?.dirty)">
+                <small class="text-red-500">Debe seleccionar un género.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 md:gap-6">
+          <div class="relative z-0 w-full mb-4 group">
+            <input
+              formControlName="nombre"
+              type="text"
+              name="nombre"
+              id="nombre"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="nombre"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Nombre</label
+            >
+            <div *ngIf="personaForm.get('nombre')?.invalid && personaForm.get('nombre')?.touched">
+              <small *ngIf="personaForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</small>
+            </div>
+          </div>
+          <div class="relative z-0 w-full mb-4 group">
+            <input
+              formControlName="ap"
+              type="text"
+              name="ap"
+              id="ap"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="ap"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Ap. Paterno</label
+            >
+            <div *ngIf="personaForm.get('ap')?.invalid && personaForm.get('ap')?.touched">
+              <small *ngIf="personaForm.get('ap')?.errors?.['required']">El apellido paterno es obligatorio.</small>
+            </div>
+        
+          </div>
+          <div class="relative z-0 w-full mb-4 group">
+            <input
+              formControlName="am"
+              type="text"
+              name="am"
+              id="am"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              for="am"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >AP. Materno</label
+            >
+            
+          </div>
+        </div>
+        <div class="relative z-0 w-full mb-4 group">
+          <label
+            for="tipo_per"
+            class="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+            >Tipo de personal</label
+          >
+          <select
+            formControlName="tipo_per"
+            id="tipo_per"
+            name="tipo_per"
+            class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option>administrativo</option>
+            <option>publico</option>
+          </select>
+          <div *ngIf="personaForm.get('tipo_per')?.invalid && personaForm.get('tipo_per')?.touched">
+            <small *ngIf="personaForm.get('tipo_per')?.errors?.['required']">El tipo de persona es obligatorio.</small>
+          </div>
+        </div>
+
+        <div class="relative z-0 w-full mb-4 group">
+          <label
+            class="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+            for="file_input"
+            >Subir foto</label
+          >
+          <div class="flex justify-end items-center space-x-4">
+            <div>
+              <img *ngIf="foto_url" [src]="foto_url" alt="Imagen de usuario" class="h-16 w-16 rounded-full" />
+              <span *ngIf="!foto_url">No image</span>
+            </div>
+            <input
+              class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              aria-describedby="file_input_help"
+              id="file_input"
+              type="file"
+              (change)="onFileSelected($event)"
+            />
+          </div>
+        </div>
+        
+
+        <div class="relative z-0 w-full mb-4 group">
+          <div formArrayName="telefonos">
+            <div
+              *ngFor="let telefono of telefonos.controls; let i = index"
+              [formGroupName]="i"
+              class="mb-4"
+            >
+              <label
+                for="telefono-{{ i }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Teléfono {{ i + 1 }}
+              </label>
+              <div class="flex items-center">
+                <div class="relative w-full">
+                  <div
+                    class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                  >
+                    <svg
+                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 19 18"
+                    >
+                      <path
+                        d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    formControlName="numero"
+                    id="telefono-{{ i }}"
+                    aria-describedby="helper-text-explanation"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="70000000"
+                  />
+                </div>
+                <button
+                type="button"
+                (click)="removeTelefono(i)"
+                class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center"
+              >
+                <i class="fa-solid fa-trash mr-2"></i>
+                Eliminar
+              </button>
+              
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            (click)="addTelefono()"
+            class="text-white bg-gray-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <i class="fa-solid fa-plus"></i>
+            Agregar Teléfono
+          </button>
+        </div>
+
+        <div class="flex justify-end p-2 space-x-4">
+          <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+
+          <button
+          type="submit"
+          [disabled]="personaForm.invalid"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+          (click)="actualizarPersona()"
+        >
+          Enviar
+        </button>
+        </div>
+      </form>
+
+        <!-- Close form -->
+      </div>
+
+      <!-- Modal footer -->
+    </div>
+  </div>
+</div>
+<!-- Close Modal -->
