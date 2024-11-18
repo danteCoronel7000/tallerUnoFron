@@ -43,7 +43,18 @@ export interface Texto {
 
 export interface Ejemplares{
   id_ejemplar: number;
+  codinv: number;
   disponible: number;
   estado: number;
 }
+
+export interface updateIdEjemplar{
+  currentId: number,
+  newId?: number
+}
   
+
+export interface CrearEjemplarDTO {
+  ejemplar: Ejemplares;
+  id_texto: number;
+}

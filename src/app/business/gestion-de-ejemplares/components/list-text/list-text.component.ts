@@ -87,7 +87,6 @@ export class ListTextComponent {
         this.ejemplaresService.getTextos().subscribe(
             (data) => {
                 this.listTextos = data;
-                console.log('lista de textos: ', this.listTextos)
             },
             (error) => {
                 console.error('Error al obtener los textos:', error);
