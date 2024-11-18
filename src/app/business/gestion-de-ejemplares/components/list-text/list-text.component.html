@@ -1,0 +1,220 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table
+    class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <td colspan="2" class="border border-gray-300 px-4 text-center w-auto">
+          <form>
+            <label
+              for="search"
+              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+              >buscar</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="searchtexto"
+                name="searchValue"
+                [(ngModel)]="searchValue"
+                class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="buscar texto"
+              />
+            </div>
+          </form>
+        </td>
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <div class="flex">
+            <div class="flex items-center me-4">
+              <input
+                id="uno"
+                type="radio"
+                value="1"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+              />
+              <label
+                for="uno"
+                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                >Activos</label
+              >
+            </div>
+            <div class="flex items-center me-4">
+              <input
+                id="cero"
+                type="radio"
+                value="0"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+              />
+              <label
+                for="cero"
+                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                >Bajas</label
+              >
+            </div>
+            <div class="flex items-center me-4">
+              <input
+                id="dos"
+                type="radio"
+                value="2"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+              />
+              <label
+                for="dos"
+                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                >Todos</label
+              >
+            </div>
+          </div>
+        </td>
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <label
+            for="countries"
+            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+            >Editoriales</label
+          >
+          <select
+            id="ed"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="editorial"
+            [(ngModel)]="selectedEditorial"
+          >
+            <option value="" selected>ninguno</option>
+            <option
+              *ngFor="let editorial of editoriales"
+              [value]="editorial.nombre"
+            >
+              {{ editorial.nombre }}
+            </option>
+          </select>
+        </td>
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <label
+            for="countries"
+            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+            >Areas</label
+          >
+          <select
+            id="ar"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="areas"
+            [(ngModel)]="selectedArea"
+          >
+            <option value="" selected>ninguno</option>
+            <option *ngFor="let area of areas" [value]="area.nombre">
+              {{ area.nombre }}
+            </option>
+          </select>
+        </td>
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <label
+            for="countries"
+            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+            >Tipos</label
+          >
+          <select
+            id="countries"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="tipos"
+            [(ngModel)]="selectedTipo"
+          >
+            <option value="" selected>ninguno</option>
+            <option *ngFor="let tipo of tipos" [value]="tipo.nombre">
+              {{ tipo.nombre }}
+            </option>
+          </select>
+        </td>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <table
+    class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-4 py-2 w-auto">#</th>
+        <th scope="col" class="px-4 py-2 w-auto">Titulo</th>
+        <th scope="col" class="px-4 py-2 w-auto">Area</th>
+        <th scope="col" class="px-4 py-2 w-auto">Editorial</th>
+        <th scope="col" class="px-4 py-2 w-auto">Tipos</th>
+        <th scope="col" class="px-4 py-2 w-auto">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let texto of listTextos
+            | searchtext : searchValue
+            | estadopp : selectEstado
+            | areaspp : selectedArea
+            | editorialespp : selectedEditorial
+            | tipospp : selectedTipo
+            | paginate : { itemsPerPage: 4, currentPage: p }
+        "
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
+      >
+        <td class="w-4 p-4 w-auto">
+          <div class="flex items-center">
+            <input
+              type="radio"
+              id="id_menu"
+              name="id_menu"
+              (change)="seleccionarTextoPorId(texto.id_texto)"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label class="sr-only">menu</label>
+          </div>
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ texto.titulo }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ texto.area.nombre }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ texto.editorial.nombre }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          <span *ngIf="texto.url"> Digital </span>
+          <span *ngIf="!texto.url"> Impreso </span>
+        </td>
+        <td class="px-4 py-4 w-auto">
+          <span *ngIf="texto.estado == 1">
+            <i class="fa-solid fa-thumbs-up fa-2x"></i>
+          </span>
+          <span *ngIf="texto.estado == 0">
+            <i class="fa-solid fa-thumbs-down fa-2x"></i>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>

@@ -73,6 +73,10 @@ export const routes: Routes = [
           {
             path: 'groluser',
             loadComponent: () => import('./business/add-roles-to-user/components/layout-rol-user/layout-rol-user.component')
+          },
+          {
+            path: 'gejemplares',
+            loadComponent: () => import('./business/gestion-de-ejemplares/components/layout-gest-ejemplares/layout-gest-ejemplares.component')
           }
         ]
       },

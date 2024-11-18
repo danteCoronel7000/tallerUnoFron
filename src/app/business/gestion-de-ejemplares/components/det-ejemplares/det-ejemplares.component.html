@@ -1,0 +1,124 @@
+<div *ngIf="ejemplaresService.openEjemplaresList()">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg sm:w-full lg:w-1/2 mx-auto">
+<h1 class="w-1/3 mx-auto py-6 font-bold">...detalle ejemplares...</h1>
+    <table
+        class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+        <tr>
+            
+            <td class="border border-gray-300 px-4 text-center w-auto">
+              <div class="flex">
+                <div class="flex items-center me-4">
+                  <input
+                    id="uno"
+                    type="radio"
+                    value="1"
+                    name="estadoTexto"
+                    [(ngModel)]="selectEstado"
+                  />
+                  <label
+                    for="uno"
+                    class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                    >Activos</label
+                  >
+                </div>
+                <div class="flex items-center me-4">
+                  <input
+                    id="cero"
+                    type="radio"
+                    value="0"
+                    name="estadoTexto"
+                    [(ngModel)]="selectEstado"
+                  />
+                  <label
+                    for="cero"
+                    class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                    >Bajas</label
+                  >
+                </div>
+                <div class="flex items-center me-4">
+                  <input
+                    id="dos"
+                    type="radio"
+                    value="2"
+                    name="estadoTexto"
+                    [(ngModel)]="selectEstado"
+                  />
+                  <label
+                    for="dos"
+                    class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                    >Todos</label
+                  >
+                </div>
+              </div>
+            </td>
+           
+          </tr>
+       
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg sm:w-full lg:w-1/2 mx-auto">
+
+    <table
+        class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+    
+          <tr>
+            <th scope="col" class="px-4 py-2 w-auto">Cod. Inv.</th>
+            <th scope="col" class="px-4 py-2 w-auto">Disponible</th>
+            <th scope="col" class="px-4 py-2 w-auto">estado</th>
+            <th scope="col" class="px-4 py-2 w-auto">editar</th>
+            <th scope="col" class="px-4 py-2 w-auto">eliminar</th>
+            <th scope="col" class="px-4 py-2 w-auto">habilitar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let ejemplar of listEjemplares | paginate : { itemsPerPage: 2, currentPage: p }"
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
+          >
+            <td class="px-4 py-4 w-auto">
+              {{ ejemplar.id_ejemplar }}
+            </td>
+            <td class="px-4 py-4 w-auto">
+              {{ejemplar.disponible}}
+            </td>
+            <td class="px-4 py-4 w-auto">
+                <span *ngIf="ejemplar.estado == 1">
+                    <i class="fa-solid fa-thumbs-up fa-2x"></i>
+                  </span>
+                  <span *ngIf="ejemplar.estado == 0">
+                    <i class="fa-solid fa-thumbs-down fa-2x"></i>
+                  </span>
+            </td>
+            <td class="px-4 py-4 w-auto">
+                <button>
+                    <i class="fa-solid fa-pen-to-square fa-2x"></i>
+                  </button>
+            </td>
+            <td class="px-4 py-4 w-auto">
+                <button>
+                    <i class="fa-solid fa-trash fa-2x"></i>
+                  </button>
+            </td>
+            <td class="px-4 py-4 w-auto">
+                <button>
+                    <i class="fa-solid fa-rotate-right fa-2x"></i>
+                  </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+</div>
