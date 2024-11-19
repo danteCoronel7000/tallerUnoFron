@@ -1,0 +1,41 @@
+<div *ngIf="prestamoService.openEjemplaresList()">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg sm:w-full lg:w-1/2 mx-auto">
+    
+        <table
+            class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+        
+              <tr>
+                <th scope="col" class="px-4 py-2 w-auto">Cod. Inv.</th>
+                <th scope="col" class="px-4 py-2 w-auto">Titulo Ejemplar</th>
+                <th scope="col" class="px-4 py-2 w-auto">estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let detprestamo of listDetPresatamo"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
+              >
+                <td class="px-4 py-4 w-auto">
+                  {{ detprestamo.codinv}}
+                </td>
+                <td class="px-4 py-4 w-auto">
+                  {{detprestamo.titejemplar}}
+                </td>
+                <td class="px-4 py-4 w-auto">
+                    <span *ngIf="detprestamo.estado == 1">
+                        <i class="fa-solid fa-thumbs-up fa-2x"></i>
+                      </span>
+                      <span *ngIf="detprestamo.estado == 0">
+                        <i class="fa-solid fa-thumbs-down fa-2x"></i>
+                      </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  
