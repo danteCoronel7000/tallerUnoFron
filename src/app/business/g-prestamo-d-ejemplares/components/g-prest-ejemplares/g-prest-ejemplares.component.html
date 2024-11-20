@@ -1,183 +1,541 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table
-      class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+  <table
+    class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
     >
-      <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-      >
-        <tr>
-          <td colspan="2" class="border border-gray-300 px-4 text-center w-auto">
-            <form>
-              <label
-                for="search"
-                class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-                >buscar</label
+      <tr>
+        <!--fecha inicio adn fecha fin-->
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <div
+            id="date-range-picker"
+            date-rangepicker
+            class="flex items-center"
+          >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
               >
-              <div class="relative">
-                <div
-                  class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
                 >
-                  <svg
-                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="search"
-                  id="searchtexto"
-                  name="searchValue"
-                  [(ngModel)]="searchValueEst"
-                  class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="buscar texto"
-                />
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
               </div>
-            </form>
-          </td>
-          <td class="border border-gray-300 px-4 text-center w-auto">
-            <div class="flex">
-              <div class="flex items-center me-4">
-                <input
-                  id="uno"
-                  type="radio"
-                  value="1"
-                  name="estadoTexto"
-                  [(ngModel)]="selectEstado"
-                />
-                <label
-                  for="uno"
-                  class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
-                  >Activos</label
-                >
-              </div>
-              <div class="flex items-center me-4">
-                <input
-                  id="cero"
-                  type="radio"
-                  value="0"
-                  name="estadoTexto"
-                  [(ngModel)]="selectEstado"
-                />
-                <label
-                  for="cero"
-                  class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
-                  >Bajas</label
-                >
-              </div>
-              <div class="flex items-center me-4">
-                <input
-                  id="dos"
-                  type="radio"
-                  value="2"
-                  name="estadoTexto"
-                  [(ngModel)]="selectEstado"
-                />
-                <label
-                  for="dos"
-                  class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
-                  >Todos</label
-                >
-              </div>
-            </div>
-          </td>
-          <td class="border border-gray-300 px-4 text-center w-auto">
-            <button (click)="openModalNewEjemplar()">
-                <i class="fa-solid fa-user-plus fa-2x"></i>
-              </button>
-          </td>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  
-    <table
-      class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
-    >
-      <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-      >
-        <tr>
-          <th scope="col" class="px-4 py-2 w-auto">#</th>
-          <th scope="col" class="px-4 py-2 w-auto">codPrestamo</th>
-          <th scope="col" class="px-4 py-2 w-auto">fecha</th>
-          <th scope="col" class="px-4 py-2 w-auto">Estudiante</th>
-          <th scope="col" class="px-4 py-2 w-auto">F. inicio</th>
-          <th scope="col" class="px-4 py-2 w-auto">F. fin</th>
-          <th scope="col" class="px-4 py-2 w-auto">Tipo pres.</th>
-          <th scope="col" class="px-4 py-2 w-auto">Estado</th>
-          <th scope="col" class="px-4 py-2 w-auto">delete</th>
-          <th scope="col" class="px-4 py-2 w-auto">imprimir</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="
-            let mprestamo of mainListPrestamos | paginate : { itemsPerPage: 4, currentPage: p }
-          "
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
-        >
-          <td class="w-4 p-4 w-auto">
-            <div class="flex items-center">
               <input
-                type="radio"
-                id="id_menu"
-                name="id_menu"
-                (change)="seleccionarTextoPorId(mprestamo.id_mprestamo)"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                id="datepicker-range-start"
+                name="start"
+                type="text"
+                [(ngModel)]="startDate"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date start"
               />
-              <label class="sr-only">menu</label>
             </div>
-          </td>
-          <td class="px-4 py-4 w-auto">
-            {{ mprestamo.id_mprestamo }}
-          </td>
-          <td class="px-4 py-4 w-auto">
-            {{ mprestamo.fecha }}
-          </td>
-          <td class="px-4 py-4 w-auto">
-            {{ mprestamo.realiza.persona.nombre }}
-          </td>
-          <td class="px-4 py-4 w-auto">
-            {{mprestamo.fechaini}}
-          </td>
-          <td class="px-4 py-4 w-auto">
-            {{mprestamo.fechafin}}
-          </td>
-          <td class="px-4 py-4 w-auto">
-            {{mprestamo.tipopres}}
-          </td>
-          <td class="px-4 py-4 w-auto">
-            <span *ngIf="mprestamo.estado == 1">
-              <i class="fa-solid fa-thumbs-up fa-2x"></i>
-            </span>
-            <span *ngIf="mprestamo.estado == 0">
-              <i class="fa-solid fa-thumbs-down fa-2x"></i>
-            </span>
-          </td>
-          <td class="px-4 py-4 w-auto">
-            <button>
-                <i class="fa-solid fa-trash fa-2x"></i>
-              </button>
-          </td>
-          <td class="px-4 py-4 w-auto">
-            <button>
-                <i class="fa-solid fa-print fa-2x"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  
+            <span class="mx-4 text-gray-500">to</span>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                id="datepicker-range-end"
+                name="end"
+                type="text"
+                [(ngModel)]="endDate"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date end"
+              />
+            </div>
+          </div>
+        </td>
+        <!--estudiante-->
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <form>
+            <label
+              for="search"
+              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+              >buscar</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="searchtexto"
+                name="searchValue"
+                [(ngModel)]="searchValueEst"
+                class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Buscar Estudiante"
+              />
+            </div>
+          </form>
+        </td>
+        <!--estado-->
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <div class="flex">
+            <div class="flex items-center me-4">
+              <input
+                id="uno"
+                type="radio"
+                value="1"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+              />
+              <label
+                for="uno"
+                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                >Activos</label
+              >
+            </div>
+            <div class="flex items-center me-4">
+              <input
+                id="cero"
+                type="radio"
+                value="0"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+              />
+              <label
+                for="cero"
+                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                >Bajas</label
+              >
+            </div>
+            <div class="flex items-center me-4">
+              <input
+                id="dos"
+                type="radio"
+                value="2"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+              />
+              <label
+                for="dos"
+                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
+                >Todos</label
+              >
+            </div>
+          </div>
+        </td>
+        <td class="border border-gray-300 px-4 text-center w-auto">
+          <button
+            data-modal-target="default-modal"
+            data-modal-toggle="default-modal"
+            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+          >
+            <i class="fa-solid fa-user-plus fa-2x"></i>
+          </button>
+        </td>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
+  <table
+    class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-4 py-2 w-auto">#</th>
+        <th scope="col" class="px-4 py-2 w-auto">Cod</th>
+        <th scope="col" class="px-4 py-2 w-auto">fecha</th>
+        <th scope="col" class="px-4 py-2 w-auto">Estudiante</th>
+        <th scope="col" class="px-4 py-2 w-auto">F. inicio</th>
+        <th scope="col" class="px-4 py-2 w-auto">F. fin</th>
+        <th scope="col" class="px-4 py-2 w-auto">Tipo pres.</th>
+        <th scope="col" class="px-4 py-2 w-auto">Estado</th>
+        <th scope="col" class="px-4 py-2 w-auto">delete</th>
+        <th scope="col" class="px-4 py-2 w-auto">imprimir</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let mprestamo of mainListPrestamos
+            | searchfecha : startDate : endDate
+            | searchest : searchValueEst
+            | paginate : { itemsPerPage: 4, currentPage: p }
+        "
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
+      >
+        <td class="w-4 p-4 w-auto">
+          <div class="flex items-center">
+            <input
+              type="radio"
+              id="id_menu"
+              name="id_menu"
+              (change)="seleccionarTextoPorId(mprestamo.id_mprestamo)"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label class="sr-only">menu</label>
+          </div>
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ mprestamo.id_mprestamo }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ mprestamo.fecha }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ mprestamo.realiza.persona.nombre }}
+          {{ mprestamo.realiza.persona.ap }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ mprestamo.fechaini }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ mprestamo.fechafin }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          {{ mprestamo.tipopres }}
+        </td>
+        <td class="px-4 py-4 w-auto">
+          <span *ngIf="mprestamo.estado == 1">
+            <i class="fa-solid fa-thumbs-up fa-2x"></i>
+          </span>
+          <span *ngIf="mprestamo.estado == 0">
+            <i class="fa-solid fa-thumbs-down fa-2x"></i>
+          </span>
+        </td>
+        <td class="px-4 py-4 w-auto">
+          <button>
+            <i class="fa-solid fa-trash fa-2x"></i>
+          </button>
+        </td>
+        <td class="px-4 py-4 w-auto">
+          <button>
+            <i class="fa-solid fa-print fa-2x"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+<!-- Main modal new prestamo -->
+<div
+  id="default-modal"
+  tabindex="-1"
+  aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+      >
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Terms of Service
+        </h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="default-modal"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-4 md:p-5 space-y-6 overflow-y-auto max-h-[66vh]">
+        <form>
+          <!--fecha-->
+          <div class="mb-6">
+            <label
+              for="fecha"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Fecha</label
+            >
+            <div class="relative z-1050 max-w-sm">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="false"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                datepicker
+                id="default-datepickeruno"
+                name="fecha"
+                type="text"
+                [(ngModel)]="prestamoEjemplar.fecha"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date"
+              />
+            </div>
+          </div>
+
+          <!--fecha inicio-->
+          <div class="mb-6">
+            <label
+              for="nombre"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Fecha inicio</label
+            >
+            <div class="relative z-1050 max-w-sm">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                datepicker
+                id="default-datepickerdos"
+                name="fechaini"
+                type="text"
+                [(ngModel)]="prestamoEjemplar.fechaini"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date"
+              />
+            </div>
+          </div>
+
+          <!--fecha fin-->
+          <div class="mb-6">
+            <label
+              for="nombre"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Fecha fin</label
+            >
+            <div class="relative z-1050 max-w-sm">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                datepicker
+                id="default-datepickertres"
+                name="fechafin"
+                type="text"
+                [(ngModel)]="prestamoEjemplar.fechafin"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date"
+              />
+            </div>
+          </div>
+
+          <!--tipo prestamo-->
+          <label
+            for="tipo"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Tipo prestamo</label
+          >
+          <div class="grid md:grid-cols-2 md:gap-6 mb-6">
+            <div>
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="1"
+                name="tipopres"
+                [(ngModel)]="prestamoEjemplar.tipopres"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+
+              <label
+                for="default-radio-1"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Domicilio</label
+              >
+            </div>
+            <div>
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="2"
+                name="tipopresd"
+                [(ngModel)]="prestamoEjemplar.tipopres"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-600 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="default-radio-2"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Sala</label
+              >
+            </div>
+          </div>
+
+          <!--estudiante-->
+          <div class="mb-6">
+            <label
+              for="ed"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Estudiante</label
+            >
+            <select
+              id="ed"
+              name="id_dato"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              [(ngModel)]="prestamoEjemplar.id_dato"
+            >
+              <option value="" selected>Seleccione un estudiante</option>
+              <option
+                *ngFor="let prestamo of mainListPrestamos"
+                [value]="prestamo.realiza.id_dato"
+              >
+                {{ prestamo.realiza.persona.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <!--añadir ejemplar-->
+          <div class="mb-6">
+            <label
+              for="countries"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Ejemplares</label
+            >
+
+            <ng-select
+              name="listEjemplares"
+              [items]="listEjemplaresPP"
+              [multiple]="true"
+              bindLabel="titulo"
+              [(ngModel)]="selectedEjemplares"
+              clearAllText="Clear"
+              class="custom"
+            >
+            </ng-select>
+          </div>
+        </form>
+      </div>
+      <!-- Modal footer -->
+      <div
+        class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600"
+      >
+        <button
+          data-modal-hide="default-modal"
+          type="button"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-gray-400 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          (click)="onSubmit()"
+        >
+          I accept
+        </button>
+        <button
+          data-modal-hide="default-modal"
+          type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >
+          Decline
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de éxito -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-400 bg-opacity-50"
+>
+  <div
+    id="alert-additional-content-3"
+    class="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+    role="alert"
+  >
+    <div class="flex items-center">
+      <svg
+        class="flex-shrink-0 w-4 h-4 me-2"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <h1 class="text-lg font-medium">Autor creado con Exito</h1>
+    </div>
+    <div class="mt-2 mb-4 text-sm">
+      More info about this info success goes here. This example text is going to
+      run a bit longer so that you can see how spacing within an alert works
+      with this kind of content.
+    </div>
+  </div>
+</div>

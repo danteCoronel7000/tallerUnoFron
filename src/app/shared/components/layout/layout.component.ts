@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
-import { LoginComponent } from '../../../business/users/components/login/login.component';
-import { NewPersonalComponent } from "../../../business/gestionar-usuarios/components/new-personal/new-personal.component";
-import  SidebarComponent  from "../sidebar/sidebar.component";
-import NewUsuarioComponent from "../../../business/gestionar-usuarios/components/new-usuario/new-usuario.component";
 import { AppComponent } from "../../../app.component";
+import { DateComponent } from "../../utils/date/date.component";
+import { RolesComponent } from "../../../business/users/components/roles/roles.component";
+import { ProfileUserComponent } from "../../../business/users/components/profile-user/profile-user.component";
+import { LoginComponent } from "../../../business/users/components/login/login.component";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, RouterOutlet, LoginComponent, SidebarComponent, NewUsuarioComponent, AppComponent],
+  imports: [AppComponent, DateComponent, RolesComponent, ProfileUserComponent, LoginComponent, RouterOutlet],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
