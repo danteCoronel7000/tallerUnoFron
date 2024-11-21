@@ -6,20 +6,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchmenuPipe } from '../../pipes/searchmenu.pipe';
 import { SearchrolPipe } from '../../pipes/searchrol.pipe';
+import { AsignoasigPipe } from '../../pipes/asignoasig.pipe';
 
 @Component({
   selector: 'app-list-menu-rol',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxPaginationModule, SearchmenuPipe, SearchrolPipe],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxPaginationModule, SearchmenuPipe, SearchrolPipe, AsignoasigPipe],
   templateUrl: './list-menu-rol.component.html',
   styleUrl: './list-menu-rol.component.css'
 })
 export class ListMenuRolComponent {
   p: number = 1;
 pp: number = 1;
-searchValueRoles: string = ' ';
-searchValueMenus: string = ' ';
+searchValueRoles: string = '';
+searchValueMenus: string = '';
 
+asigNoasig: string = '2';
 listRoles: Rol[] = [];
 listMenus: Menu[] = [];
 listMenusSeleccionados: number[] = [];

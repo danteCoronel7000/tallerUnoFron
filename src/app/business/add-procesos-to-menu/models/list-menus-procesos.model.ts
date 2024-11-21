@@ -2,6 +2,7 @@ export interface proceso{
     id_proceso: number;
     nombre: string;
     estado: number;
+    asig: number;
 }
 export interface menu {
     id_menu: number;

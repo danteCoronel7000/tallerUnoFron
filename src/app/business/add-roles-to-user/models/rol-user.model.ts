@@ -2,6 +2,7 @@ export interface rol{
     id_rol: number;
     nombre: string;
     estado: number;
+    asig: number;
 }
 export interface usuario {
     id_usuario: number;

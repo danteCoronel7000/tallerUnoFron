@@ -6,11 +6,12 @@ import { rol, usuario, UsuarioAll } from '../../models/rol-user.model';
 import { RolToUsuarioService } from '../../services/rol-to-usuario.service';
 import { SearchrolPipe } from '../../pipes/searchrol.pipe';
 import { SearchusuarioPipe } from '../../pipes/searchusuario.pipe';
+import { AsignoasigPipe } from '../../pipes/asignoasig.pipe';
 
 @Component({
   selector: 'app-list-rol-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxPaginationModule, SearchrolPipe, SearchusuarioPipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxPaginationModule, SearchrolPipe, SearchusuarioPipe, AsignoasigPipe],
   templateUrl: './list-rol-user.component.html',
   styleUrl: './list-rol-user.component.css'
 })
@@ -19,6 +20,8 @@ export class ListRolUserComponent {
   pp: number = 1;
   searchValueUsuario: string = ' ';
   searchValueRol: string = ' ';
+
+  asigNoasig: string = '2';
   
   listUsuarios: usuario[] = [];
   listRoles: rol[] = [];
@@ -45,6 +48,7 @@ export class ListRolUserComponent {
     this.rolUsuarioService.getRoles().subscribe(
       (data) => {
         this.listRoles = data;
+        console.log('data rolesf: ', data)
       },
       (error) => {
         console.error('Error al obtener los roles:', error);
@@ -87,7 +91,6 @@ export class ListRolUserComponent {
   // Método para manejar la selección de usuario
   isRolRelacionado(rolId: number): boolean {
     if (!this.usuarioSeleccionadoPorId || !Array.isArray(this.usuarioSeleccionadoPorId.rolesList)) {
-      console.error('No se encontró rolesList o no es un array:', this.usuarioSeleccionadoPorId);
       return false; // Si no hay un usuario seleccionado o rolesList no es un array, retorna falso
     }
   

@@ -10,7 +10,7 @@ export class RolToUsuarioService {
 
   private baseUrlAdd = 'http://localhost:9090/api/usuarios';
 private url_usuarios = 'http://localhost:9090/api/usuarios/all';
-private url_roles = 'http://localhost:9090/api/roles/all';
+private url_roles = 'http://localhost:9090/api/roles/allAsig';
 private apiUrlObtenerPorId = 'http://localhost:9090/api/usuarios/obternerPorId';
 // Para seleccionar textos según el estado
 private estadoSeleccionado = new BehaviorSubject<number>(2);

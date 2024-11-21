@@ -10,7 +10,7 @@ export class ProcMenuService {
 
   private baseUrlAdd = 'http://localhost:9090/api/menus';
   private url_menus = 'http://localhost:9090/api/menus/all';
-  private url_procesos = 'http://localhost:9090/api/procesos/all';
+  private url_procesos = 'http://localhost:9090/api/menus/alldtoPro';
   private apiUrlObtenerPorId = 'http://localhost:9090/api/menus/obternerPorId';
   // Para seleccionar textos según el estado
   private estadoSeleccionado = new BehaviorSubject<number>(2);

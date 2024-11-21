@@ -6,6 +6,8 @@ export interface Rol{
 export interface Menu {
     id_menu: number;
     nombre: string;
+    estado: number;
+    asig: number;
 }
 
 

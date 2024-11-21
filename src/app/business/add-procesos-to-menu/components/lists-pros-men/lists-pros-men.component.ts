@@ -6,11 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchprocPipe } from '../../pipes/searchproc.pipe';
 import { SearchmenuPipe } from "../../pipes/searchmenu.pipe";
+import { AsignoasigPipe } from '../../pipes/asignoasig.pipe';
 
 @Component({
   selector: 'app-lists-pros-men',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxPaginationModule, SearchmenuPipe, SearchprocPipe],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxPaginationModule, SearchmenuPipe, SearchprocPipe, AsignoasigPipe],
   templateUrl: './lists-pros-men.component.html',
   styleUrl: './lists-pros-men.component.css'
 })
@@ -19,6 +20,8 @@ export class ListsProsMenComponent {
   pp: number = 1;
   searchValueMenu: string = ' ';
   searchValueProceso: string = ' ';
+
+  asigNoasig:string = '2';
 
   listMenus: menu[] = [];
   listProcesos: proceso[] = [];

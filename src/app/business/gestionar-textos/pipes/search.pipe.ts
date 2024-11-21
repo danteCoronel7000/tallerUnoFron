@@ -7,12 +7,22 @@ import { TextoNotUndefined } from '../models/list-textos.model';
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(value:  TextoNotUndefined[], searchInput: string){
-    //operador ternario
-    console.log(searchInput)
-    //si es que existe sercharInput?.......  lo convertimos a minusculas(searchInput.toLocaleLowerCase()), sino lo dejamos como un string vacio asi nos aseguramos de que por lo menos haya un valor vacio
-    searchInput = searchInput ? searchInput.toLowerCase() : ' ';
-    return searchInput ? value.filter(texto => texto.titulo.toLowerCase().includes(searchInput)) : value;
+  transform(value: TextoNotUndefined[], searchInput: string): TextoNotUndefined[] {
+    if (!value || value.length === 0) {
+      return []; // Si no hay datos, retorna una lista vacía
+    }
+
+    if (!searchInput || searchInput.trim() === '') {
+      return value; // Si no hay texto de búsqueda, retorna la lista completa
+    }
+
+    // Convertimos el texto de búsqueda a minúsculas para una comparación insensible a mayúsculas
+    const searchText = searchInput.toLowerCase().trim();
+
+    // Filtramos la lista de usuarios
+    return value.filter(texto =>
+      texto.titulo.toLowerCase().includes(searchText)
+    );
   }
 
 }

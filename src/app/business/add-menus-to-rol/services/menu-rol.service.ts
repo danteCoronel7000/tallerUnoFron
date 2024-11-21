@@ -10,7 +10,7 @@ export class MenuRolService {
 
   private baseUrlAdd = 'http://localhost:9090/api/roles';
 private url_roles = 'http://localhost:9090/api/roles/all';
-private url_menus = 'http://localhost:9090/api/menus/all';
+private url_menus = 'http://localhost:9090/api/menus/alldto';
 private apiUrlObtenerPorId = 'http://localhost:9090/api/roles/obternerPorId';
 // Para seleccionar textos según el estado
 private estadoSeleccionado = new BehaviorSubject<number>(2);
