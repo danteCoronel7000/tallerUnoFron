@@ -48,7 +48,6 @@ export class RolesComponent implements OnInit {
   selectRole(role: string): void {
     this.roleService.selectRole(role);
     this.selectedRole = role;  // Asignar el rol seleccionado
-    
   }
 
   openDrop(){

@@ -38,7 +38,7 @@ export class LoginComponent {
         next: () => {
           console.log('Inicio de sesión exitoso');
           // Redirecciona al dashboard
-          this.router.navigate(['/gallery']);
+          this.router.navigate(['/inicio']);
           this.authService.isAuth = true;
          // Obtener los datos del usuario desde el servicio (signal)
          /*

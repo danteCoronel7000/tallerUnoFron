@@ -11,7 +11,7 @@ export const routes: Routes = [
         loadComponent: () => import('./shared/components/layout/layout.component'),
         children: [
           {
-            path: 'gallery',
+            path: 'inicio',
             loadComponent: () => import('./business/home/components/gallery/gallery.component'),
           },
           {
@@ -19,20 +19,8 @@ export const routes: Routes = [
             loadComponent: () => import('./business/home/components/no-auth/no-auth.component'),
           },
           {
-            path: 'file',
-            loadComponent: () => import('./business/users/components/file-upload/file-upload.component'),
-          },
-          {
-            path: 'layout-usuarios',
+            path: 'gusuarios',
             loadComponent: () => import('./business/gestionar-usuarios/components/layout-usuarios/layout-usuarios.component')
-          },
-          {
-            path: 'filesel',
-            loadComponent: () => import('./business/users/components/select-file/select-file.component')
-          },
-          {
-            path: 'newusuario',
-            loadComponent: () => import('./business/gestionar-usuarios/components/new-usuario/new-usuario.component')
           },
           {
             path: 'gareas',

@@ -8,14 +8,19 @@ import { Usuario } from '../../business/users/models/Usuarios.Model';
   providedIn: 'root'
 })
 export class AuthService {
+  authService(): Usuario | null {
+    throw new Error('Method not implemented.');
+  }
 
   private LOGIN_URL = 'http://localhost:9090/api/usuarios/login'
   private url_personas = 'http://localhost:9090/api/personas/all'
   private url_usuarios = 'http://localhost:9090/api/usuarios/all'
   private tokenKey = 'authToken'
   nombreCompleto: string = '';
+  nombreRol: string = '';
   isAuth: boolean = false;
   photoUser: string = '';
+  id_personaLogueada: number = 0;
     // Signal para almacenar el usuario logueado
     loggedInUser: WritableSignal<Usuario | null> = signal<Usuario | null>(null);
 
@@ -24,9 +29,12 @@ export class AuthService {
   login(username: string, password: string): Observable<Usuario> {
     return this.httpClient.post<Usuario>(this.LOGIN_URL, {username, password}).pipe(
       tap(response => {
-        //console.log("response: ", response);
+        console.log("response: ", response);
         this.nombreCompleto = response.persona.nombre + ' ' + response.persona.ap + ' ' + response.persona.am;
+        this.nombreRol = response.rolesList.map(rol => rol.nombre).join(', ');
+        console.log(this.nombreRol);
         this.photoUser = response.persona.foto
+        this.id_personaLogueada = response.persona.id_persona;
         this.loggedInUser.set(response);
   
         //console.log('Usuario logueado en el servicio:', this.loggedInUser());
@@ -36,6 +44,8 @@ export class AuthService {
           localStorage.setItem('photoUser', response.persona.foto);
           localStorage.setItem('nombreCompleto', this.nombreCompleto);
           localStorage.setItem('loggedInUser', JSON.stringify(response));
+          localStorage.setItem('nombreRol', this.nombreRol);
+          localStorage.setItem('id_persona_log', this.id_personaLogueada.toString());
         }
   
         if (response.token) {
@@ -50,6 +60,10 @@ export class AuthService {
   // Método para obtener el signal del usuario logueado
   getLoggedInUser(): WritableSignal<Usuario | null> {
     return this.loggedInUser;
+  }
+
+  getNombreRoles(){
+    return this.nombreRol;
   }
 
   private setToken(token: string): void{
@@ -89,6 +103,8 @@ private  getToken(): string | null{
       localStorage.removeItem('photoUser');
       localStorage.removeItem('nombreCompleto');
       localStorage.removeItem('loggedInUser');
+      localStorage.removeItem('nombreRol');
+      localStorage.removeItem('id_persona_log');
       console.log("se removio correctamente el local storage")
     }
     
@@ -123,4 +139,40 @@ private  getToken(): string | null{
   getUsuarios(): Observable<any[]> {
     return this.httpClient.get<any[]>(this.url_usuarios);
   }
+
+  getFoto(): string {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      return localStorage.getItem('photoUser') || '';
+    }
+    return ''; // Valor predeterminado si no estás en el navegador
+  }
+
+  setFotoUsuario(url: string): void {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      localStorage.setItem('photoUser', url);
+    }
+  }
+  
+  getNombre(): string {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      return localStorage.getItem('nombreCompleto') || '';
+    }
+    return ''; // Valor predeterminado si no estás en el navegador
+  }
+  
+getNombreRol(): string {
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    const nombreRol = localStorage.getItem('nombreRol') || '';
+    return nombreRol;
+  }
+  return ''; // Valor predeterminado si no estás en el navegador
+}
+
+getIdPersonaLog(): number{
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    const recuperado: number = parseInt(localStorage.getItem('id_persona_log') || '0', 10);
+    return recuperado;
+  }
+  return 0; // Valor predeterminado si no estás en el navegador
+}
 }

@@ -6,19 +6,19 @@ import { NewPersonalComponent } from "../new-personal/new-personal.component";
 import { ModalFormService } from '../../../users/services/modal-form.service';
 import { EditarUsuariosComponent } from "../editar-usuarios/editar-usuarios.component";
 import { AddUsuarioService } from '../../services/add-usuario.service';
-import NewUsuarioComponent from '../new-usuario/new-usuario.component';
 import { DeleteUsuarioService } from '../../services/delete-usuario.service';
 import { HabilitarUsuarioService } from '../../services/habilitar-usuario.service';
 import { PersonasService } from '../../services/personas.service';
 import { EditarUsuarioService } from '../../services/editar-usuario.service';
 import { EditarUsuarioComponent } from "../editar-usuario-password/editar-usuario.component";
 import { Persona } from '../../../users/models/edit-user.model';
+import { NewUsuarioComponent } from "../new-usuario/new-usuario.component";
 
 
 @Component({
   selector: 'app-list-usuarios',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, NewPersonalComponent, EditarUsuariosComponent, NewUsuarioComponent, EditarUsuarioComponent],
+  imports: [CommonModule, NgxPaginationModule, NewPersonalComponent, EditarUsuariosComponent, EditarUsuarioComponent, NewUsuarioComponent],
   templateUrl: './list-usuarios.component.html',
   styleUrl: './list-usuarios.component.css'
 })

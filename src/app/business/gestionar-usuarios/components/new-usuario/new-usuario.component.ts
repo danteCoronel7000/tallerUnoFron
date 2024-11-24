@@ -11,7 +11,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
   templateUrl: './new-usuario.component.html',
   styleUrl: './new-usuario.component.css'
 })
-export default class NewUsuarioComponent {
+export class NewUsuarioComponent {
   usuarioForm: FormGroup;
   isOpen = false;
 
