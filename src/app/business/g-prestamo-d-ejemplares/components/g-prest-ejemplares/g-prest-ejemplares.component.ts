@@ -1,25 +1,26 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EjemplarDtoPPrestamos, MPrestamo, MPrestamoCrear, Usuario } from '../../models/list-prestamos.model';
 import { PrestEjemplaresService } from '../../services/prest-ejemplares.service';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchfechaPipe } from '../../pipes/searchfecha.pipe';
 import { SearchestPipe } from '../../pipes/searchest.pipe';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { AuthService } from '../../../../core/services/auth.service';
+import { SearchestadoPipe } from '../../pipes/searchestado.pipe';
 
 @Component({
   selector: 'app-g-prest-ejemplares',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxPaginationModule, NgSelectModule, SearchfechaPipe, SearchestPipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxPaginationModule, NgSelectModule, SearchfechaPipe, SearchestPipe, SearchestadoPipe],
   templateUrl: './g-prest-ejemplares.component.html',
   styleUrl: './g-prest-ejemplares.component.css'
 })
 export class GPrestEjemplaresComponent implements OnInit{
   mainListPrestamos: MPrestamo[] = [];
   listEjemplaresPP: EjemplarDtoPPrestamos[] = [];
-  searchValueEst: string = '';
+  searchValueEstudiante: string = '';
   startDate: string | null = null; // Fecha de inicio seleccionada.
   endDate: string | null = null; // Fecha de fin seleccionada.
   p: number = 1;

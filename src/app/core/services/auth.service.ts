@@ -21,6 +21,7 @@ export class AuthService {
   isAuth: boolean = false;
   photoUser: string = '';
   id_personaLogueada: number = 0;
+  id_usuarioLog: number = 0;
     // Signal para almacenar el usuario logueado
     loggedInUser: WritableSignal<Usuario | null> = signal<Usuario | null>(null);
 
@@ -35,6 +36,7 @@ export class AuthService {
         console.log(this.nombreRol);
         this.photoUser = response.persona.foto
         this.id_personaLogueada = response.persona.id_persona;
+        this.id_usuarioLog = response.id_usuario;
         this.loggedInUser.set(response);
   
         //console.log('Usuario logueado en el servicio:', this.loggedInUser());
@@ -46,6 +48,7 @@ export class AuthService {
           localStorage.setItem('loggedInUser', JSON.stringify(response));
           localStorage.setItem('nombreRol', this.nombreRol);
           localStorage.setItem('id_persona_log', this.id_personaLogueada.toString());
+          localStorage.setItem('id_usuario_log', this.id_usuarioLog.toString());
         }
   
         if (response.token) {
@@ -105,6 +108,7 @@ private  getToken(): string | null{
       localStorage.removeItem('loggedInUser');
       localStorage.removeItem('nombreRol');
       localStorage.removeItem('id_persona_log');
+      localStorage.removeItem('id_usuario_log');
       console.log("se removio correctamente el local storage")
     }
     
@@ -171,6 +175,13 @@ getNombreRol(): string {
 getIdPersonaLog(): number{
   if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
     const recuperado: number = parseInt(localStorage.getItem('id_persona_log') || '0', 10);
+    return recuperado;
+  }
+  return 0; // Valor predeterminado si no estás en el navegador
+}
+getIdUsuarioLogueado(): number{
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    const recuperado: number = parseInt(localStorage.getItem('id_usuario_log') || '0', 10);
     return recuperado;
   }
   return 0; // Valor predeterminado si no estás en el navegador

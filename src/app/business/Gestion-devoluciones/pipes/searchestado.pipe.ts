@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filtrarEst',
+  name: 'searchestado',
   standalone: true
 })
-export class FiltrarEstPipe implements PipeTransform {
+export class SearchestadoPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): unknown {
     return null;

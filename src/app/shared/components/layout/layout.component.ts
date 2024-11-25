@@ -39,6 +39,9 @@ export default class LayoutComponent {
   longinSingIn(){
     if(this.authService.isAuthenticated()){
       this.authService.logout();
+      // Resetea la selección del dropdown
+    this.selectedRoleInDropdown = null;
+    this.listOfMenusByRole = [];
     }else{
       this.modalService.openModal();
     }

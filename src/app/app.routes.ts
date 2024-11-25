@@ -69,6 +69,10 @@ export const routes: Routes = [
           {
             path: 'gprestejemplares',
             loadComponent: () => import('./business/g-prestamo-d-ejemplares/components/layout-g-p-ej/layout-g-p-ej.component')
+          },
+          {
+            path: 'gmdevoluciones',
+            loadComponent: () => import('./business/Gestion-devoluciones/components/layout-devoluc/layout-devoluc.component')
           }
         ]
       },
