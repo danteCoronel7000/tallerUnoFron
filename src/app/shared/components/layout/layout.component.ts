@@ -56,7 +56,7 @@ export default class LayoutComponent {
   selecionarRol(role: string): void {
     this.selectedRoleInDropdown = role;
     this.listOfMenusByRole = this.getMenusByRoleName(this.selectedRoleInDropdown)
-    console.log('list ade menus by role: ',this.listOfMenusByRole)
+    //console.log('lista de menus by name role: ',this.listOfMenusByRole)
   }
 
   getUserRoles(): string[] {
