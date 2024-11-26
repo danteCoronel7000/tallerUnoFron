@@ -77,6 +77,10 @@ export const routes: Routes = [
           {
             path: 'ganuldevol',
             loadComponent: () => import('./business/anulacion-devoluciones/components/layout-g-anul-prest/layout-g-anul-prest.component')
+          },
+          {
+            path: 'gbusquedaejem',
+            loadComponent: () => import('./business/busqueda-ejemplares-dig/components/layout-busqued/layout-busqued.component')
           }
         ]
       },
