@@ -13,6 +13,9 @@ import { EditarUsuarioService } from '../../services/editar-usuario.service';
 import { EditarUsuarioComponent } from "../editar-usuario-password/editar-usuario.component";
 import { Persona } from '../../../users/models/edit-user.model';
 import { NewUsuarioComponent } from "../new-usuario/new-usuario.component";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -37,8 +40,10 @@ export default class ListUsuariosComponent {
   personaService = inject(PersonasService)
   id: number = 0;
   nombre: string = '';
+  pdfUrl: SafeResourceUrl | undefined;
+  openModalPdf: boolean = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
      // Suscríbete a los cambios en el servicio
@@ -221,4 +226,90 @@ obtenerId(id_persona: number){
   console.log('id_persona obteniada de la lista: ', id_persona)
 this.personaService.cambiarValor(id_persona)
 }
+
+//metodos para el pdf
+openModalpdf() {
+  // Lógica para abrir el modal
+  this.openModalPdf = true;
+}
+
+cerrarModalpdf() {
+  this.openModalPdf = false;
+}
+
+async generarPDF(persona: Persona) {
+  try {
+    // URL de la imagen (puede ser una URL local o remota)
+    const imageUrl = persona.foto; // Asegúrate de que la URL sea válida
+
+    console.log('Generando PDF para:', persona.nombre);
+    
+    // Convertir la imagen a Base64
+    const base64Image = await this.convertImageToBase64(imageUrl);
+    
+    console.log('Imagen convertida a Base64');
+
+    // Crear el documento PDF
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Información del Usuario', 10, 10);
+
+    // Verificar si la imagen Base64 está disponible
+    if (base64Image) {
+      // Ajustar las coordenadas para evitar que la imagen se sobreponga al texto
+      doc.addImage(base64Image, 'PNG', 10, 20, 100, 50); // Coordenadas (10, 20) y tamaño (100, 50)
+      console.log('Imagen agregada al PDF');
+    } else {
+      console.error('La imagen no se ha convertido correctamente.');
+    }
+
+    // Agregar texto al PDF
+    doc.setFontSize(12);
+    doc.text(`Nombre: ${persona.nombre} ${persona.ap} ${persona.am}`, 10, 80);  // Ajustar la posición
+    doc.text(`Estado: ${persona.estado === 1 ? 'Activo' : 'Inactivo'}`, 10, 90);  // Ajustar la posición
+    doc.text(`tipo personal: ${persona.tipo_per}`, 10, 10);  // Ajustar la posición
+
+    // Convertir el PDF a un Blob y generar una URL para previsualización
+    const blob = doc.output('blob');
+    const ulpdf = URL.createObjectURL(blob);
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(ulpdf);
+ 
+    // Abrir el modal para previsualizar
+    this.openModalpdf();
+    console.log('PDF generado y enviado a nueva ventana');
+  } catch (error) {
+    console.error('Error al generar el PDF:', error);
+  }
+}
+
+
+// Método para convertir la imagen de la URL a Base64
+convertImageToBase64(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous"; // Permite el acceso a imágenes de otros dominios, si es necesario.
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        const base64Image = canvas.toDataURL('image/png');
+        resolve(base64Image);
+      } else {
+        reject('Error al crear el contexto del canvas');
+      }
+    };
+
+    img.onerror = (error) => {
+      console.error('Error al cargar la imagen:', error);
+      reject('Error al cargar la imagen desde la URL');
+    };
+
+    img.src = url;
+  });
+}
+
 }
