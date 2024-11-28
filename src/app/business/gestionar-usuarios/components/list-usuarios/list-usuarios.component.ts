@@ -11,25 +11,28 @@ import { HabilitarUsuarioService } from '../../services/habilitar-usuario.servic
 import { PersonasService } from '../../services/personas.service';
 import { EditarUsuarioService } from '../../services/editar-usuario.service';
 import { EditarUsuarioComponent } from "../editar-usuario-password/editar-usuario.component";
-import { Persona } from '../../../users/models/edit-user.model';
 import { NewUsuarioComponent } from "../new-usuario/new-usuario.component";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { SearchpersonaPipe } from '../../pipes/searchpersona.pipe';
+import { Persona } from '../../models/usuarios.model';
+import { SearchestadoPipe } from '../../pipes/searchestado.pipe';
+import { SearchtipoPipe } from '../../pipes/searchtipo.pipe';
 
 
 @Component({
   selector: 'app-list-usuarios',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, NewPersonalComponent, EditarUsuariosComponent, EditarUsuarioComponent, NewUsuarioComponent],
+  imports: [CommonModule, FormsModule, NgxPaginationModule, NewPersonalComponent, EditarUsuariosComponent, EditarUsuarioComponent, NewUsuarioComponent, SearchpersonaPipe, SearchestadoPipe, SearchtipoPipe],
   templateUrl: './list-usuarios.component.html',
   styleUrl: './list-usuarios.component.css'
 })
 export default class ListUsuariosComponent {
-  personas: any[] = [];  // Aquí se almacenarán los personas
+  personas: Persona[] = [];  // Aquí se almacenarán los personas
   usuarios: any[] = [];  // Aquí se almacenarán los usuarios
-  personasFiltradasPoTipo_per: any[] = [];
-  personasFiltradasPorEstado: any[] = [];
+  
   edit_user: Persona | null = null; 
   p: number = 1;
   modalService = inject(ModalFormService)
@@ -41,7 +44,17 @@ export default class ListUsuariosComponent {
   id: number = 0;
   nombre: string = '';
   pdfUrl: SafeResourceUrl | undefined;
+
+  searchValue: string = '';
   openModalPdf: boolean = false;
+  selectEstado: string = "2";
+  selectedTipo: string = '';
+
+  Administrador: string = 'administrador';
+  Publico: string = 'publico';
+  Todos: string = 'todos';
+
+  openModNewUser: boolean = false;
 
   constructor(private authService: AuthService, private sanitizer: DomSanitizer) { }
 
@@ -54,42 +67,18 @@ export default class ListUsuariosComponent {
     this.getPersonas();
     this.getUsuarios();
 
-     // Escuchar cambios en el tipo de persona seleccionado
-     this.personaService.tipoPersona$.subscribe(tipo => {
-      this.filtrarPersonas(tipo);
-    });
-// Escuchar cambios en el estado de persona seleccionado
-    this.personaService.estadoSeleccionado$.subscribe(tipo => {
-      this.filtrarPersonasPorEstado(tipo);
-    });
+
   }
 
-  filtrarPersonas(tipo: string) {
-    if (tipo === 'Todos') {
-      this.personasFiltradasPoTipo_per = this.personas;
-    } else {
-      this.personasFiltradasPoTipo_per = this.personas.filter(persona => persona.tipo_per === tipo);
-    }
-  }
 
-  filtrarPersonasPorEstado(tipo: any) {
-    // Convierte tipo a un número explícitamente
-    const tipoNumero = Number(tipo);
-    console.log('tipo persona desde list: ', tipoNumero);
-    
-    if (tipoNumero === 2) {
-      this.personasFiltradasPoTipo_per = this.personas;
-    } else {
-      this.personasFiltradasPoTipo_per = this.personas.filter(persona => persona.estado === tipoNumero);
-    }
-  }
+
+
   
 
   getPersonas(): void {
     this.authService.getPersonas().subscribe(
       (data) => {
         this.personas = data;  // Asigna los datos recibidos a la variable users
-        this.personasFiltradasPoTipo_per = data;
         //console.log('personas: back: ',data);  // Para verificar que los usuarios han sido obtenidos correctamente
       },
       (error) => {+
@@ -227,6 +216,10 @@ obtenerId(id_persona: number){
 this.personaService.cambiarValor(id_persona)
 }
 
+openModalNew(){
+  this.modalService.openModalNewUser();
+}
+
 //metodos para el pdf
 openModalpdf() {
   // Lógica para abrir el modal
@@ -241,33 +234,37 @@ async generarPDF(persona: Persona) {
   try {
     // URL de la imagen (puede ser una URL local o remota)
     const imageUrl = persona.foto; // Asegúrate de que la URL sea válida
+    const doc = new jsPDF();
 
     console.log('Generando PDF para:', persona.nombre);
     
     // Convertir la imagen a Base64
-    const base64Image = await this.convertImageToBase64(imageUrl);
+    if(imageUrl != null){
+    let base64Image = await this.convertImageToBase64(imageUrl);
+      // Verificar si la imagen Base64 está disponible
+      if (base64Image) {
+        // Ajustar las coordenadas para evitar que la imagen se sobreponga al texto
+        doc.addImage(base64Image, 'PNG', 10, 20, 100, 50); // Coordenadas (10, 20) y tamaño (100, 50)
+        console.log('Imagen agregada al PDF');
+      } else {
+        doc.text(`la persona no tien imagen`, 10, 20); // Coordenadas (10, 20) y tamaño (100, 50)
+      }
+  }
     
     console.log('Imagen convertida a Base64');
 
     // Crear el documento PDF
-    const doc = new jsPDF();
+    
     doc.setFontSize(18);
     doc.text('Información del Usuario', 10, 10);
 
-    // Verificar si la imagen Base64 está disponible
-    if (base64Image) {
-      // Ajustar las coordenadas para evitar que la imagen se sobreponga al texto
-      doc.addImage(base64Image, 'PNG', 10, 20, 100, 50); // Coordenadas (10, 20) y tamaño (100, 50)
-      console.log('Imagen agregada al PDF');
-    } else {
-      console.error('La imagen no se ha convertido correctamente.');
-    }
+  
 
     // Agregar texto al PDF
     doc.setFontSize(12);
     doc.text(`Nombre: ${persona.nombre} ${persona.ap} ${persona.am}`, 10, 80);  // Ajustar la posición
     doc.text(`Estado: ${persona.estado === 1 ? 'Activo' : 'Inactivo'}`, 10, 90);  // Ajustar la posición
-    doc.text(`tipo personal: ${persona.tipo_per}`, 10, 10);  // Ajustar la posición
+    doc.text(`tipo personal: ${persona.tipo_per}`, 10, 100);  // Ajustar la posición
 
     // Convertir el PDF a un Blob y generar una URL para previsualización
     const blob = doc.output('blob');
