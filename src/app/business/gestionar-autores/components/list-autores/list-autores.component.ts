@@ -5,6 +5,8 @@ import { AutoresService } from '../../services/autores.service';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NewAutorComponent } from "../new-autor/new-autor.component";
+import jsPDF from 'jspdf';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-autores',
@@ -22,6 +24,9 @@ export class ListAutoresComponent {
   autorForm!: FormGroup;
   id_autor: number = 0;
   nombreAutor: string = '';
+
+  pdfUrl: SafeResourceUrl | undefined;
+  openModalPdf: boolean = false;
   
   autoresService = inject(AutoresService);
   
@@ -40,7 +45,7 @@ export class ListAutoresComponent {
     });
   }
   
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {
     this.autorForm = this.fb.group({
       id_autor: [0],
       nombre: ['', Validators.required],
@@ -200,5 +205,49 @@ export class ListAutoresComponent {
       modal.classList.remove('block');
     }
   }
+  //metodos para imprimor datos del autor
   
+//metodos para el pdf
+openModalpdf() {
+  // Lógica para abrir el modal
+  this.openModalPdf = true;
+}
+
+cerrarModalpdf() {
+  this.openModalPdf = false;
+}
+
+async generarPDF(persona: AutorNotUndefined) {
+  try {
+
+    console.log('Generando PDF para:', persona.nombre);
+    
+    
+    console.log('Imagen convertida a Base64');
+
+    // Crear el documento PDF
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Información del Autor', 10, 20);
+
+
+    // Agregar texto al PDF
+    doc.setFontSize(12);
+    doc.text(`Nombre: ${persona.nombre} ${persona.ap} ${persona.am}`, 10, 40);  // Ajustar la posición
+    doc.text(`Estado: ${persona.estado === 1 ? 'Activo' : 'Inactivo'}`, 10, 50);  // Ajustar la posición
+    doc.text(`genero: ${persona.genero}`, 10, 60);  // Ajustar la posición
+
+    // Convertir el PDF a un Blob y generar una URL para previsualización
+    const blob = doc.output('blob');
+    const ulpdf = URL.createObjectURL(blob);
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(ulpdf);
+ 
+    // Abrir el modal para previsualizar
+    this.openModalpdf();
+    console.log('PDF generado y enviado a nueva ventana');
+  } catch (error) {
+    console.error('Error al generar el PDF:', error);
+  }
+}
+
 }

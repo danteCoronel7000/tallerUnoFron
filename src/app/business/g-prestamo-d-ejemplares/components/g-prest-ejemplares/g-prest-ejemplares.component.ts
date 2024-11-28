@@ -9,6 +9,8 @@ import { SearchestPipe } from '../../pipes/searchest.pipe';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { AuthService } from '../../../../core/services/auth.service';
 import { SearchestadoPipe } from '../../pipes/searchestado.pipe';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-g-prest-ejemplares',
@@ -29,6 +31,11 @@ export class GPrestEjemplaresComponent implements OnInit{
   selectedEjemplares: EjemplarDtoPPrestamos[] = []; // IDs de autores seleccionados
   userLoguado: Usuario | null = null;
 
+  
+  pdfUrl: SafeResourceUrl | undefined;
+  openModalPdf: boolean = false;
+
+
   fecha: string = '';
   fechaini: string = '';
   fechafin: string = '';
@@ -45,7 +52,7 @@ export class GPrestEjemplaresComponent implements OnInit{
     listEjemplares: []
   }
 
-  constructor(private prestamosService: PrestEjemplaresService, private authService: AuthService) {
+  constructor(private prestamosService: PrestEjemplaresService, private authService: AuthService, private sanitizer: DomSanitizer) {
     
   }
 
@@ -111,4 +118,50 @@ export class GPrestEjemplaresComponent implements OnInit{
     this.prestamoEjemplar.fecha = input.value;
     console.log('Fecha actualizada:', this.prestamoEjemplar.fecha);
   }
+  
+//metodos para el pdf
+openModalpdf() {
+  // Lógica para abrir el modal
+  this.openModalPdf = true;
+}
+
+cerrarModalpdf() {
+  this.openModalPdf = false;
+}
+
+async generarPDF(persona: MPrestamo) {
+  try {
+
+    console.log('Generando PDF para:', persona.id_mprestamo);
+    
+    
+    console.log('Imagen convertida a Base64');
+
+    // Crear el documento PDF
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Información del Prestamo', 10, 20);
+
+
+    // Agregar texto al PDF
+    doc.setFontSize(12);
+    doc.text(`Nombre: ${persona.realiza.persona.nombre} ${persona.realiza.persona.ap} ${persona.realiza.persona.am}`, 10, 40);  // Ajustar la posición
+    doc.text(`Estado: ${persona.estado === 1 ? 'Activo' : 'Inactivo'}`, 10, 50);  // Ajustar la posición
+    doc.text(`Fecha: ${persona.fecha}`, 10, 60);  // Ajustar la posición
+    doc.text(`Fecha Inicio: ${persona.fechaini}`, 10, 70);  // Ajustar la posición
+    doc.text(`Fecha Fin: ${persona.fechafin}`, 10, 80);  // Ajustar la posición
+
+    // Convertir el PDF a un Blob y generar una URL para previsualización
+    const blob = doc.output('blob');
+    const ulpdf = URL.createObjectURL(blob);
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(ulpdf);
+ 
+    // Abrir el modal para previsualizar
+    this.openModalpdf();
+    console.log('PDF generado y enviado a nueva ventana');
+  } catch (error) {
+    console.error('Error al generar el PDF:', error);
+  }
+}
+
 }

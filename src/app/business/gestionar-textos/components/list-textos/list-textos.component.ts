@@ -10,6 +10,7 @@ import { EstadoppPipe } from '../../pipes/estadopp.pipe';
 import { AreasppPipe } from '../../pipes/areaspp.pipe';
 import { EditorialesppPipe } from '../../pipes/editorialespp.pipe';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import jsPDF from 'jspdf';
 
 
 @Component({
@@ -27,6 +28,10 @@ isOpenModalEditar: boolean = false;
 isDigitalSelected: boolean = false;
 selectedFile: File | null = null;
 isParaEditar: number = 0;
+
+
+pdfUrl: SafeResourceUrl | undefined;
+openModalPdf: boolean = false;
 
 id_texto: number = 0;
 nombreTexto: string = '';
@@ -270,6 +275,54 @@ onFileSelected(event: any) {
       console.log('Archivo seleccionado:', this.selectedFile);
     }
   }
+
+  
+//metodos para el pdf
+openModalpdf() {
+    // Lógica para abrir el modal
+    this.openModalPdf = true;
+  }
+  
+  cerrarModalpdf() {
+    this.openModalPdf = false;
+  }
+  
+  async generarPDF(persona: TextoNotUndefined) {
+    try {
+  
+      console.log('Generando PDF para:', persona.titulo);
+      
+      
+      console.log('Imagen convertida a Base64');
+  
+      // Crear el documento PDF
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text('Información del texto', 10, 20);
+  
+  
+      // Agregar texto al PDF
+      doc.setFontSize(12);
+      doc.text(`Titulo: ${persona.titulo}`, 10, 40);  // Ajustar la posición
+      doc.text(`Estado: ${persona.estado === 1 ? 'Activo' : 'Inactivo'}`, 10, 50);  // Ajustar la posición
+      doc.text(`Isbn: ${persona.isbn}`, 10, 60);  // Ajustar la posición
+      doc.text(`Numero de Edicion: ${persona.edicion}`, 10, 70);  // Ajustar la posición
+      doc.text(`Fecha Publicacion: ${persona.fechapub}`, 10, 80);  // Ajustar la posición
+      doc.text(`resumen: ${persona.resumen}`, 10, 90);  // Ajustar la posición
+  
+      // Convertir el PDF a un Blob y generar una URL para previsualización
+      const blob = doc.output('blob');
+      const ulpdf = URL.createObjectURL(blob);
+      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(ulpdf);
+   
+      // Abrir el modal para previsualizar
+      this.openModalpdf();
+      console.log('PDF generado y enviado a nueva ventana');
+    } catch (error) {
+      console.error('Error al generar el PDF:', error);
+    }
+  }
+  
 
   
 }
