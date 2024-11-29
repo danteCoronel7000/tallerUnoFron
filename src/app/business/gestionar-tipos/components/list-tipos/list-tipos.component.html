@@ -41,6 +41,7 @@
           </td>
           <td class="px-4 py-4 text-center">
             <button 
+            data-modal-target="popup-modal" data-modal-toggle="popup-modal"
             (click)="openModalDelete(tipo.id_tipo, tipo.nombre)"
             >
               <i class="fa-solid fa-trash fa-2x"></i>
@@ -48,6 +49,7 @@
           </td>
           <td class="px-4 py-4 text-center">
             <button 
+            data-modal-target="popup-modal-one" data-modal-toggle="popup-modal-one"
             (click)="openModalHabilitar(tipo.id_tipo, tipo.nombre)"
             >
             <i class="fa-solid fa-rotate-right fa-2x"></i>

@@ -1,7 +1,73 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <p class="w-1/4 m-auto font-[Monospace] rounded-lg text-xs text-xs md:text-lg">Gestionar Autores</p>
+<div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+  <div>
+    <form>   
+      <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">buscar</label>
+      <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
+          </div>
+          <input 
+      type="search" 
+      id="search"
+      class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+      placeholder="buscar autor" 
+      name="searchValue"
+    [(ngModel)]="searchValueAutor"
+    />
+      </div>
+    </form>
+  </div>
 
-<div class="p-4">
+  <div>
+    <div class="flex">
+      <div class="flex items-center me-4">
+        <input
+        id="uno"
+                type="radio"
+                value="1"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+               />
+        <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Activos</label>
+      </div>
+      <div class="flex items-center me-4">
+        <input
+        id="cero"
+              type="radio"
+              value="0"
+              name="estadoTexto"
+              [(ngModel)]="selectEstado"
+               />
+        <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bajas</label>
+      </div>
+      <div class="flex items-center me-4">
+        <input
+        id="dos"
+                type="radio"
+                value="2"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+                     checked 
+               />
+        <label for="inline-checked-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Todos</label>
+      </div>
+    </div>
+  </div>
+
+      <div >
+        <button (click)="openModal()" class="p-2 bg-[#96C2DB] hover:bg-[#FFCE32] rounded-lg">
+          <i class="fa-solid fa-user-plus fa-2x"></i>
+          </button>
+    </div>
+
+</div>
+
     <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-[#96C2DB] dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-4 py-2">
             apellido y nombre
@@ -24,7 +90,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let autor of autoresFiltradas | paginate: { itemsPerPage: 3, currentPage: p }"
+        <tr *ngFor="let autor of listAutores 
+        | searchautor : searchValueAutor
+        | searchestado : selectEstado
+        | paginate: { itemsPerPage: 3, currentPage: p }"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900">
           <td class="px-6 py-4">
             {{autor.ap}} {{autor.am}} {{ autor.nombre }}
@@ -65,8 +134,8 @@
       </tbody>
     </table>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  
   </div>
-
 
 
 <app-new-autor />
@@ -310,3 +379,6 @@
   </div>
   </div>
   
+
+
+

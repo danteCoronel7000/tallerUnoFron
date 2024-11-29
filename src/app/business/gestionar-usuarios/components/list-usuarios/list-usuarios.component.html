@@ -12,7 +12,7 @@
     <tbody>
       <tr>
         <td colspan="5" class="border border-gray-300 text-right px-4 py-2">
-            <button (click)="openModalNew()">
+            <button (click)="openModalNew()" class="p-2 bg-[#96C2DB] hover:bg-[#FFCE32] rounded-lg">
                 <i class="fa-solid fa-user-plus fa-2x"></i>
               </button>
         </td>
@@ -109,7 +109,7 @@
       class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
     >
       <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        class="text-xs text-gray-700 uppercase bg-[#96C2DB] dark:bg-gray-700 dark:text-gray-400"
       >
         <tr>
           <th scope="col" class="px-4 py-2">Foto</th>
@@ -163,9 +163,11 @@
           </td>
           <td class="px-4 py-2 text-center">
             <button
+            data-modal-target="popup-modal" data-modal-toggle="popup-modal"
               (click)="
                 obtenerIdPersonaDelete(persona.id_persona, persona.nombre)
               "
+              
             >
               <i class="fa-solid fa-trash fa-2x"></i>
             </button>
@@ -177,9 +179,11 @@
           </td>
           <td class="px-4 py-2 text-center">
             <button
+            data-modal-target="popup-modal-one" data-modal-toggle="popup-modal-one"
               (click)="
                 obtenerIdPersonaHabilitar(persona.id_persona, persona.nombre)
               "
+              
             >
               <i class="fa-solid fa-rotate-right fa-2x"></i>
             </button>
@@ -187,9 +191,7 @@
           <td class="px-4 py-2 text-center">
             <span *ngIf="tieneUsuario(persona.id_persona)">
               <button
-                (click)="
-                  openModalEditUser(); obtenerIdPersona(persona.id_persona)
-                "
+                (click)="openModalEditUser(); obtenerIdPersona(persona.id_persona)"
               >
                 <i class="fa-solid fa-lock fa-2x"></i>
               </button>
@@ -282,7 +284,6 @@
   </div>
 
   <!-- modal para habilitar un usuario -->
-
   <div
     id="popup-modal-one"
     tabindex="-1"

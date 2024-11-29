@@ -1,22 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { AutorNotUndefined } from '../../models/list-autores.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AutoresService } from '../../services/autores.service';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NewAutorComponent } from "../new-autor/new-autor.component";
 import jsPDF from 'jspdf';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ModalService } from '../../services/modal.service';
+import { SearchautorPipe } from '../../pipes/searchautor.pipe';
+import { SearchestadoPipe } from '../../pipes/searchestado.pipe';
 
 @Component({
   selector: 'app-list-autores',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, NewAutorComponent],
+  imports: [CommonModule, FormsModule, NgxPaginationModule, ReactiveFormsModule, NewAutorComponent, SearchautorPipe, SearchestadoPipe],
   templateUrl: './list-autores.component.html',
   styleUrl: './list-autores.component.css'
 })
 export class ListAutoresComponent {
-  autoresFiltradas: AutorNotUndefined[] = [];
   listAutores: AutorNotUndefined[] = [];
   p: number = 1;
   showModal: boolean = false;
@@ -25,24 +27,18 @@ export class ListAutoresComponent {
   id_autor: number = 0;
   nombreAutor: string = '';
 
+  searchValueAutor: string = '';
+  selectEstado: string = "2";
+
   pdfUrl: SafeResourceUrl | undefined;
   openModalPdf: boolean = false;
   
   autoresService = inject(AutoresService);
+  modalService = inject(ModalService);
   
   ngOnInit(): void {
     // Obtenemos todos los autores
     this.getAutores();
-  
-    // Suscríbete a los cambios en el servicio
-    this.autoresService.autorSource$.subscribe(autores => {
-      this.autoresFiltradas = autores; // Actualiza la lista de autores
-    });
-  
-    // Escuchar cambios en el estado de autor seleccionado
-    this.autoresService.estadoSeleccionado$.subscribe(autor => {
-      this.filtrarAutoresPorEstado(autor);
-    });
   }
   
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {
@@ -56,22 +52,11 @@ export class ListAutoresComponent {
     });
   }
   
-  filtrarAutoresPorEstado(autor: any) {
-    const autorNumero = Number(autor);
-    console.log('autor desde list: ', autorNumero);
-    
-    if (autorNumero === 2) {
-      this.autoresFiltradas = this.listAutores;
-    } else {
-      this.autoresFiltradas = this.listAutores.filter(autor => autor.estado === autorNumero);
-    }
-  }
   
   getAutores(): void {
     this.autoresService.getAutores().subscribe(
       (data) => {
         this.listAutores = data;
-        this.autoresFiltradas = data;
       },
       (error) => {
         console.error('Error al obtener los autores:', error);
@@ -249,5 +234,10 @@ async generarPDF(persona: AutorNotUndefined) {
     console.error('Error al generar el PDF:', error);
   }
 }
+
+  // Llama al servicio para abrir el modal
+  openModal() {
+    this.modalService.openModal(); // Abre el modal
+  }
 
 }

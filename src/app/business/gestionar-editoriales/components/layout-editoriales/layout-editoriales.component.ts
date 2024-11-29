@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { HeadAraesComponent } from "../../../gestionar-areas/components/head-areas/head-araes.component";
-import { HeadEditorialesComponent } from "../head-editoriales/head-editoriales.component";
-import { BodyEditorialesComponent } from "../body-editoriales/body-editoriales.component";
+import { ListEditorialesComponent } from "../list-editoriales/list-editoriales.component";
 
 @Component({
   selector: 'app-layout-editoriales',
   standalone: true,
-  imports: [HeadAraesComponent, HeadEditorialesComponent, BodyEditorialesComponent],
+  imports: [ListEditorialesComponent],
   templateUrl: './layout-editoriales.component.html',
   styleUrl: './layout-editoriales.component.css'
 })

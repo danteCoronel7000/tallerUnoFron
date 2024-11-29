@@ -1,21 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { editorialNotUndefined } from '../../models/list-editoriales.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditorialesService } from '../../services/editoriales.service';
 import { NewEditorialComponent } from "../new-editorial/new-editorial.component";
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ModalService } from '../../services/modal.service';
+import { SearcheditorialPipe } from '../../pipes/searcheditorial.pipe';
+import { SearchestadoPipe } from '../../pipes/searchestado.pipe';
 
 @Component({
   selector: 'app-list-editoriales',
   standalone: true,
-  imports: [NewEditorialComponent, CommonModule, NgxPaginationModule, ReactiveFormsModule],
+  imports: [FormsModule, NewEditorialComponent, CommonModule, NgxPaginationModule, ReactiveFormsModule, SearcheditorialPipe, SearchestadoPipe],
   templateUrl: './list-editoriales.component.html',
   styleUrl: './list-editoriales.component.css'
 })
 export class ListEditorialesComponent {
-
-  editorialesFiltradas: editorialNotUndefined[] = [];
   listEditoriales: editorialNotUndefined[] = [];
   p: number = 1;
   showModal: boolean = false;
@@ -24,23 +25,16 @@ export class ListEditorialesComponent {
   id_editorial: number = 0;
   nombreEditorial: string = '';
 
+  searchValueEditorial: string = '';
+  selectEstado: string = "2";
+
 
   editorialesService = inject(EditorialesService);
-
+  modalService = inject(ModalService);
 
 ngOnInit(): void {
   //obtenemos todas las areas
   this.getEditoriales();
-
-  // Suscríbete a los cambios en el servicio
-  this.editorialesService.editorialSource$.subscribe(editoriales => {
-    this.editorialesFiltradas = editoriales; // Actualiza la lista de personas
-  });
-
-  // Escuchar cambios en el estado de persona seleccionado
-  this.editorialesService.estadoSeleccionado$.subscribe(tipo => {
-    this.filtrarEditorialesPorEstado(tipo);
-  });
 }
 
 constructor(private fb: FormBuilder){
@@ -51,23 +45,11 @@ constructor(private fb: FormBuilder){
   });
 }
 
-filtrarEditorialesPorEstado(tipo: any) {
-  // Convierte tipo a un número explícitamente
-  const tipoNumero = Number(tipo);
-  console.log('tipo persona desde list: ', tipoNumero);
-  
-  if (tipoNumero === 2) {
-    this.editorialesFiltradas = this.listEditoriales;
-  } else {
-    this.editorialesFiltradas = this.listEditoriales.filter(editorial => editorial.estado === tipoNumero);
-  }
-}
 
   getEditoriales(): void {
     this.editorialesService.getEditorial().subscribe(
       (data) => {
         this.listEditoriales = data;  // Asigna los datos recibidos a la variable users
-        this.editorialesFiltradas = data;
         //console.log('personas: back: ',data);  // Para verificar que los usuarios han sido obtenidos correctamente
       },
       (error) => {+
@@ -212,5 +194,9 @@ actualizarEditorial() {
     }
   }
 
+   // Llama al servicio para abrir el modal
+   openModal() {
+    this.modalService.openModal(); // Abre el modal
+  }
 
 }
