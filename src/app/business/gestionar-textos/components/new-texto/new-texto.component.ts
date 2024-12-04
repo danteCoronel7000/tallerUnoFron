@@ -4,11 +4,12 @@ import { Area, AutorNotUndefined, Editorial, id_au, Texto, TextoBack } from '../
 import { TextosService } from '../../services/textos.service';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-new-texto',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgSelectModule],
   templateUrl: './new-texto.component.html',
   styleUrl: './new-texto.component.css'
 })
@@ -81,8 +82,7 @@ textoForm!: FormGroup;
   formData.forEach((value, key) => {
     console.log(`${key}:`, value);
   });
-
-    
+  
     this.textosService.createTexto(formData).subscribe({
       next: (response) => {
         console.log('Texto creado:', response);

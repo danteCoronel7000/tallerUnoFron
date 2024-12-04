@@ -109,6 +109,7 @@ private  getToken(): string | null{
       localStorage.removeItem('nombreRol');
       localStorage.removeItem('id_persona_log');
       localStorage.removeItem('id_usuario_log');
+      localStorage.removeItem('nombreRolSelect');
       console.log("se removio correctamente el local storage")
     }
     

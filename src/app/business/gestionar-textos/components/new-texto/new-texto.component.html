@@ -209,29 +209,26 @@
               placeholder="ingrese el resumen del libro"
             ></textarea>
           </div>
-          <!--autores-->
-          <div class="mb-6">
-            <label
-              for="countries"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Autores</label
-            >
-            <select
-              id="countries"
-              multiple
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="autores"
-              [(ngModel)]="selectedAuthorIds"
-              required
-            >
-              <option
-                *ngFor="let autor of autoresList"
-                [value]="autor.id_autor"
-              >
-                {{ autor.nombre }} {{ autor.ap }} {{ autor.am }} {{autor.id_autor}}
-              </option>
-            </select>
-          </div>
+              <!--autores ng select-->
+              <div class="mb-6">
+                <label
+                  for="countries"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Ejemplares</label
+                >
+    
+                <ng-select
+                  name="listEjemplares"
+                  [items]="autoresList"
+                  [multiple]="true"
+                  bindLabel="nombre"
+                  bindValue="id_autor"
+                  [(ngModel)]="selectedAuthorIds"
+                  clearAllText="Clear"
+                  class="custom"
+                >
+                </ng-select>
+              </div>
           <!--subir el archivo-->
           <!-- Sección de carga de archivos, mostrada solo si 'isDigitalSelected' es verdadero -->
           <div *ngIf="isDigitalSelected" class="mb-6">

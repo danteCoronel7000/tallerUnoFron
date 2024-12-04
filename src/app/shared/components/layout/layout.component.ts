@@ -1,7 +1,7 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
 import { DateComponent } from "../../utils/date/date.component";
 import { LoginComponent } from "../../../business/users/components/login/login.component";
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalFormService } from '../../../business/users/services/modal-form.service';
 import { Menus } from '../../models/models-shared.model';
@@ -16,7 +16,7 @@ import { SharedService } from '../../services/shared.service';
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
-export default class LayoutComponent {
+export default class LayoutComponent implements OnInit{
 
   roles: string[] = [];
   botonLog: boolean = true;
@@ -26,12 +26,18 @@ export default class LayoutComponent {
   listOfMenusByRole: Menus[] = [];
   openDropdowns: { [key: number]: boolean } = {}; // Estado de los dropdowns
   selectedFile: any;
+  nombreRolSelect: string = '';
   
 
-  constructor(public authService: AuthService, private sharedService: SharedService){
+  constructor(public authService: AuthService, private sharedService: SharedService, private router: Router){
     
     
-    
+  }
+  ngOnInit(): void {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const nombreRol = localStorage.getItem('nombreRolSelect') || '';
+      this.selecionarRol(nombreRol);
+    }
   }
 
 
@@ -54,6 +60,10 @@ export default class LayoutComponent {
  
 
   selecionarRol(role: string): void {
+    this.nombreRolSelect = role;
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    localStorage.setItem('nombreRolSelect', this.nombreRolSelect);
+    }
     this.selectedRoleInDropdown = role;
     this.listOfMenusByRole = this.getMenusByRoleName(this.selectedRoleInDropdown)
     //console.log('lista de menus by name role: ',this.listOfMenusByRole)
@@ -148,4 +158,11 @@ export default class LayoutComponent {
       }
     });
   }
+
+    // Verifica si algún enlace del submenú está activo
+    isMenuActive(menu: any): boolean {
+      return menu.procesosList.some((proceso: any) =>
+        this.router.isActive(proceso.enlace, false)
+      );
+    }
 }
