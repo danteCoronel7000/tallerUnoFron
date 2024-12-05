@@ -1,6 +1,7 @@
+<div class="relative overflow-x-auto sm:rounded-lg">
+  <p class="font-[Monospace] rounded-lg text-xs md:text-lg text-center flex justify-center items-center">Gestionar Textos</p>
 <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
     <!-- Título o encabezado de la tabla -->
-    <caption>Gestionar Textos</caption>
   
     <!-- Encabezado de la tabla -->
     <thead>
@@ -10,8 +11,8 @@
     <!-- Cuerpo de la tabla -->
     <tbody>
       <tr>
-        <td class="border border-gray-300 text-right px-4 py-4">
-            <button (click)="openModal()">
+        <td class="text-right">
+            <button (click)="openModal()" class="p-2 bg-[#96C2DB] hover:bg-[#FFCE32] rounded-lg">
                 <i class="fa-solid fa-user-plus fa-2x"></i>
               </button>
         </td>
@@ -22,6 +23,7 @@
     <tfoot>
     </tfoot>
   </table>
+</div>
   
 
 

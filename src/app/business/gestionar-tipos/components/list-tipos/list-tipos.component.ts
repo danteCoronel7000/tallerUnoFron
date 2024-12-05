@@ -1,21 +1,23 @@
 import { Component, inject } from '@angular/core';
 import { tipoNotUndefined } from '../../models/list-tipos.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TiposService } from '../../services/tipos.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { NewTipoComponent } from "../new-tipo/new-tipo.component";
+import { ModalService } from '../../services/modal.service';
+import { SearchestadoPipe } from '../../pipes/searchestado.pipe';
+import { SearchtipoPipe } from '../../pipes/searchtipo.pipe';
 
 @Component({
   selector: 'app-list-tipos',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, NewTipoComponent],
+  imports: [CommonModule, FormsModule, NgxPaginationModule, ReactiveFormsModule, NewTipoComponent, SearchestadoPipe, SearchtipoPipe],
   templateUrl: './list-tipos.component.html',
   styleUrl: './list-tipos.component.css'
 })
 export class ListTiposComponent {
 
-  tiposFiltradas: tipoNotUndefined[] = [];
 listTipos: tipoNotUndefined[] = [];
 p: number = 1;
 showModal: boolean = false;
@@ -24,21 +26,15 @@ tipoForm!: FormGroup;
 id_tipo: number = 0;
 nombreTipo: string = '';
 
+searchValueTipo: string = '';
+  selectEstado: string = "2";
+
 tiposService = inject(TiposService);
+modalService = inject(ModalService)
 
 ngOnInit(): void {
   // Obtenemos todos los tipos
   this.getTipos();
-
-  // Suscríbete a los cambios en el servicio
-  this.tiposService.tipoSource$.subscribe(tipos => {
-    this.tiposFiltradas = tipos; // Actualiza la lista de tipos
-  });
-
-  // Escuchar cambios en el estado de tipo seleccionado
-  this.tiposService.estadoSeleccionado$.subscribe(tipo => {
-    this.filtrarTiposPorEstado(tipo);
-  });
 }
 
 constructor(private fb: FormBuilder) {
@@ -50,22 +46,11 @@ constructor(private fb: FormBuilder) {
   });
 }
 
-filtrarTiposPorEstado(tipo: any) {
-  const tipoNumero = Number(tipo);
-  console.log('tipo desde list: ', tipoNumero);
-  
-  if (tipoNumero === 2) {
-    this.tiposFiltradas = this.listTipos;
-  } else {
-    this.tiposFiltradas = this.listTipos.filter(tipo => tipo.estado === tipoNumero);
-  }
-}
 
 getTipos(): void {
   this.tiposService.getTipos().subscribe(
     (data) => {
       this.listTipos = data;
-      this.tiposFiltradas = data;
     },
     (error) => {
       console.error('Error al obtener los tipos:', error);
@@ -76,24 +61,11 @@ getTipos(): void {
 openModalDelete(id: number, nombre: string) {
   this.nombreTipo = nombre;
   this.id_tipo = id;
-  const modal = document.getElementById('popup-modal');
-    
-  if (modal) {
-    modal.classList.add('block');
-    modal.classList.remove('hidden');
-  }
 }
 
 openModalHabilitar(id: number, nombre: string) {
   this.nombreTipo = nombre;
   this.id_tipo = id;
-
-  const modal = document.getElementById('popup-modal-one');
-    
-  if (modal) {
-    modal.classList.add('block');
-    modal.classList.remove('hidden');
-  }
 }
 
 // Editar tipos
@@ -168,12 +140,6 @@ deleteTipo() {
       console.error('Error al actualizar el tipo:', error);
     }
   });
-
-  const modal = document.getElementById('popup-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.classList.remove('block');
-  }
 }
 
 habilitarTipo() {
@@ -188,12 +154,11 @@ habilitarTipo() {
       console.error('Error al actualizar el tipo:', error);
     }
   });
+}
 
-  const modal = document.getElementById('popup-modal-one');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.classList.remove('block');
-  }
+// Llama al servicio para abrir el modal new tipo
+openModal() {
+  this.modalService.openModal(); // Abre el modal
 }
 
 }

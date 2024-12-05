@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { HeadAraesComponent } from "../head-areas/head-araes.component";
-import { BodyAreasComponent } from "../body-areas/body-areas.component";
+import { ListAreasComponent } from "../list-areas/list-areas.component";
 
 @Component({
   selector: 'app-layout-areas',
   standalone: true,
-  imports: [HeadAraesComponent, BodyAreasComponent],
+  imports: [ListAreasComponent],
   templateUrl: './layout-areas.component.html',
   styleUrl: './layout-areas.component.css'
 })

@@ -63,30 +63,13 @@ constructor(private fb: FormBuilder){
   openModalDelete(id: number, nombre: string) {
     this.nombreEditorial = nombre;
   this.id_editorial = id;
-    const modal = document.getElementById('popup-modal');
-      
-    if (modal) {
-      // Agrega las clases necesarias para mostrar el modal
-      modal.classList.add('block'); // Asegúrate de que el modal tenga la clase para mostrarlo
-      modal.classList.remove('hidden'); // Elimina la clase que oculta el modal
-    }
-      
   }
 
 
   openModalHabilitar(id: number, nombre: string) {
     
     this.nombreEditorial = nombre;
-    this.id_editorial = id;
-  
-    const modal = document.getElementById('popup-modal-one');
-      
-    if (modal) {
-      // Agrega las clases necesarias para mostrar el modal
-      modal.classList.add('block'); // Asegúrate de que el modal tenga la clase para mostrarlo
-      modal.classList.remove('hidden'); // Elimina la clase que oculta el modal
-    }
-      
+    this.id_editorial = id; 
   }
 
 
@@ -166,12 +149,6 @@ actualizarEditorial() {
         console.error('Error al actualizar la persona:', error);
       }
     });
-
-    const modal = document.getElementById('popup-modal');
-    if (modal) {
-        modal.classList.add('hidden'); // Agrega la clase que oculta el modal
-        modal.classList.remove('block'); // Asegúrate de que se remueva la clase que lo muestra
-    }
   }
   
   habilitarEditorial(){
@@ -186,12 +163,6 @@ actualizarEditorial() {
         console.error('Error al actualizar la persona:', error);
       }
     });
-  
-    const modal = document.getElementById('popup-modal-one');
-    if (modal) {
-        modal.classList.add('hidden'); // Agrega la clase que oculta el modal
-        modal.classList.remove('block'); // Asegúrate de que se remueva la clase que lo muestra
-    }
   }
 
    // Llama al servicio para abrir el modal

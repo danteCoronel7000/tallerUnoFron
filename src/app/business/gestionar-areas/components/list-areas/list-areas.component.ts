@@ -2,20 +2,22 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NewAreaComponent } from "../new-area/new-area.component";
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { AreaNotUndefined, Areas } from '../../models/list-areas.model';
+import { AreaNotUndefined } from '../../models/list-areas.model';
 import { AreasService } from '../../services/areas.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ModalService } from '../../services/modal.service';
+import { SearchareaPipe } from '../../pipes/searcharea.pipe';
+import { SearchestadoPipe } from '../../pipes/searchestado.pipe';
 
 @Component({
   selector: 'app-list-areas',
   standalone: true,
-  imports: [NewAreaComponent, CommonModule, NgxPaginationModule, ReactiveFormsModule],
+  imports: [NewAreaComponent, CommonModule, FormsModule, NgxPaginationModule, ReactiveFormsModule, SearchareaPipe, SearchestadoPipe],
   templateUrl: './list-areas.component.html',
   styleUrl: './list-areas.component.css'
 })
 export class ListAreasComponent implements OnInit{
 
-  areasFiltradas: AreaNotUndefined[] = [];
   listAreas: AreaNotUndefined[] = [];
   p: number = 1;
   showModal: boolean = false;
@@ -24,23 +26,18 @@ export class ListAreasComponent implements OnInit{
   id_area: number = 0;
   nombreArea: string = '';
 
+  searchValueArea: string = '';
+  selectEstado: string = "2";
+
 
 areasService = inject(AreasService);
+modalService = inject(ModalService);
 
 
 ngOnInit(): void {
   //obtenemos todas las areas
   this.getAreas();
 
-  // Suscríbete a los cambios en el servicio
-  this.areasService.areasSource$.subscribe(areas => {
-    this.areasFiltradas = areas; // Actualiza la lista de personas
-  });
-
-  // Escuchar cambios en el estado de persona seleccionado
-  this.areasService.estadoSeleccionado$.subscribe(tipo => {
-    this.filtrarAreasPorEstado(tipo);
-  });
 }
 
 constructor(private fb: FormBuilder){
@@ -51,23 +48,10 @@ constructor(private fb: FormBuilder){
   });
 }
 
-filtrarAreasPorEstado(tipo: any) {
-  // Convierte tipo a un número explícitamente
-  const tipoNumero = Number(tipo);
-  console.log('tipo persona desde list: ', tipoNumero);
-  
-  if (tipoNumero === 2) {
-    this.areasFiltradas = this.listAreas;
-  } else {
-    this.areasFiltradas = this.listAreas.filter(area => area.estado === tipoNumero);
-  }
-}
-
   getAreas(): void {
     this.areasService.getAreas().subscribe(
       (data) => {
         this.listAreas = data;  // Asigna los datos recibidos a la variable users
-        this.areasFiltradas = data;
         //console.log('personas: back: ',data);  // Para verificar que los usuarios han sido obtenidos correctamente
       },
       (error) => {+
@@ -151,7 +135,8 @@ actualizarArea() {
       this.areasService.actualizarArea(formData).subscribe({
           next: (response) => {
               console.log('Persona actualizada:', response);
-              this.showSuccessModal()
+              this.getAreas();
+              this.showSuccessModal();
           },
           error: (err) => {
               console.error('Error actualizando persona:', err);
@@ -184,12 +169,6 @@ actualizarArea() {
         console.error('Error al actualizar la persona:', error);
       }
     });
-
-    const modal = document.getElementById('popup-modal');
-    if (modal) {
-        modal.classList.add('hidden'); // Agrega la clase que oculta el modal
-        modal.classList.remove('block'); // Asegúrate de que se remueva la clase que lo muestra
-    }
   }
   
   habilitarArea(){
@@ -204,13 +183,11 @@ actualizarArea() {
         console.error('Error al actualizar la persona:', error);
       }
     });
-  
-    const modal = document.getElementById('popup-modal-one');
-    if (modal) {
-        modal.classList.add('hidden'); // Agrega la clase que oculta el modal
-        modal.classList.remove('block'); // Asegúrate de que se remueva la clase que lo muestra
-    }
   }
 
+  // Llama al servicio para abrir el modal new area
+  openModal() {
+    this.modalService.openModal(); // Abre el modal
+  }
 
 }

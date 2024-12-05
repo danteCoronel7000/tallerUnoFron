@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { HeadTiposComponent } from "../head-tipos/head-tipos.component";
-import { BodyTiposComponent } from "../body-tipos/body-tipos.component";
+import { ListTiposComponent } from "../list-tipos/list-tipos.component";
 
 @Component({
   selector: 'app-layout-tipos',
   standalone: true,
-  imports: [HeadTiposComponent, BodyTiposComponent],
+  imports: [ListTiposComponent],
   templateUrl: './layout-tipos.component.html',
   styleUrl: './layout-tipos.component.css'
 })

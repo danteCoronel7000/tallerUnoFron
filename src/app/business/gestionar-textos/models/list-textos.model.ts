@@ -41,6 +41,7 @@ export interface TextoNotUndefined {
     isbn: string;
     edicion: number;
     fechapub: string;
+    url: string;
     estado: number;
     autoresList: Autor[];
     area: Area;

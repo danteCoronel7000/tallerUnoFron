@@ -11,12 +11,14 @@ import { AreasppPipe } from '../../pipes/areaspp.pipe';
 import { EditorialesppPipe } from '../../pipes/editorialespp.pipe';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import jsPDF from 'jspdf';
+import { TiposppPipe } from '../../pipes/tipospp.pipe';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @Component({
   selector: 'app-list-textos',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, FormsModule, NewTextoComponent, SearchPipe, EstadoppPipe, AreasppPipe, EditorialesppPipe],
+  imports: [CommonModule, NgxPaginationModule, NgSelectModule, ReactiveFormsModule, FormsModule, NewTextoComponent, SearchPipe, EstadoppPipe, AreasppPipe, EditorialesppPipe, TiposppPipe],
   templateUrl: './list-textos.component.html',
   styleUrl: './list-textos.component.css'
 })
@@ -36,7 +38,7 @@ openModalPdf: boolean = false;
 id_texto: number = 0;
 nombreTexto: string = '';
 searchValue: string = '';
-selectEstado: number = 2;
+selectEstado: string = '2';
 selectedEditorial: string = '';
 urlSegura:  SafeResourceUrl | undefined;
 selectedAuthorIds: number[] = []; // IDs de autores seleccionados
@@ -69,7 +71,7 @@ ngOnInit(): void {
     // Obtenemos todos los textos
     this.getTextos();
 
-    //obtenemos las areas
+    //obtenemos los autores
     this.textosService.getAutores().subscribe((data) =>{this.autoresList = data})
 
     //obtenemos los editoriales:
@@ -102,7 +104,7 @@ getTextos(): void {
     this.textosService.getTextos().subscribe(
         (data) => {
             this.listTextos = data;
-            console.log('lista de textos: ',this.listTextos)
+            //console.log('lista de textos: ',this.listTextos)
         },
         (error) => {
             console.error('Error al obtener los textos:', error);
@@ -113,24 +115,11 @@ getTextos(): void {
 openModalDelete(id: number, nombre: string) {
     this.nombreTexto = nombre;
     this.id_texto = id;
-    const modal = document.getElementById('popup-modal');
-
-    if (modal) {
-        modal.classList.add('block');
-        modal.classList.remove('hidden');
-    }
 }
 
 openModalHabilitar(id: number, nombre: string) {
     this.nombreTexto = nombre;
     this.id_texto = id;
-
-    const modal = document.getElementById('popup-modal-one');
-
-    if (modal) {
-        modal.classList.add('block');
-        modal.classList.remove('hidden');
-    }
 }
 
 // Editar textos
@@ -154,6 +143,11 @@ cargarTexto(id: number): void {
                     this.urlSegura = this.sanitizer.bypassSecurityTrustResourceUrl(this.texto.url);
                   }
                 this.isDigitalSelected = this.texto.url? true : false;
+                 // Preseleccionar autores en el ng-select
+                 if (this.texto.autoresList) {
+                    // Asignar los IDs de los autores seleccionados
+                    this.selectedAuthorIds = this.texto.autoresList.map(autor => autor.id_autor);
+                }
             }
         },
         error: (err) => {
@@ -218,12 +212,6 @@ deleteTexto() {
             console.error('Error al eliminar el texto:', error);
         }
     });
-
-    const modal = document.getElementById('popup-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('block');
-    }
 }
 
 habilitarTexto() {
@@ -238,20 +226,6 @@ habilitarTexto() {
             console.error('Error al habilitar el texto:', error);
         }
     });
-
-    const modal = document.getElementById('popup-modal-one');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('block');
-    }
-}
-
-closeModalDH(modalId: string) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('block');
-    }
 }
 
 

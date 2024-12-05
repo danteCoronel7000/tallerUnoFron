@@ -1,213 +1,235 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-<table
-    class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
-  >
-    <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-    >
-      <tr>
-        <td class="border border-gray-300 px-4 py-4 text-center">
-          <form>
-            <label
-              for="search"
-              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-              >buscar</label
+<div class="relative overflow-x-auto mb-2 shadow-md sm:rounded-lg">
+  <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+    <!--buscar-->
+    <div>
+      <form>
+        <label
+          for="search"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Buscar</label
+        >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
             >
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-              >
-                <svg
-                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                id="searchtexto"
-                name="searchValue"
-                [(ngModel)]="searchValue"
-                class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="buscar texto"
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
               />
-            </div>
-          </form>
-        </td>
-        <td class="border border-gray-300 px-4 py-4 text-center">
-          <form class="max-w-sm mx-auto">
-            <label
-              for="countries"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Editoriales</label
-            >
-            <select
-              id="ed"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="editorial"
-              [(ngModel)]="selectedEditorial" 
-            >
-            <option value="" selected>ninguno</option>
-            <option *ngFor="let editorial of editoriales" [value]="editorial.nombre">
-              {{ editorial.nombre }}
-            </option>
-            </select>
-          </form>
-        </td>
-        <td class="border border-gray-300 px-4 py-4 text-center">
-          <form class="max-w-sm mx-auto">
-            <label
-              for="countries"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Areas</label
-            >
-            <select
-              id="ar"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="areas"
-              [(ngModel)]="selectedArea" 
-            >
-            <option value="" selected>ninguno</option>
-            <option *ngFor="let area of areas" [value]="area.nombre">
-              {{ area.nombre }}
-            </option>
-            </select>
-          </form>
-        </td>
-        <td class="border border-gray-300 px-4 py-4 text-center">
-          <form class="max-w-sm mx-auto">
-            <label
-              for="countries"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Tipos</label
-            >
-            <select
-              id="countries"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="tipos"
-              [(ngModel)]="selectedTipo" 
-            >
-            <option value="" selected>ninguno</option>
-            <option *ngFor="let tipo of tipos" [value]="tipo.nombre">
-              {{ tipo.nombre }}
-            </option>
-            </select>
-          </form>
-        </td>
-
-        <td class="border border-gray-300 px-4 py-4 text-center">
-          <div class="flex">
-            <div class="flex items-center me-4">
-              <input
-                id="uno"
-                type="radio"
-                value="1"
-                name="estadoTexto"
-                [(ngModel)]="selectEstado"
-              />
-              <label
-                for="uno"
-                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Activos</label
-              >
-            </div>
-            <div class="flex items-center me-4">
-              <input
-                id="cero"
-                type="radio"
-                value="0"
-                name="estadoTexto"
-                [(ngModel)]="selectEstado"
-              />
-              <label
-                for="cero"
-                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Bajas</label
-              >
-            </div>
-            <div class="flex items-center me-4">
-              <input
-                id="dos"
-                type="radio"
-                value="2"
-                name="estadoTexto"
-                [(ngModel)]="selectEstado"
-              />
-              <label
-                for="dos"
-                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Todos</label
-              >
-            </div>
+            </svg>
           </div>
-        </td>
-        
-      </tr>
-
-      <tr>
-        <th scope="col" class="px-4 py-2">titulo</th>
-        <th scope="col" class="px-4 py-2">estado</th>
-        <th scope="col" class="px-4 py-2">editar</th>
-        <th scope="col" class="px-4 py-2">delete</th>
-        <th scope="col" class="px-4 py-2">reload</th>
-        <th scope="col" class="px-4 py-2">print</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let texto of listTextos | search : searchValue |  estadopp : selectEstado | areaspp : selectedArea | editorialespp : selectedEditorial | paginate : { itemsPerPage: 4, currentPage: p }"
-        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
-      >
-        <td class="px-6 py-4">
-          {{ texto.titulo }}
-        </td>
-        <td class="px-4 py-4 text-center">
-          <span *ngIf="texto.estado == 1">
-            <i class="fa-solid fa-thumbs-up fa-2x"></i>
-          </span>
-          <span *ngIf="texto.estado == 0">
-            <i class="fa-solid fa-thumbs-down fa-2x"></i>
-          </span>
-        </td>
-        <td class="px-4 py-4 text-center">
-          <button (click)="openModalEditar(texto.id_texto); cargarTexto(texto.id_texto)">
-            <i class="fa-solid fa-pen-to-square fa-2x"></i>
-          </button>
-        </td>
-        <td class="px-4 py-4 text-center">
-          <button (click)="openModalDelete(texto.id_texto, texto.titulo)">
-            <i class="fa-solid fa-trash fa-2x"></i>
-          </button>
-        </td>
-        <td class="px-4 py-4 text-center">
-          <button (click)="openModalHabilitar(texto.id_texto, texto.titulo)">
-            <i class="fa-solid fa-rotate-right fa-2x"></i>
-          </button>
-        </td>
-        <td class="px-4 py-2 text-center">
-          <button (click)="generarPDF(texto)">
-            <i class="fa-solid fa-print fa-2x"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <input
+            type="search"
+            id="searchtexto"
+            name="searchValue"
+            [(ngModel)]="searchValue"
+            class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="buscar texto"
+          />
+        </div>
+      </form>
+    </div>
+    <!--editoriales-->
+    <div>
+      <form class="max-w-sm mx-auto">
+        <label
+          for="countries"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Editoriales</label
+        >
+        <select
+          id="ed"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          name="editorial"
+          [(ngModel)]="selectedEditorial"
+        >
+          <option value="" selected>Todos</option>
+          <option
+            *ngFor="let editorial of editoriales"
+            [value]="editorial.nombre"
+          >
+            {{ editorial.nombre }}
+          </option>
+        </select>
+      </form>
+    </div>
+    <!--areas-->
+    <div>
+      <form class="max-w-sm mx-auto">
+        <label
+          for="countries"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Areas</label
+        >
+        <select
+          id="ar"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          name="areas"
+          [(ngModel)]="selectedArea"
+        >
+          <option value="" selected>Todos</option>
+          <option *ngFor="let area of areas" [value]="area.nombre">
+            {{ area.nombre }}
+          </option>
+        </select>
+      </form>
+    </div>
+    <!--tipos-->
+    <div>
+      <form class="max-w-sm mx-auto">
+        <label
+          for="countries"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Tipos</label
+        >
+        <select
+          id="countries"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          name="tipos"
+          [(ngModel)]="selectedTipo"
+        >
+          <option value="" selected>Todos</option>
+          <option *ngFor="let tipo of tipos" [value]="tipo.nombre">
+            {{ tipo.nombre }}
+          </option>
+        </select>
+      </form>
+    </div>
+    <!--estados-->
+    <div>
+      <div class="flex">
+        <div class="flex items-center me-4">
+          <input
+            id="uno"
+            type="radio"
+            value="1"
+            name="estadoTexto"
+            [(ngModel)]="selectEstado"
+          />
+          <label
+            for="uno"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Activos</label
+          >
+        </div>
+        <div class="flex items-center me-4">
+          <input
+            id="cero"
+            type="radio"
+            value="0"
+            name="estadoTexto"
+            [(ngModel)]="selectEstado"
+          />
+          <label
+            for="cero"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Bajas</label
+          >
+        </div>
+        <div class="flex items-center me-4">
+          <input
+            id="dos"
+            type="radio"
+            value="2"
+            name="estadoTexto"
+            [(ngModel)]="selectEstado"
+            checked 
+          />
+          <label
+            for="dos"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Todos</label
+          >
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-[#96C2DB] dark:bg-gray-700 dark:text-gray-400">
+  <tr>
+    <th scope="col" class="px-4 py-2">titulo</th>
+    <th scope="col" class="px-4 py-2">estado</th>
+    <th scope="col" class="px-4 py-2">editar</th>
+    <th scope="col" class="px-4 py-2">delete</th>
+    <th scope="col" class="px-4 py-2">reload</th>
+    <th scope="col" class="px-4 py-2">print</th>
+  </tr>
+</thead>
+<tbody>
+  <tr
+    *ngFor="
+      let texto of listTextos
+        | search : searchValue
+        | estadopp : selectEstado
+        | areaspp : selectedArea
+        | editorialespp : selectedEditorial
+        | tipospp : selectedTipo
+        | paginate : { itemsPerPage: 4, currentPage: p }
+    "
+    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
+  >
+    <td class="px-6 py-4">
+      {{ texto.titulo }}
+    </td>
+    <td class="px-4 py-4 text-center">
+      <span *ngIf="texto.estado == 1">
+        <i class="fa-solid fa-thumbs-up fa-2x"></i>
+      </span>
+      <span *ngIf="texto.estado == 0">
+        <i class="fa-solid fa-thumbs-down fa-2x"></i>
+      </span>
+    </td>
+    <td class="px-4 py-4 text-center">
+      <button
+        (click)="openModalEditar(texto.id_texto); cargarTexto(texto.id_texto)"
+      >
+        <i class="fa-solid fa-pen-to-square fa-2x"></i>
+      </button>
+    </td>
+    <td class="px-4 py-4 text-center">
+      <button
+      data-modal-target="popup-modal-texto" data-modal-toggle="popup-modal-texto"
+       (click)="openModalDelete(texto.id_texto, texto.titulo)">
+        <i class="fa-solid fa-trash fa-2x"></i>
+      </button>
+    </td>
+    <td class="px-4 py-4 text-center">
+      <button 
+      data-modal-target="popup-modal-one-texto" data-modal-toggle="popup-modal-one-texto"
+      (click)="openModalHabilitar(texto.id_texto, texto.titulo)">
+        <i class="fa-solid fa-rotate-right fa-2x"></i>
+      </button>
+    </td>
+    <td class="px-4 py-2 text-center">
+      <button (click)="generarPDF(texto)">
+        <i class="fa-solid fa-print fa-2x"></i>
+      </button>
+    </td>
+  </tr>
+</tbody>
+</table>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+
+
 
 <app-new-texto />
 
-<!-- Open Modal para editar un Autor-->
+<!-- Open Modal para editar un texto-->
 <div
   *ngIf="isOpenModalEditar"
   id="modal"
@@ -282,7 +304,7 @@
                 required
               />
             </div>
-      
+
             <div>
               <label
                 for="edicion"
@@ -323,7 +345,7 @@
                 </option>
               </select>
             </div>
-      
+
             <div>
               <label
                 for="countries"
@@ -361,14 +383,14 @@
                 required
               />
             </div>
-      
+
             <div>
               <label
                 for="tipo"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Tipo</label
               >
-      
+
               <div class="flex items-center mb-4">
                 <input
                   id="default-radio-1"
@@ -384,7 +406,7 @@
                   >impreso</label
                 >
               </div>
-      
+
               <div class="flex items-center">
                 <input
                   id="default-radio-2"
@@ -418,61 +440,64 @@
               placeholder="ingrese el resumen del libro"
             ></textarea>
           </div>
-          <!--autores-->
+          <!--autores ng select-->
           <div class="mb-6">
             <label
               for="countries"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Autores</label
             >
-            <select
-              id="countries"
-              multiple
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="autores"
+
+            <ng-select
+              name="listEjemplares"
+              [items]="autoresList"
+              [multiple]="true"
+              bindLabel="nombre"
+              bindValue="id_autor"
               [(ngModel)]="selectedAuthorIds"
+              clearAllText="Clear"
+              class="custom"
             >
-              <option
-                *ngFor="let autor of autoresList"
-                [value]="autor.id_autor"
-              >
-                {{ autor.nombre }} {{ autor.ap }} {{ autor.am }}
-              </option>
-            </select>
+            </ng-select>
           </div>
           <!--subir el archivo-->
           <!-- Sección de carga de archivos, mostrada solo si 'isDigitalSelected' es verdadero -->
-          <div *ngIf="isDigitalSelected" class="grid md:grid-cols-2 md:gap-6 mb-6">
+          <div
+            *ngIf="isDigitalSelected"
+            class="grid md:grid-cols-2 md:gap-6 mb-6"
+          >
             <div *ngIf="urlSegura" class="mb-6">
-              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
                 archivo
               </label>
               <iframe
-              [src]="urlSegura"
-              type="application/pdf"
-              class="w-full h-96 rounded-lg border border-gray-300 dark:border-gray-600"
-              alt="Vista previa del PDF"
-            ></iframe>
+                [src]="urlSegura"
+                type="application/pdf"
+                class="w-full h-96 rounded-lg border border-gray-300 dark:border-gray-600"
+                alt="Vista previa del PDF"
+              ></iframe>
             </div>
             <div>
-            <label
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              for="file_input"
-              >Upload file</label
-            >
-            <input
-              class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-              id="file_input"
-              type="file"
-              (change)="onFileSelected($event)"
-            />
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="file_input"
+                >Upload file</label
+              >
+              <input
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                id="file_input"
+                type="file"
+                (change)="onFileSelected($event)"
+              />
+            </div>
           </div>
-          </div>
-      
+
           <button
             type="submit"
             [disabled]="textoForm.form.invalid"
-            class="text-white mr-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="text-white mr-6 mb-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             (click)="actualizarTexto()"
           >
             Eviar
@@ -485,7 +510,6 @@
             Cancelar
           </button>
         </form>
-        
       </div>
     </div>
   </div>
@@ -495,16 +519,16 @@
 <!-- Modal de éxito -->
 <div
   *ngIf="showModal"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-400 bg-opacity-50"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-200 bg-opacity-50"
 >
   <div
     id="alert-additional-content-3"
-    class="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+    class="p-4 mb-4 w-3/4 md:w-1/3 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
     role="alert"
   >
     <div class="flex items-center">
       <svg
-        class="flex-shrink-0 w-4 h-4 me-2"
+        class="flex-shrink-0 w-8 h-8 me-2"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
@@ -515,29 +539,23 @@
         />
       </svg>
       <span class="sr-only">Info</span>
-      <h1 class="text-lg font-medium">Tipo ACTUALIZADO con Exito</h1>
-    </div>
-    <div class="mt-2 mb-4 text-sm">
-      More info about this info success goes here. This example text is going to
-      run a bit longer so that you can see how spacing within an alert works
-      with this kind of content.
+      <h1 class="text-lg font-[Monospace]">TIPO ACTUALIZADO CON EXITO</h1>
     </div>
   </div>
 </div>
 
 <!--modal para eliminar un usuario de manera logica-->
 <div
-  id="popup-modal"
+  id="popup-modal-texto"
   tabindex="-1"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
 >
   <div class="relative p-4 w-full max-w-md max-h-full">
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
       <button
-        (click)="closeModalDH('popup-modal')"
         type="button"
         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-        data-modal-hide="popup-modal"
+        data-modal-hide="popup-modal-texto"
       >
         <svg
           class="w-3 h-3"
@@ -576,7 +594,7 @@
           desea eliminar el autor: {{ nombreTexto }}?
         </h3>
         <button
-          data-modal-hide="popup-modal"
+          data-modal-hide="popup-modal-texto"
           type="button"
           class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
           (click)="deleteTexto()"
@@ -584,8 +602,7 @@
           Si, eliminar
         </button>
         <button
-          (click)="closeModalDH('popup-modal')"
-          data-modal-hide="popup-modal"
+          data-modal-hide="popup-modal-texto"
           type="button"
           class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
         >
@@ -597,9 +614,8 @@
 </div>
 
 <!-- modal para habilitar un usuario -->
-
 <div
-  id="popup-modal-one"
+  id="popup-modal-one-texto"
   tabindex="-1"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
 >
@@ -608,8 +624,7 @@
       <button
         type="button"
         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-        data-modal-hide="popup-modal-one"
-        (click)="closeModalDH('popup-modal-one')"
+        data-modal-hide="popup-modal-one-texto"
       >
         <svg
           class="w-3 h-3"
@@ -648,7 +663,7 @@
           desea habilitar el autor: {{ nombreTexto }}?
         </h3>
         <button
-          data-modal-hide="popup-modal-one"
+          data-modal-hide="popup-modal-one-texto"
           type="button"
           class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
           (click)="habilitarTexto()"
@@ -656,8 +671,7 @@
           Si, habilitar
         </button>
         <button
-          (click)="closeModalDH('popup-modal-one')"
-          data-modal-hide="popup-modal-one"
+          data-modal-hide="popup-modal-one-texto"
           type="button"
           class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
         >
@@ -668,16 +682,18 @@
   </div>
 </div>
 
-
 <!--modal para previzualizar el pdf-->
 <div *ngIf="openModalPdf">
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  >
     <div class="w-3/4 h-3/4">
-      <button (click)="cerrarModalpdf()" class="mb-2"><i class="fa-solid fa-circle-xmark hover:text-red-500 fa-2xl"></i></button>
-    <div class="bg-white p-2 rounded shadow-lg relative w-full h-full">
-      <iframe [src]="pdfUrl" class="w-full h-full" frameborder="0"></iframe>
+      <button (click)="cerrarModalpdf()" class="mb-2">
+        <i class="fa-solid fa-circle-xmark hover:text-red-500 fa-2xl"></i>
+      </button>
+      <div class="bg-white p-2 rounded shadow-lg relative w-full h-full">
+        <iframe [src]="pdfUrl" class="w-full h-full" frameborder="0"></iframe>
+      </div>
     </div>
   </div>
-  </div>
-  </div>
-  
+</div>

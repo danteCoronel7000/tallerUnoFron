@@ -1,5 +1,75 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <p class="font-[Monospace] rounded-lg text-xs md:text-lg text-center flex justify-center items-center">Gestionar Tipos</p>
+<div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+  <!--buscar-->
+  <div>
+    <form>   
+      <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">buscar</label>
+      <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
+          </div>
+          <input 
+      type="search" 
+      id="search"
+      class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+      placeholder="buscar tipo" 
+      name="searchValue"
+    [(ngModel)]="searchValueTipo"
+    />
+      </div>
+    </form>
+  </div>
+<!--estados-->
+  <div>
+    <div class="flex">
+      <div class="flex items-center me-4">
+        <input
+        id="uno"
+                type="radio"
+                value="1"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+               />
+        <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Activos</label>
+      </div>
+      <div class="flex items-center me-4">
+        <input
+        id="cero"
+              type="radio"
+              value="0"
+              name="estadoTexto"
+              [(ngModel)]="selectEstado"
+               />
+        <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bajas</label>
+      </div>
+      <div class="flex items-center me-4">
+        <input
+        id="dos"
+                type="radio"
+                value="2"
+                name="estadoTexto"
+                [(ngModel)]="selectEstado"
+                     checked 
+               />
+        <label for="inline-checked-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Todos</label>
+      </div>
+    </div>
+  </div>
+<!--button buscar-->
+      <div >
+        <button (click)="openModal()" class="p-2 bg-[#96C2DB] hover:bg-[#FFCE32] rounded-lg">
+          <i class="fa-solid fa-user-plus fa-2x"></i>
+          </button>
+    </div>
 
-<div class="p-4">
+</div>
+
+</div>
+
+<div class="relative overflow-x-auto mb-2 shadow-md sm:rounded-lg">
     <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
@@ -21,7 +91,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let tipo of tiposFiltradas | paginate: { itemsPerPage: 3, currentPage: p }"
+        <tr *ngFor="let tipo of listTipos 
+        | searchestado : selectEstado
+        | searchtipo : searchValueTipo
+        | paginate: { itemsPerPage: 3, currentPage: p }"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900">
           <td class="px-6 py-4">
             {{ tipo.nombre }}
@@ -41,7 +114,7 @@
           </td>
           <td class="px-4 py-4 text-center">
             <button 
-            data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+            data-modal-target="popup-modal-tipo" data-modal-toggle="popup-modal-tipo"
             (click)="openModalDelete(tipo.id_tipo, tipo.nombre)"
             >
               <i class="fa-solid fa-trash fa-2x"></i>
@@ -49,7 +122,7 @@
           </td>
           <td class="px-4 py-4 text-center">
             <button 
-            data-modal-target="popup-modal-one" data-modal-toggle="popup-modal-one"
+            data-modal-target="popup-modal-one-tipo" data-modal-toggle="popup-modal-one-tipo"
             (click)="openModalHabilitar(tipo.id_tipo, tipo.nombre)"
             >
             <i class="fa-solid fa-rotate-right fa-2x"></i>
@@ -60,7 +133,6 @@
     </table>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
-
 
 
 <app-new-tipo />
@@ -185,10 +257,10 @@
 
 
   <!--modal para eliminar un usuario de manera logica-->
-  <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div id="popup-modal-tipo" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal-tipo">
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                 </svg>
@@ -199,12 +271,12 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                 </svg>
                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">desea eliminar el tipo: {{ nombreTipo}}?</h3>
-                <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                <button data-modal-hide="popup-modal-tipo" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
                 (click)="deleteTipo()"
                 >
                     Si, eliminar
                 </button>
-                <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                <button data-modal-hide="popup-modal-tipo" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 >
                 No, cancelar</button>
             </div>
@@ -215,10 +287,10 @@
 
 <!-- modal para habilitar un usuario -->
 
-<div id="popup-modal-one" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="popup-modal-one-tipo" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
   <div class="relative p-4 w-full max-w-md max-h-full">
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-          <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal-one">
+          <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal-one-tipo">
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
               </svg>
@@ -229,12 +301,12 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
               </svg>
               <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">desea habilitar el tipo: {{ nombreTipo}}?</h3>
-              <button data-modal-hide="popup-modal-one" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+              <button data-modal-hide="popup-modal-one-tipo" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
               (click)="habilitarTipo()"
               >
                   Si, habilitar
               </button>
-              <button data-modal-hide="popup-modal-one" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              <button data-modal-hide="popup-modal-one-tipo" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
               >
               No, cancelar</button>
           </div>

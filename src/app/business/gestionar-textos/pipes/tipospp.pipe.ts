@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Tipo } from '../models/list-textos.model';
+import { TextoNotUndefined } from '../models/list-textos.model';
 
 @Pipe({
   name: 'tipospp',
@@ -7,10 +7,23 @@ import { Tipo } from '../models/list-textos.model';
 })
 export class TiposppPipe implements PipeTransform {
 
-  transform(value: Tipo[], tipoSelect: string): Tipo[] {
-    console.log('tipo  seleccionda mostrado desde el pipe:', tipoSelect);
-    // Si estadoTexto es diferente de 2, filtra los textos donde el estado coincida con estadoTexto
-    return value.filter(tipo => tipo.nombre == tipoSelect);
-}
+  transform(value: TextoNotUndefined[], searchInput: string): TextoNotUndefined[] {
+    if (!value || value.length === 0) {
+      return []; // Si no hay datos, retorna una lista vacía
+    }
+
+    if (!searchInput || searchInput.trim() === '') {
+      return value; // Si no hay texto de búsqueda, retorna la lista completa
+    }
+
+    // Filtramos la lista de usuarios
+    if(searchInput == "impreso"){
+      return value.filter(texto =>
+        texto.url == null);
+    }else{
+    return value.filter(texto =>
+      texto.url != null);
+    }
+  }
 
 }

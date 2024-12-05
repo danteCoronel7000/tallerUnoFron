@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
-import { Areas } from '../../models/list-areas.model';
+import { AreaNotUndefined, Areas } from '../../models/list-areas.model';
 import { AreasService } from '../../services/areas.service';
 import { FormsModule } from '@angular/forms';
 
@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class NewAreaComponent {
 
   modalService = inject(ModalService)
+  listAreas: AreaNotUndefined[] = [];
 
   isOpen = false;
 
@@ -36,6 +37,7 @@ export class NewAreaComponent {
     this.areasService.createArea(this.area).subscribe({
       next: (response) => {
         console.log('Área creada:', response);
+        this.getAreas();
         this.showSuccessModal();  // Llamada al modal de éxito
         // Puedes agregar aquí una redirección o mensaje de éxito
       },
@@ -43,6 +45,18 @@ export class NewAreaComponent {
         console.error('Error al crear el área:', error);
       }
     });
+  }
+
+  getAreas(): void {
+    this.areasService.getAreas().subscribe(
+      (data) => {
+        this.listAreas = data;  // Asigna los datos recibidos a la variable users
+        //console.log('personas: back: ',data);  // Para verificar que los usuarios han sido obtenidos correctamente
+      },
+      (error) => {+
+        console.error('Error al obtener los usuarios:', error);
+      }
+    );
   }
 
   //metodo para mostrar un modal de creado con exito

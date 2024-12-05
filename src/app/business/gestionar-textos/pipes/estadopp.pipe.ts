@@ -7,14 +7,29 @@ import { TextoNotUndefined } from '../models/list-textos.model';
 })
 export class EstadoppPipe implements PipeTransform {
 
-  transform(value: TextoNotUndefined[], estadoTexto: number): TextoNotUndefined[] {
-    console.log('estado texto desde en pipe:', estadoTexto);
-    // Si el estadoTexto es 2, retorna toda la lista sin filtrar
-    if (estadoTexto == 2) {
-        return value;
+  transform(value: TextoNotUndefined[], searchInput: string): TextoNotUndefined[] {
+    if (!value || value.length === 0) {
+      return []; // Si no hay datos, retorna una lista vacía
     }
-    // Si estadoTexto es diferente de 2, filtra los textos donde el estado coincida con estadoTexto
-    return value.filter(texto => texto.estado == estadoTexto);
-}
+
+    if (!searchInput || searchInput.trim() === '') {
+      return value; // Si no hay texto de búsqueda, retorna la lista completa
+    }
+
+    // Intentar convertir el texto de búsqueda a un número
+    const searchText = Number(searchInput.trim());
+    if (isNaN(searchText)) {
+      // Si la conversión falla, retorna la lista completa o haz algo más
+      return value;
+    }
+
+    // Si el valor de búsqueda es "2", retornar toda la lista
+    if (searchText === 2) {
+      return value;
+    }
+
+    // Filtrar la lista de textos para otros valores
+    return value.filter(mprestamo => mprestamo.estado === searchText);
+  }
 
 }
