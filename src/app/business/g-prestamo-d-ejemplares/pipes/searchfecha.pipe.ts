@@ -12,12 +12,24 @@ export class SearchfechaPipe implements PipeTransform {
     if (!startDate || !endDate) {
       return prestamos; // Si no hay rango, devolver la lista completa.
     }
-
+  
     const start = new Date(startDate).getTime();
     const end = new Date(endDate).getTime();
-
+  
     return prestamos.filter((prestamo) => {
-      const fecha = new Date(prestamo.fecha).getTime();
+      const fechaString = prestamo.fecha;
+  
+      // Si no hay fecha o no es válida, ignorar el elemento
+      if (!fechaString) {
+        return false;
+      }
+  
+      const [day, month, year] = fechaString.split('/').map(Number);
+      const fecha = new Date(year, month - 1, day).getTime();
+  
+      console.log('fechaString:', fechaString);
+      console.log('start:', start, 'end:', end, 'fecha:', fecha);
+  
       return fecha >= start && fecha <= end;
     });
   }

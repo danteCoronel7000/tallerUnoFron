@@ -12,7 +12,7 @@
       name="searchValuet"
       [(ngModel)]="searchValueTitulo"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      placeholder="John"
+      placeholder="buscar por titulo"
       required
     />
 
@@ -27,7 +27,7 @@
       name="searchValuea"
       [(ngModel)]="searchValueAutor"
       class="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      placeholder="Doe"
+      placeholder="buscar por autor"
       required
     />
 
@@ -43,7 +43,7 @@
         name="areas"
         [(ngModel)]="selectedArea"
       >
-      <option value="" selected>ninguno</option>
+      <option value="" selected>Todos</option>
       <option *ngFor="let area of areas" [value]="area.nombre">
         {{ area.nombre }}
       </option>
@@ -60,7 +60,7 @@
         name="editorial"
         [(ngModel)]="selectedEditorial"
       >
-      <option value="" selected>ninguno</option>
+      <option value="" selected>Todos</option>
       <option
         *ngFor="let editorial of editoriales"
         [value]="editorial.nombre"
@@ -80,7 +80,7 @@
         name="tipos"
         [(ngModel)]="selectedTipo"
       >
-        <option value="" selected>ninguno</option>
+        <option value="" selected>Todos</option>
         <option value="impreso">Impreso</option>
         <option value="digital">Digital</option>
       </select>
@@ -128,7 +128,7 @@
       <td class="px-4 py-2 w-auto"
       [ngClass]="{ 'cursor-pointer text-blue-600': ejemplar.url, 'text-gray-600': !ejemplar.url }"
       [title]="ejemplar.url ? 'Abrir ejemplar digital' : 'Sin versión digital disponible'"
-      (click)="ejemplar.url && abrirVentana(ejemplar.url)"
+      (click)="ejemplar.url && abrirModalPdf(ejemplar.url)"
       >
         <span class="text-base font-medium">{{ ejemplar.titulo }}</span> <br>
           <!-- Nombres de los autores -->
@@ -144,4 +144,21 @@
 </table>
     </div>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+
+
+<!--modal para previzualizar el pdf-->
+<div *ngIf="openModPdf">
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  >
+    <div class="w-3/4 h-3/4">
+      <button (click)="cerrarModalpdf()" class="mb-2">
+        <i class="fa-solid fa-circle-xmark hover:text-red-500 fa-2xl"></i>
+      </button>
+      <div class="bg-white p-2 rounded shadow-lg relative w-full h-full">
+        <iframe [src]="pdfUrl" class="w-full h-full" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
 </div>

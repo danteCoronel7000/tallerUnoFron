@@ -72,7 +72,7 @@ export const routes: Routes = [
           },
           {
             path: 'gmdevoluciones',
-            loadComponent: () => import('./business/Gestion-devoluciones/components/layout-devoluc/layout-devoluc.component')
+            loadComponent: () => import('./business/gestionar-devoluciones/components/layout-devoluc/layout-devoluc.component')
           },
           {
             path: 'ganuldevol',

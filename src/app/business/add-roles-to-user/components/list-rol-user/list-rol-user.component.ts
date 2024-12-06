@@ -18,8 +18,8 @@ import { AsignoasigPipe } from '../../pipes/asignoasig.pipe';
 export class ListRolUserComponent {
   p: number = 1;
   pp: number = 1;
-  searchValueUsuario: string = ' ';
-  searchValueRol: string = ' ';
+  searchValueUsuario: string = '';
+  searchValueRol: string = '';
 
   asigNoasig: string = '2';
   

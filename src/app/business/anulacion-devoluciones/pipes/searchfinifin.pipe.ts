@@ -8,23 +8,29 @@ import { MDevolucion } from '../models/devolucion.model';
 export class SearchfinifinPipe implements PipeTransform {
 
   transform(mdevolucion: MDevolucion[], startDate: string | null, endDate: string | null): MDevolucion[] {
+    console.log('fechaini fecha fin pipe: ', startDate, endDate);
     
     if (!startDate || !endDate) {
       return mdevolucion; // Si no hay rango, devolver la lista completa.
     }
-
+  
     const start = new Date(startDate).getTime();
     const end = new Date(endDate).getTime();
-
+  
     return mdevolucion.filter((mdevl) => {
-      const fechaString = mdevl.mprestamo?.fecha;
-      
+      const fechaString = mdevl.mprestamo.fecha;
+  
       // Si no hay fecha o no es válida, ignorar el elemento
-      if (!fechaString || isNaN(new Date(fechaString).getTime())) {
+      if (!fechaString) {
         return false;
       }
-    
-      const fecha = new Date(fechaString).getTime();
+  
+      const [day, month, year] = fechaString.split('/').map(Number);
+      const fecha = new Date(year, month - 1, day).getTime();
+  
+      console.log('fechaString:', fechaString);
+      console.log('start:', start, 'end:', end, 'fecha:', fecha);
+  
       return fecha >= start && fecha <= end;
     });
   }

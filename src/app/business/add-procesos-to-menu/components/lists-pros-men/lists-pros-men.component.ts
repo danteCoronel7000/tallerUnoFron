@@ -18,8 +18,8 @@ import { AsignoasigPipe } from '../../pipes/asignoasig.pipe';
 export class ListsProsMenComponent {
   p: number = 1;
   pp: number = 1;
-  searchValueMenu: string = ' ';
-  searchValueProceso: string = ' ';
+  searchValueMenu: string = '';
+  searchValueProceso: string = '';
 
   asigNoasig:string = '2';
 

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Area, Editorial, Texto } from '../../models/busqueda.model';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { GestbuscService } from '../../services/gestbusc.service';
 import { SearchtituloPipe } from '../../pipes/searchtitulo.pipe';
 import { SearchautorPipe } from '../../pipes/searchautor.pipe';
@@ -24,6 +24,9 @@ searchValueAutor: string = '';
 selectedEditorial: string = '';
 selectedArea: string = '';
 selectedTipo: string = '';
+
+openModPdf: boolean = false;
+pdfUrl: SafeResourceUrl | undefined;
 
 p: number = 1;
 
@@ -59,8 +62,18 @@ getTextos(): void {
   );
 }
 
-abrirVentana(url: string): void {
-  window.open(url, '_blank');
+abrirModalPdf(url: string) {
+  console.log('URL del PDF:', url);
+
+  // Agregamos parámetros para habilitar navpanes y deshabilitar la barra de herramientas
+  this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${url}#toolbar=0&navpanes=0`);
+
+  this.openModPdf = true;
+}
+
+
+cerrarModalpdf() {
+  this.openModPdf = false;
 }
 
 }
