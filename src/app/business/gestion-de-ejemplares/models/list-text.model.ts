@@ -57,4 +57,6 @@ export interface updateIdEjemplar{
 export interface CrearEjemplarDTO {
   ejemplar: Ejemplares;
   id_texto: number;
+  id_usuario: number;
+  codinv: number;
 }

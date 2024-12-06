@@ -57,7 +57,7 @@
               </td>
               <td class="border border-gray-300 px-4 text-center w-auto">
                 <button (click)="openModalNewEjemplar()">
-                  <i class="fa-solid fa-user-plus fa-2x"></i>
+                  <i class="fa-solid fa-user-plus fa-3x"></i>
                 </button>
               </td>
              
@@ -89,7 +89,7 @@
           </thead>
           <tbody>
             <tr
-              *ngFor="let ejemplar of listEjemplares | paginate : { itemsPerPage: 2, currentPage: p }"
+              *ngFor="let ejemplar of listEjemplares | paginate : { itemsPerPage: 2, currentPage: p, id: 'dejemplares' }"
               class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
             >
               <td class="px-4 py-4 w-auto">
@@ -124,7 +124,7 @@
             </tr>
           </tbody>
         </table>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls (pageChange)="p = $event" id="dejemplares"></pagination-controls>
       </div>
   </div>
 
@@ -191,7 +191,7 @@
           <button
             type="submit"
             [disabled]="ejemplarForm.form.invalid"
-            class="text-white mr-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="text-white mr-6 mb-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Eviar
           </button>
@@ -288,7 +288,7 @@ class="fixed inset-0 z-50 bg-blue-300 bg-opacity-75 flex items-center justify-ce
         <button
           type="submit"
           [disabled]="ejemplarEForm.form.invalid"
-          class="text-white mr-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="text-white mr-6 mb-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Eviar
         </button>
@@ -306,21 +306,19 @@ class="fixed inset-0 z-50 bg-blue-300 bg-opacity-75 flex items-center justify-ce
 </div>
 </div>
 
-
-
 <!-- Modal de éxito -->
 <div
   *ngIf="showModal"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-400 bg-opacity-50"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-200 bg-opacity-50"
 >
   <div
     id="alert-additional-content-3"
-    class="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+    class="p-4 mb-4 w-3/4 md:w-1/3 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
     role="alert"
   >
     <div class="flex items-center">
       <svg
-        class="flex-shrink-0 w-4 h-4 me-2"
+        class="flex-shrink-0 w-8 h-8 me-2"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
@@ -331,22 +329,42 @@ class="fixed inset-0 z-50 bg-blue-300 bg-opacity-75 flex items-center justify-ce
         />
       </svg>
       <span class="sr-only">Info</span>
-      <h1 class="text-lg font-medium">Autor creado con Exito</h1>
-    </div>
-    <div class="mt-2 mb-4 text-sm">
-      More info about this info success goes here. This example text is going to
-      run a bit longer so that you can see how spacing within an alert works
-      with this kind of content.
+      <h1 class="text-lg font-[Monospace]">TIPO ACTUALIZADO CON EXITO</h1>
     </div>
   </div>
 </div>
 
-
+<!-- modal cod inv ya existe -->
+<div
+  *ngIf="showModalcodinv"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-200 bg-opacity-50"
+>
+  <div
+    id="alert-additional-content-3"
+    class="p-4 mb-4 w-3/4 md:w-1/3 text-red-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+    role="alert"
+  >
+    <div class="flex items-center">
+      <svg
+        class="flex-shrink-0 w-8 h-8 me-2"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <h1 class="text-lg font-[Monospace]">EL CODIGO DE INVENTARIO YA EXISTE</h1>
+    </div>
+  </div>
+</div>
 
 <!--modal para eliminar un usuario de manera logica-->
 <div
   id="popup-modal"
-  tabindex="-1"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
 >
   <div class="relative p-4 w-full max-w-md max-h-full">

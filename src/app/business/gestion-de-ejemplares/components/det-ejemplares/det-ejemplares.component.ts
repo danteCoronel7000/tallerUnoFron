@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { CrearEjemplarDTO, Ejemplares, updateIdEjemplar } from '../../models/list-text.model';
+import { CrearEjemplarDTO, Ejemplares } from '../../models/list-text.model';
 import { GestEjemplaresService } from '../../services/gest-ejemplares.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-det-ejemplares',
@@ -27,6 +28,7 @@ export class DetEjemplaresComponent {
   isOpenModalNew: boolean = false;
   isOpenModalEditar: boolean = false;
   showModal: boolean = false;
+  showModalcodinv: boolean = false;
 
   ejemplar: Ejemplares = {
     id_ejemplar: 0,
@@ -37,10 +39,12 @@ export class DetEjemplaresComponent {
 
   ejemplarCreateDTO: CrearEjemplarDTO = {
     ejemplar: this.ejemplar,
-    id_texto: 0
+    id_texto: 0,
+    id_usuario: 0,
+    codinv: 0
   }
 
-  constructor(public ejemplaresService: GestEjemplaresService) {
+  constructor(public ejemplaresService: GestEjemplaresService, private authService: AuthService) {
     this.ejemplaresService.idSeleccionado$.subscribe(
       (valor) => {
         this.ejemplarCreateDTO.id_texto = valor;
@@ -70,6 +74,11 @@ export class DetEjemplaresComponent {
   }
 
   onSubmitNew() {
+    console.log('id del texto que se creara: ',this.ejemplarCreateDTO.id_texto)
+    console.log('ejemplar dto: ',this.ejemplarCreateDTO)
+    this.ejemplarCreateDTO.codinv = this.ejemplar.codinv;
+    const idusuario = this.authService.getIdUsuarioLogueado()
+    this.ejemplarCreateDTO.id_usuario = idusuario;
     this.ejemplaresService.createEjemplar(this.ejemplarCreateDTO).subscribe({
       next: (response) => {
         console.log('ejemplar creado:', response);
@@ -78,7 +87,12 @@ export class DetEjemplaresComponent {
         this.closeModalNew();
       },
       error: (error) => {
-        console.error('Error al crear el ejemplar:', error);
+        if(error.status === 417){
+          this.showSuccessModalcodinv();
+          console.error('Error: El número de inventario ya existe.');
+        }else{
+          console.error('Error al crear el ejemplar:', error);
+        }
       }
     });
   }
@@ -97,11 +111,17 @@ export class DetEjemplaresComponent {
     this.ejemplaresService.modificarIdEjemplar(this.idEjemplar, this.newIdejemplar).subscribe(
       (data) =>{
         console.log('ejemplar creado:', data);
+        this.getEjemplaresPorIdTexto(this.ejemplarCreateDTO.id_texto);
         this.showSuccessModal();  // Llamada al modal de éxito
         this.closeModalEditar();
       },
       (error) => {
-        console.error('Error al crear el menú:', error);
+        if(error.status === 417){
+          this.showSuccessModalcodinv();
+          console.error('Error: El número de inventario ya existe.');
+        }else{
+          console.error('Error al crear el ejemplar:', error);
+        }
       });
     
   }
@@ -119,11 +139,19 @@ export class DetEjemplaresComponent {
     }, 1000); // Oculta el modal después de 1 segundo
   }
 
+  showSuccessModalcodinv() {
+    this.showModalcodinv = true;
+    setTimeout(() => {
+      this.showModalcodinv = false;
+    }, 1000); // Oculta el modal después de 1 segundo
+  }
+
   deleteEjemplar() {
     const payload = { id_ejemplar: this.id_ejemplar };
     console.log('id_texto desde delete texto: ', this.id_ejemplar);
     this.ejemplaresService.deleteEjemplar(payload).subscribe({
         next: (respuesta) => {
+          this.getEjemplaresPorIdTexto(this.ejemplarCreateDTO.id_texto);
             console.log('ejemplar eliminado:', respuesta);
         },
         error: (error) => {
@@ -143,6 +171,7 @@ export class DetEjemplaresComponent {
     console.log('id desde habilitar', this.id_ejemplar);
     this.ejemplaresService.habilitarEjemplar(payload).subscribe({
         next: (respuesta) => {
+          this.getEjemplaresPorIdTexto(this.ejemplarCreateDTO.id_texto);
             console.log('ejemplar habilitado:', respuesta);
         },
         error: (error) => {

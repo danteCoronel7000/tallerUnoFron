@@ -1,100 +1,50 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table
-    class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
-  >
-  <caption>Gestionar Ejemplares</caption>
-    <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-    >
-      <tr>
-        <td colspan="2" class="border border-gray-300 px-4 text-center w-auto">
-          <form>
-            <label
-              for="search"
-              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-              >buscar</label
+<div class="relative overflow-x-auto mb-2 shadow-md sm:rounded-lg">
+  <p class="font-[Monospace] mb-4 rounded-lg text-xs md:text-lg text-center flex justify-center items-center">Gestionar Ejemplares</p>
+  <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+    <!--buscar-->
+    <div>
+      <form>
+        <label
+          for="search"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >buscar</label
+        >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
             >
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-              >
-                <svg
-                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                id="searchtexto"
-                name="searchValue"
-                [(ngModel)]="searchValue"
-                class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="buscar texto"
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
               />
-            </div>
-          </form>
-        </td>
-        <td class="border border-gray-300 px-4 text-center w-auto">
-          <div class="flex">
-            <div class="flex items-center me-4">
-              <input
-                id="uno"
-                type="radio"
-                value="1"
-                name="estadoTexto"
-                [(ngModel)]="selectEstado"
-              />
-              <label
-                for="uno"
-                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
-                >Activos</label
-              >
-            </div>
-            <div class="flex items-center me-4">
-              <input
-                id="cero"
-                type="radio"
-                value="0"
-                name="estadoTexto"
-                [(ngModel)]="selectEstado"
-              />
-              <label
-                for="cero"
-                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
-                >Bajas</label
-              >
-            </div>
-            <div class="flex items-center me-4">
-              <input
-                id="dos"
-                type="radio"
-                value="2"
-                name="estadoTexto"
-                [(ngModel)]="selectEstado"
-              />
-              <label
-                for="dos"
-                class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300"
-                >Todos</label
-              >
-            </div>
+            </svg>
           </div>
-        </td>
-        <td class="border border-gray-300 px-4 text-center w-auto">
-          <label
+          <input
+            type="search"
+            id="searchtexto"
+            name="searchValue"
+            [(ngModel)]="searchValue"
+            class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="buscar ejemplar"
+          />
+        </div>
+      </form>
+    </div>
+    <!--editoriales-->
+    <div>
+      <label
             for="countries"
-            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Editoriales</label
           >
           <select
@@ -103,7 +53,7 @@
             name="editorial"
             [(ngModel)]="selectedEditorial"
           >
-            <option value="" selected>ninguno</option>
+            <option value="" selected>Todos</option>
             <option
               *ngFor="let editorial of editoriales"
               [value]="editorial.nombre"
@@ -111,11 +61,12 @@
               {{ editorial.nombre }}
             </option>
           </select>
-        </td>
-        <td class="border border-gray-300 px-4 text-center w-auto">
-          <label
+    </div>
+    <!--areas-->
+    <div>
+      <label
             for="countries"
-            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Areas</label
           >
           <select
@@ -124,16 +75,17 @@
             name="areas"
             [(ngModel)]="selectedArea"
           >
-            <option value="" selected>ninguno</option>
+            <option value="" selected>Todos</option>
             <option *ngFor="let area of areas" [value]="area.nombre">
               {{ area.nombre }}
             </option>
           </select>
-        </td>
-        <td class="border border-gray-300 px-4 text-center w-auto">
-          <label
+    </div>
+    <!--tipos-->
+    <div>
+      <label
             for="countries"
-            class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Tipos</label
           >
           <select
@@ -142,22 +94,68 @@
             name="tipos"
             [(ngModel)]="selectedTipo"
           >
-            <option value="" selected>ninguno</option>
+            <option value="" selected>Todos</option>
             <option *ngFor="let tipo of tipos" [value]="tipo.nombre">
               {{ tipo.nombre }}
             </option>
           </select>
-        </td>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    </div>
+    <!--estado-->
+    <div>
+      <div class="flex">
+        <div class="flex items-center me-4">
+          <input
+            id="uno"
+            type="radio"
+            value="1"
+            name="estadoTexto"
+            [(ngModel)]="selectEstado"
+          />
+          <label
+            for="uno"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Activos</label
+          >
+        </div>
+        <div class="flex items-center me-4">
+          <input
+            id="cero"
+            type="radio"
+            value="0"
+            name="estadoTexto"
+            [(ngModel)]="selectEstado"
+          />
+          <label
+            for="cero"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Bajas</label
+          >
+        </div>
+        <div class="flex items-center me-4">
+          <input
+            id="dos"
+            type="radio"
+            value="2"
+            name="estadoTexto"
+            [(ngModel)]="selectEstado"
+          />
+          <label
+            for="dos"
+            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Todos</label
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
   <table
     class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400"
   >
     <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    class="text-xs text-gray-700 uppercase bg-[#96C2DB] dark:bg-gray-700 dark:text-gray-400"
     >
       <tr>
         <th scope="col" class="px-4 py-2 w-auto">#</th>
@@ -177,7 +175,7 @@
             | areaspp : selectedArea
             | editorialespp : selectedEditorial
             | tipospp : selectedTipo
-            | paginate : { itemsPerPage: 4, currentPage: p }
+            | paginate : { itemsPerPage: 4, currentPage: p, id: 'txt' }
         "
         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900"
       >
@@ -218,4 +216,4 @@
     </tbody>
   </table>
 </div>
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<pagination-controls (pageChange)="p = $event" id="txt"></pagination-controls>

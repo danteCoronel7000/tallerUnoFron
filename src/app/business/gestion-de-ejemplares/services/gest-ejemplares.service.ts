@@ -90,10 +90,10 @@ export class GestEjemplaresService {
    * @param newId Nuevo ID para el ejemplar.
    * @returns Observable con la respuesta del servidor.
    */
-  modificarIdEjemplar(currentId: number | undefined, newId: number | undefined): Observable<string> {
+  modificarIdEjemplar(id_ejemplar: number | undefined, newcodinv: number | undefined): Observable<string> {
     const body = {
-      currentId: currentId,
-      newId: newId
+      id_ejemplar: id_ejemplar,
+      newcodinv: newcodinv
     };
 console.log('desde el servicio: ', body)
     return this.httpClient.put<string>(`${this.apiUrlModIdEjemp}/modificarIdEjemplar`, body);
