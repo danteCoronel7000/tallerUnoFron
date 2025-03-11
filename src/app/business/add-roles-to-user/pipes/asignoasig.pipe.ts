@@ -18,7 +18,11 @@ export class AsignoasigPipe implements PipeTransform {
     return value.filter(rol => rol.asig > 0);
     }
 
+    if(estadoAsig == '0'){
     return value.filter(rol => rol.asig == 0);
+    }
+
+    return value
 }
 
 }

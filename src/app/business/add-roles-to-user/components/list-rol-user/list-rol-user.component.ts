@@ -48,7 +48,7 @@ export class ListRolUserComponent {
     this.rolUsuarioService.getRoles().subscribe(
       (data) => {
         this.listRoles = data;
-        console.log('data rolesf: ', data)
+        console.log('lista de todos los roles: ', data)
       },
       (error) => {
         console.error('Error al obtener los roles:', error);

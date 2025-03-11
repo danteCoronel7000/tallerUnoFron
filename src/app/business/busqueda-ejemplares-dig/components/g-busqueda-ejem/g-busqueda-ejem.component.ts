@@ -25,6 +25,8 @@ selectedEditorial: string = '';
 selectedArea: string = '';
 selectedTipo: string = '';
 
+isfilter: boolean = false;
+
 openModPdf: boolean = false;
 pdfUrl: SafeResourceUrl | undefined;
 
@@ -74,6 +76,10 @@ abrirModalPdf(url: string) {
 
 cerrarModalpdf() {
   this.openModPdf = false;
+}
+
+openListfiltradaEjemplares(): void{
+  this.isfilter = true;
 }
 
 }
