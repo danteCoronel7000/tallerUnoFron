@@ -108,6 +108,7 @@
                         type="radio"
                         value="2"
                         [(ngModel)]="asigNoasig"
+                        (change)="onFiltroChage('2')"
                         name="inline-radio-group"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
@@ -123,6 +124,7 @@
                         type="radio"
                         value="1"
                         [(ngModel)]="asigNoasig"
+                        (change)="onFiltroChage('1')"
                         name="inline-radio-group"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
@@ -138,6 +140,7 @@
                         type="radio"
                         value="0"
                         [(ngModel)]="asigNoasig"
+                        (change)="onFiltroChage('0')"
                         name="inline-radio-group"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
@@ -180,7 +183,9 @@
               </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of listUsuarios | searchusuario: searchValueUsuario | paginate : { itemsPerPage: 4, currentPage: p, id: 'usuarios' }"
+                <tr *ngFor="let user of listUsuarios 
+                | searchusuario: searchValueUsuario 
+                | paginate : { itemsPerPage: 4, currentPage: p, id: 'usuarios' }"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td class="w-4 p-4">
                 <div class="flex items-center">
@@ -222,7 +227,7 @@
     
             <tbody>
                 <tr
-                *ngFor="let rol of listRoles 
+                *ngFor="let rol of listRolesFiltrados
                 | searchrol : searchValueRol
                 | asignoasig : asigNoasig
                 | paginate : { itemsPerPage: 4, currentPage: pp }; let i = index"

@@ -12,8 +12,9 @@ export class RolToUsuarioService {
 private url_usuarios = 'http://localhost:9090/api/usuarios/all';
 private url_roles = 'http://localhost:9090/api/roles/allAsig';
 private apiUrlObtenerPorId = 'http://localhost:9090/api/usuarios/obternerPorId';
+private url_rolesfiltrados = 'http://localhost:9090/api/usuarios/filtrarRoles';
 // Para seleccionar textos según el estado
-private estadoSeleccionado = new BehaviorSubject<number>(2);
+private estadoSeleccionado = new BehaviorSubject<number>(2);      
 estadoSeleccionado$ = this.estadoSeleccionado.asObservable();
 
 constructor(private http: HttpClient) { }
@@ -49,6 +50,11 @@ getRoles(): Observable<rol[]> {
 
 getUsuariosPorId(id: number): Observable<UsuarioAll> {
   return this.http.get<UsuarioAll>(`${this.apiUrlObtenerPorId}/${id}`);
+}
+
+
+getRolesFiltrados(id: number, filtro: string): Observable<rol[]> {
+  return this.http.get<rol[]>(`${this.url_rolesfiltrados}/${id}/${filtro}`);
 }
 
 }

@@ -21,10 +21,11 @@ export class ListRolUserComponent {
   searchValueUsuario: string = '';
   searchValueRol: string = '';
 
-  asigNoasig: string = '2';
+  asigNoasig: string = '403';
   
   listUsuarios: usuario[] = [];
   listRoles: rol[] = [];
+  listRolesFiltrados: rol[] = [];
   listRolesSeleccionados: number[] = [];
   usuarioSeleccionadoPorId: UsuarioAll | null = null;
   
@@ -47,7 +48,7 @@ export class ListRolUserComponent {
     //obtenemos los roles
     this.rolUsuarioService.getRoles().subscribe(
       (data) => {
-        this.listRoles = data;
+        //this.listRoles = data;
         console.log('lista de todos los roles: ', data)
       },
       (error) => {
@@ -96,9 +97,9 @@ export class ListRolUserComponent {
   
     console.log('roles imprimidos: ', this.usuarioSeleccionadoPorId.rolesList);
     
-    // Verifica si el rolId está en la lista de roles relacionados con el usuario seleccionado
+    // Verifica si el rolId está en la lista de roles relacionados con el usuario seleccionado: marcara los chekeds si el usuario seleccionado tiene asignado ese rol
     const isRolEncontrado = this.usuarioSeleccionadoPorId.rolesList.some((rol) => rol.id_rol === rolId);
-    console.log(`Rol ${rolId} ${isRolEncontrado ? 'encontrado' : 'no encontrado'} en la lista de roles.`);
+    console.log(`Rol ${rolId} ${isRolEncontrado ? ' encontrado' : ' no encontrado'} en la lista de roles.`);
     
     return isRolEncontrado;
   }
@@ -106,7 +107,7 @@ export class ListRolUserComponent {
   
   seleccionarUsuarioPorId(id: number): void {
     this.idUsuarioSeleccionado = id;
-    console.log(id)
+    console.log("id del usuario seleccionado por el radio",id)
   
     //cargamos la variable usuarioSeleccionadoPorId con el usuario seleccionado
     this.rolUsuarioService.getUsuariosPorId(id).subscribe(
@@ -115,6 +116,32 @@ export class ListRolUserComponent {
         console.log('usuarioSeleccionadoPorId: ',this.usuarioSeleccionadoPorId)
       }
     );
+
+    this.asigNoasig = '2';
+     //obtenemos los roles filtrados
+     this.rolUsuarioService.getRolesFiltrados(id, this.asigNoasig).subscribe(
+      (data) => {
+        this.listRolesFiltrados = data;
+        console.log('lista de roles filtrados: ', data)
+      },
+      (error) => {
+        console.error('Error al obtener los roles:', error);
+      }
+    );
   }
+
+  onFiltroChage(filtro: string){
+      //obtenemos los roles filtrados
+      this.rolUsuarioService.getRolesFiltrados(this.idUsuarioSeleccionado, filtro).subscribe(
+        (data) => {
+          this.listRolesFiltrados = data;
+          console.log('lista de roles filtrados: ', data)
+        },
+        (error) => {
+          console.error('Error al obtener los roles:', error);
+        }
+      );
+  }
+
   
 }
