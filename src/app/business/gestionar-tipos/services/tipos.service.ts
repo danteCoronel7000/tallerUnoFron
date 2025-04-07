@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tipo, tipoNotUndefined } from '../models/list-tipos.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TiposService {
 
-  private url_tipos = 'http://localhost:9090/api/tipos/all';
-private apiUrlSearch = 'http://localhost:9090/api/tipos';
-private apiUrlCrear = 'http://localhost:9090/api/tipos/crear';
-private apiUrlObtenerPorId = 'http://localhost:9090/api/tipos/obternerPorId';
-private apiUrlActualizar = 'http://localhost:9090/api/tipos/actualizar';
+  private url_tipos = `${environment.API_URL}/api/tipos/all`;
+private apiUrlSearch = `${environment.API_URL}/api/tipos`;
+private apiUrlCrear = `${environment.API_URL}/api/tipos/crear`;
+private apiUrlObtenerPorId = `${environment.API_URL}/api/tipos/obternerPorId`;
+private apiUrlActualizar = `${environment.API_URL}/api/tipos/actualizar`;
 
 // Para recibir el tipo buscado
 private tipoSource = new BehaviorSubject<tipoNotUndefined[]>([]);
@@ -30,14 +31,14 @@ actualizarEstado(tipo: number) {
 }
 
 habilitarTipo(payload: { id_tipo: number }): Observable<tipoNotUndefined> {
-    const url = `http://localhost:9090/api/tipos/habilitar`; // Endpoint de habilitación
+    const url = `${environment.API_URL}/api/tipos/habilitar`; // Endpoint de habilitación
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<tipoNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
 }
 
 deleteTipo(payload: { id_tipo: number }): Observable<tipoNotUndefined> {
-    const url = `http://localhost:9090/api/tipos/estado`; // Endpoint de eliminación
+    const url = `${environment.API_URL}/api/tipos/estado`; // Endpoint de eliminación
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<tipoNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud

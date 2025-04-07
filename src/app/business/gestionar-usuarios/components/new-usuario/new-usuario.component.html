@@ -70,7 +70,18 @@
 </div>
 <!-- Close Modal -->
 
-
-
-
-
+<!-- Modal de confirmación exitosa -->
+<div 
+  *ngIf="showSuccessModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+>
+  <div class="bg-white rounded-lg p-8 shadow-lg max-w-md text-center">
+    <div class="flex justify-center mb-4">
+      <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+    <h3 class="text-xl font-bold text-gray-900 mb-2">¡Usuario creado con éxito!</h3>
+    <p class="text-gray-600">El nuevo usuario ha sido registrado correctamente.</p>
+  </div>
+</div>

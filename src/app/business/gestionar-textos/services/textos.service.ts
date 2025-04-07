@@ -2,21 +2,22 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Area, AutorNotUndefined, Editorial, Texto, TextoBack, TextoNotUndefined, Tipo } from '../models/list-textos.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TextosService {
 
-  private url_textos = 'http://localhost:9090/api/textos/all';
-private apiUrlSearch = 'http://localhost:9090/api/textos';
-private apiUrlCrear = 'http://localhost:9090/api/media/createtext';
-private apiUrlObtenerPorId = 'http://localhost:9090/api/textos/obternerPorId';
-private apiUrlActualizar = 'http://localhost:9090/api/media/updatetext';
-private url_editoriales = 'http://localhost:9090/api/editoriales/all';
-private url_areas = 'http://localhost:9090/api/areas/all';
-private url_tipos = 'http://localhost:9090/api/tipos/all';
-private url_autores = 'http://localhost:9090/api/autores/all';
+  private url_textos = `${environment.API_URL}/api/textos/all`;
+private apiUrlSearch = `${environment.API_URL}/api/textos`;
+private apiUrlCrear = `${environment.API_URL}/api/media/createtext`;
+private apiUrlObtenerPorId = `${environment.API_URL}/api/textos/obternerPorId`;
+private apiUrlActualizar = `${environment.API_URL}/api/media/updatetext`;
+private url_editoriales = `${environment.API_URL}/api/editoriales/all`;
+private url_areas = `${environment.API_URL}/api/areas/all`;
+private url_tipos = `${environment.API_URL}/api/tipos/all`;
+private url_autores = `${environment.API_URL}/api/autores/all`;
 
 //para obtener los autores
 getAutores(): Observable<AutorNotUndefined[]> {
@@ -38,14 +39,14 @@ actualizarEstado(texto: number) {
 }
 
 habilitarTexto(payload: { id_texto: number }): Observable<TextoNotUndefined> {
-    const url = `http://localhost:9090/api/textos/habilitar`; // Endpoint de habilitación
+    const url = `${environment.API_URL}/api/textos/habilitar`; // Endpoint de habilitación
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<TextoNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
 }
 
 deleteTexto(payload: { id_texto: number }): Observable<TextoNotUndefined> {
-    const url = `http://localhost:9090/api/textos/estado`; // Endpoint de eliminación
+    const url = `${environment.API_URL}/api/textos/estado`; // Endpoint de eliminación
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<TextoNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud

@@ -3,6 +3,7 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Usuario } from '../../business/users/models/Usuarios.Model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,9 @@ export class AuthService {
     throw new Error('Method not implemented.');
   }
 
-  private LOGIN_URL = 'http://localhost:9090/api/usuarios/login'
-  private url_personas = 'http://localhost:9090/api/personas/all'
-  private url_usuarios = 'http://localhost:9090/api/usuarios/all'
+  private LOGIN_URL = `${environment.API_URL}/api/usuarios/login`
+  private url_personas = `${environment.API_URL}/api/personas/all`
+  private url_usuarios = `${environment.API_URL}/api/usuarios/all`
   private tokenKey = 'authToken'
   nombreCompleto: string = '';
   nombreRol: string = '';

@@ -21,10 +21,11 @@ export class ListsProsMenComponent {
   searchValueMenu: string = '';
   searchValueProceso: string = '';
 
-  asigNoasig:string = '2';
+  asigNoasig:string = '403';
 
   listMenus: menu[] = [];
   listProcesos: proceso[] = [];
+  listProcesosfiltrados: proceso[] = [];
   listProcesosSeleccionados: number[] = [];
   menuSeleccionadoPorId: MenuAll | null = null;
 
@@ -48,7 +49,7 @@ export class ListsProsMenComponent {
     //obtenemos los procesos
     this.procMenuService.getProcesos().subscribe(
       (data) => {
-        this.listProcesos = data;
+        //this.listProcesos = data;
       },
       (error) => {
         console.error('Error al obtener los procesos:', error);
@@ -110,8 +111,34 @@ export class ListsProsMenComponent {
       (data) => {
         this.menuSeleccionadoPorId = data;
       }
-    )
+    );
+
+    this.asigNoasig = '2'; // Reiniciar el filtro de asignación al seleccionar un nuevo menú el cual obtendrá todos los procesos
+    //obtenemos los procesos filtrados 
+    this.procMenuService.getProcesosFiltrados(id, this.asigNoasig).subscribe(
+      (data) => {
+        this.listProcesosfiltrados = data;
+        console.log('lista de roles filtrados: ', data)
+      },
+      (error) => {
+        console.error('Error al obtener los roles:', error);
+      }
+    );
+
 
   }
+
+  onFiltroChage(filtro: string){
+    //obtenemos los roles filtrados
+    this.procMenuService.getProcesosFiltrados(this.idMenuSeleccionado, filtro).subscribe(
+      (data) => {
+        this.listProcesosfiltrados = data;
+        console.log('lista de roles filtrados: ', data)
+      },
+      (error) => {
+        console.error('Error al obtener los roles:', error);
+      }
+    );
+}
 
 }

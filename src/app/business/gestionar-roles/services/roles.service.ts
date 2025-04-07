@@ -2,42 +2,31 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { rol, rolNotUndefined } from '../models/list-roles.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolesService {
 
-  private urlRoles = 'http://localhost:9090/api/roles/all';
-private apiUrlSarch = 'http://localhost:9090/api/roles';
-private apiUrlCrear = 'http://localhost:9090/api/roles/crear';
-private apurlobtenerPorId = 'http://localhost:9090/api/roles/obternerPorId';
-private apiUrlActualizar = 'http://localhost:9090/api/roles/actualizar';
+  private urlRoles = `${environment.API_URL}/api/roles/all`;
+private apiUrlSarch = `${environment.API_URL}/api/roles`;
+private apiUrlCrear = `${environment.API_URL}/api/roles/crear`;
+private apurlobtenerPorId = `${environment.API_URL}/api/roles/obternerPorId`;
+private apiUrlActualizar = `${environment.API_URL}/api/roles/actualizar`;
 
-//para recibir el rol buscado
-private rolSource = new BehaviorSubject<rolNotUndefined[]>([]);
-rolSource$ = this.rolSource.asObservable();
-
-//para seleccionar roles segun el estado
-private estadoSeleccionado = new BehaviorSubject<number>(2);
-estadoSeleccionado$ = this.estadoSeleccionado.asObservable();
 
 constructor(private httpClient: HttpClient) { }
 
-//metodo que recibe el estado para filtrar roles segun el tipo de estado
-actualizarEstado(tipo: number) {
-  this.estadoSeleccionado.next(tipo);
-}
-
 habilitaRol(payload: { id_rol: number }): Observable<rolNotUndefined> {
-  const url = `http://localhost:9090/api/roles/habilitar`; // Endpoint de actualización
+  const url = `${environment.API_URL}/api/roles/habilitar`; // Endpoint de actualización
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   return this.httpClient.post<rolNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
 }
 
 deleteRol(payload: { id_rol: number }): Observable<rolNotUndefined> {
-  const url = `http://localhost:9090/api/roles/estado`; // Endpoint de actualización
+  const url = `${environment.API_URL}/api/roles/estado`; // Endpoint de actualización
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   return this.httpClient.post<rolNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
@@ -47,10 +36,7 @@ getRol(): Observable<rolNotUndefined[]> {
   return this.httpClient.get<rolNotUndefined[]>(this.urlRoles);
 }
 
-//metodo que recibe el rol buscado
-setRol(roles: any[]) {
-  this.rolSource.next(roles);
-}
+
 
 // Método para buscar roles por filtro
 searchRoles(xfiltro: string): Observable<rolNotUndefined[]> {

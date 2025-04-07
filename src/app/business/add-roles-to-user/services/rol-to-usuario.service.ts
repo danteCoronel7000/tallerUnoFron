@@ -2,17 +2,18 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { rol, usuario, UsuarioAll } from '../models/rol-user.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolToUsuarioService {
 
-  private baseUrlAdd = 'http://localhost:9090/api/usuarios';
-private url_usuarios = 'http://localhost:9090/api/usuarios/all';
-private url_roles = 'http://localhost:9090/api/roles/allAsig';
-private apiUrlObtenerPorId = 'http://localhost:9090/api/usuarios/obternerPorId';
-private url_rolesfiltrados = 'http://localhost:9090/api/usuarios/filtrarRoles';
+  private baseUrlAdd = `${environment.API_URL}/api/usuarios`;
+private url_usuarios = `${environment.API_URL}/api/usuarios/all`;
+private url_roles = `${environment.API_URL}/api/roles/allAsig`;
+private apiUrlObtenerPorId = `${environment.API_URL}/api/usuarios/obternerPorId`;
+private url_rolesfiltrados = `${environment.API_URL}/api/usuarios/filtrarRoles`;
 // Para seleccionar textos según el estado
 private estadoSeleccionado = new BehaviorSubject<number>(2);      
 estadoSeleccionado$ = this.estadoSeleccionado.asObservable();

@@ -2,23 +2,24 @@ import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Area, Autor, CrearEjemplarDTO, Editorial, Ejemplares, Texto, Tipo } from '../models/list-text.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GestEjemplaresService {
 
-  private url_textos = 'http://localhost:9090/api/textos/all';
-  private apiUrlObtenerPorId = 'http://localhost:9090/api/textos/obternerPorId';
-  private apiUrlObtenerEjemplarPorId= 'http://localhost:9090/api/ejemplares/filtrarPorIdTexto';
-  private url_editoriales = 'http://localhost:9090/api/editoriales/all';
-  private url_areas = 'http://localhost:9090/api/areas/all';
-  private url_tipos = 'http://localhost:9090/api/tipos/all';
-  private url_autores = 'http://localhost:9090/api/autores/all';
-  private apiUrlCrear = 'http://localhost:9090/api/ejemplares';
-  private apiUrlMaxId = 'http://localhost:9090/api/ejemplares';
-  private apiUrlModIdEjemp = 'http://localhost:9090/api/ejemplares';
-  private apiUrlEjemplarPorId = 'http://localhost:9090/api/ejemplares/obtenerPorId';
+  private url_textos = `${environment.API_URL}/api/textos/all`;
+  private apiUrlObtenerPorId = `${environment.API_URL}/api/textos/obternerPorId`;
+  private apiUrlObtenerEjemplarPorId= `${environment.API_URL}/api/ejemplares/filtrarPorIdTexto`;
+  private url_editoriales = `${environment.API_URL}/api/editoriales/all`;
+  private url_areas = `${environment.API_URL}/api/areas/all`;
+  private url_tipos = `${environment.API_URL}/api/tipos/all`;
+  private url_autores = `${environment.API_URL}/api/autores/all`;
+  private apiUrlCrear = `${environment.API_URL}/api/ejemplares`;
+  private apiUrlMaxId = `${environment.API_URL}/api/ejemplares`;
+  private apiUrlModIdEjemp = `${environment.API_URL}/api/ejemplares`;
+  private apiUrlEjemplarPorId = `${environment.API_URL}/api/ejemplares/obtenerPorId`;
   
   
   openEjemplaresList = signal<boolean>(false);
@@ -105,14 +106,14 @@ console.log('desde el servicio: ', body)
 
 //delete ejemplar de manera logica
 deleteEjemplar(payload: { id_ejemplar: number }): Observable<any> {
-  const url = `http://localhost:9090/api/ejemplares/estado`; // Endpoint de eliminación
+  const url = `${environment.API_URL}/api/ejemplares/estado`; // Endpoint de eliminación
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   return this.httpClient.post<any>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
 }
 //habilitar ejemplar
 habilitarEjemplar(payload: { id_ejemplar: number }): Observable<any> {
-  const url = `http://localhost:9090/api/ejemplares/habilitar`; // Endpoint de habilitación
+  const url = `${environment.API_URL}/api/ejemplares/habilitar`; // Endpoint de habilitación
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   return this.httpClient.post<any>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud

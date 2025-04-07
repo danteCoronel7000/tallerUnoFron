@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Autor, AutorNotUndefined } from '../models/list-autores.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutoresService {
 
-  private url_autores = 'http://localhost:9090/api/autores/all';
-private apiUrlSearch = 'http://localhost:9090/api/autores';
-private apiUrlCrear = 'http://localhost:9090/api/autores/crear';
-private apiUrlObtenerPorId = 'http://localhost:9090/api/autores/obternerPorId';
-private apiUrlActualizar = 'http://localhost:9090/api/autores/actualizar';
+  private url_autores = `${environment.API_URL}/api/autores/all`;
+private apiUrlSearch = `${environment.API_URL}/api/autores`;
+private apiUrlCrear = `${environment.API_URL}/api/autores/crear`;
+private apiUrlObtenerPorId = `${environment.API_URL}/api/autores/obternerPorId`;
+private apiUrlActualizar = `${environment.API_URL}/api/autores/actualizar`;
 
 // Para recibir el autor buscado
 private autorSource = new BehaviorSubject<AutorNotUndefined[]>([]);
@@ -30,14 +31,14 @@ actualizarEstado(autor: number) {
 }
 
 habilitarAutor(payload: { id_autor: number }): Observable<AutorNotUndefined> {
-    const url = `http://localhost:9090/api/autores/habilitar`; // Endpoint de habilitación
+    const url = `${environment.API_URL}/api/autores/habilitar`; // Endpoint de habilitación
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<AutorNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
 }
 
 deleteAutor(payload: { id_autor: number }): Observable<AutorNotUndefined> {
-    const url = `http://localhost:9090/api/autores/estado`; // Endpoint de eliminación
+    const url = `${environment.API_URL}/api/autores/estado`; // Endpoint de eliminación
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<AutorNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud

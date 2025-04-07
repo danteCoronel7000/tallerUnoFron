@@ -2,16 +2,18 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Menu, Rol, RolAll } from '../models/list-menu-rol.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuRolService {
 
-  private baseUrlAdd = 'http://localhost:9090/api/roles';
-private url_roles = 'http://localhost:9090/api/roles/all';
-private url_menus = 'http://localhost:9090/api/menus/alldto';
-private apiUrlObtenerPorId = 'http://localhost:9090/api/roles/obternerPorId';
+private baseUrlAdd = `${environment.API_URL}/api/roles`;
+private url_roles = `${environment.API_URL}/api/roles/all`;
+private url_menus = `${environment.API_URL}/api/menus/alldto`;
+private apiUrlObtenerPorId = `${environment.API_URL}/api/roles/obternerPorId`;
+private url_menusFiltrados = `${environment.API_URL}/api/menus/filtrarMenus`;
 // Para seleccionar textos según el estado
 private estadoSeleccionado = new BehaviorSubject<number>(2);
 estadoSeleccionado$ = this.estadoSeleccionado.asObservable();
@@ -50,6 +52,10 @@ getMenus(): Observable<Menu[]> {
 
 getRolesPorId(id: number): Observable<RolAll> {
   return this.http.get<RolAll>(`${this.apiUrlObtenerPorId}/${id}`);
+}
+
+getMenusFiltrados(id: number, filtro: string): Observable<Menu[]>{
+  return this.http.get<Menu[]>(`${this.url_menusFiltrados}/${id}/${filtro}`);
 }
 
 }

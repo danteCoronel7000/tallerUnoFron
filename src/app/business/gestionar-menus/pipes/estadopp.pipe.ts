@@ -6,14 +6,15 @@ import { menuNotUndefined } from '../models/list-menus.model';
   standalone: true
 })
 export class EstadoppPipe implements PipeTransform {
-  transform(value: menuNotUndefined[], estadMenu: number): menuNotUndefined[] {
+  transform(value: menuNotUndefined[], estadMenu: string): menuNotUndefined[] {
     console.log('estado texto desde en pipe:', estadMenu);
     // Si el estadoTexto es 2, retorna toda la lista sin filtrar
-    if (estadMenu == 2) {
+    if (estadMenu == '2') {
         return value;
     }
+    const estadoMenu = Number(estadMenu);
     // Si estadoTexto es diferente de 2, filtra los textos donde el estado coincida con estadoTexto
-    return value.filter(menu => menu.estado == estadMenu);
+    return value.filter(menu => menu.estado == estadoMenu);
 }
 
 

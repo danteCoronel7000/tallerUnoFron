@@ -104,7 +104,7 @@ export class EditarUsuariosComponent implements OnInit{
 cargarPersona(id: number): void {
   this.personasService.getPersonaById(id).subscribe({
     next: (formdata) => {
-      console.log('formdata:', formdata); // Agrega esta línea para inspeccionar el contenido de formdata
+      console.log('formdata de la persona a acutalizar:', formdata); // Agrega esta línea para inspeccionar el contenido de formdata
       if (formdata) {
         this.foto_url = formdata.foto || '';
         this.personaForm.patchValue(formdata);

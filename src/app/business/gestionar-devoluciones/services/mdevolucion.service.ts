@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EjemplarPrestamoDTOByidprestamo, MDevolucion } from '../models/mdevolucion.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MdevolucionService {
 
-  private urlMprestamo = 'http://localhost:9090/api/mdevolucion/all';
-  private apiUrlbyidprestamo = 'http://localhost:9090/api/detprestamo';
-  private apiUrlGD = 'http://localhost:9090/api/detprestamo';
+  private urlMprestamo = `${environment.API_URL}/api/mdevolucion/all`;
+  private apiUrlbyidprestamo = `${environment.API_URL}/api/detprestamo`;
+  private apiUrlGD = `${environment.API_URL}/api/detprestamo`;
 
   constructor(private httpClient: HttpClient) { }
 

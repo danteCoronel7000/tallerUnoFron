@@ -3,21 +3,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Persona } from '../../users/models/edit-user.model';
 import { Personas } from '../models/buscarPersona.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonasService {
 
-  private url_foto: string = 'http://localhost:9090/api/media/upload';
+  private url_foto: string = `${environment.API_URL}/api/media/upload`;
 
-  private api_url: string = 'http://localhost:9090/api/media/crear';
+  private api_url: string = `${environment.API_URL}/api/media/crear`;
 
-  private api_url_editar: string = 'http://localhost:9090/api/media/actualizar';
+  private api_url_editar: string = `${environment.API_URL}/api/media/actualizar`;
 
-  private baseUrl = 'http://localhost:9090/api/personas';
+  private baseUrl = `${environment.API_URL}/api/personas`;
 
-  private apiUrlSarch = 'http://localhost:9090/api/personas'; // Reemplaza con la URL base de tu API
+  private apiUrlSarch = `${environment.API_URL}/api/personas`;
 
 
   private valorSource = new BehaviorSubject<number>(0); // Inicializa el valor

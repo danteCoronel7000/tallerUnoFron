@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Usuarios } from '../models/usuarios.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class EditarUsuarioService {
 
   
-  private apiUrl = 'http://localhost:9090/api/usuarios'; // URL del backend para usuarios
+  private apiUrl = `${environment.API_URL}/api/usuarios`; // URL del backend para usuarios
   
   private modalState = new BehaviorSubject<boolean>(false); // Estado inicial cerrado
 

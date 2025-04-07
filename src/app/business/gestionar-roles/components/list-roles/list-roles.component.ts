@@ -4,14 +4,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RolesService } from '../../services/roles.service';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { EstadoppPipe } from '../../pipes/estadopp.pipe';
 import { SearchPipe } from '../../pipes/search.pipe';
 import { NewRolComponent } from "../new-rol/new-rol.component";
+import { EstadoppPipe } from '../../pipes/estadopp.pipe';
 
 @Component({
   selector: 'app-list-roles',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, FormsModule, EstadoppPipe, SearchPipe, NewRolComponent],
+  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, FormsModule, SearchPipe, EstadoppPipe, NewRolComponent],
   templateUrl: './list-roles.component.html',
   styleUrl: './list-roles.component.css'
 })
@@ -27,22 +27,13 @@ export class ListRolesComponent {
   
   rolesService = inject(RolesService);
   //variables para los pipes
-  searchValue: string = ' ';
-  selectEstado: number = 2;
+  searchValue: string = '';
+  selectEstado: string = '2';
   
   ngOnInit(): void {
     //obtenemos todos los roles
     this.getRoles();
-  
-    // Suscríbete a los cambios en el servicio
-    this.rolesService.rolSource$.subscribe(roles => {
-      this.rolesFiltrados = roles; // Actualiza la lista de personas
-    });
-  
-    // Escuchar cambios en el estado de persona seleccionado
-    this.rolesService.estadoSeleccionado$.subscribe(tipo => {
-      this.filtrarRolesPorEstado(tipo);
-    });
+    console.log('valor del selectestado para filtrar:', this.selectEstado);
   }
   
   constructor(private fb: FormBuilder){
@@ -53,23 +44,15 @@ export class ListRolesComponent {
     });
   }
   
-  filtrarRolesPorEstado(tipo: any) {
-    // Convierte tipo a un número explícitamente
-    const tipoNumero = Number(tipo);
-    console.log('tipo persona desde list: ', tipoNumero);
-    
-    if (tipoNumero === 2) {
-      this.rolesFiltrados = this.listRoles;
-    } else {
-      this.rolesFiltrados = this.listRoles.filter(rol => rol.estado === tipoNumero);
-    }
-  }
+
   
   getRoles(): void {
     this.rolesService.getRol().subscribe(
       (data) => {
         this.listRoles = data;  // Asigna los datos recibidos a la variable users
         this.rolesFiltrados = data;
+        console.log('Roles desde el servicio:', this.listRoles);
+        console.log('Roles filtrados:', this.rolesFiltrados);
       },
       (error) => {
         console.error('Error al obtener los usuarios:', error);

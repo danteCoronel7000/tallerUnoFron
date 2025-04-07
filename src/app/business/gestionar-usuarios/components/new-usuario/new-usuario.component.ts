@@ -14,6 +14,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 export class NewUsuarioComponent {
   usuarioForm: FormGroup;
   isOpen = false;
+  showSuccessModal = false; // Añadido para controlar el modal de éxito
 
   constructor(private fb: FormBuilder, private usuariosService: AddUsuarioService) {
     this.usuarioForm = this.fb.group({
@@ -48,6 +49,14 @@ export class NewUsuarioComponent {
       this.usuariosService.crearUsuario(nuevoUsuario).subscribe(
         (response: any) => {
           console.log('Usuario creado:', response);
+          // Mostrar el modal de éxito
+          this.showSuccessModal = true;
+          
+          // Cerrar el modal de éxito después de 1 segundo
+          setTimeout(() => {
+            this.showSuccessModal = false;
+            this.close(); // Cierra el modal principal
+          }, 1000);
         },
         (error: any) => {
           console.error('Error al crear el usuario:', error);
@@ -60,7 +69,6 @@ export class NewUsuarioComponent {
     this.usuariosService.closeModal(); // Cierra el modal
   }
 
-
   passwordMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const password = control.get('password')?.value;
@@ -69,6 +77,4 @@ export class NewUsuarioComponent {
       return password === confirmPassword ? null : { passwordMismatch: true };
     };
   }
-
-
 }

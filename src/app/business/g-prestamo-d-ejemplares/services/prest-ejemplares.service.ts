@@ -2,16 +2,17 @@ import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DetPrestamoDTO, EjemplarDtoPPrestamos, MPrestamo, MPrestamoCrear } from '../models/list-prestamos.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrestEjemplaresService {
 
-  private urlMprestamo = 'http://localhost:9090/api/mprestamo/all';
-  private apiUrlCrear = 'http://localhost:9090/api/mprestamo';
-  private urlejemplarPPdto = 'http://localhost:9090/api/ejemplares/allDto';
-  private urlDetPrestDTO = 'http://localhost:9090/api/detprestamo/filtrarPorIdPrestamo';
+  private urlMprestamo = `${environment.API_URL}/api/mprestamo/all`;
+  private apiUrlCrear = `${environment.API_URL}/api/mprestamo`;
+  private urlejemplarPPdto = `${environment.API_URL}/api/ejemplares/allDto`;
+  private urlDetPrestDTO = `${environment.API_URL}/api/detprestamo/filtrarPorIdPrestamo`;
 
   openEjemplaresList = signal<boolean>(false);
 

@@ -2,17 +2,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AreaNotUndefined, Areas } from '../models/list-areas.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AreasService {
 
-  private url_areas = 'http://localhost:9090/api/areas/all'
-  private apiUrlSarch = 'http://localhost:9090/api/areas'
-  private apiUrlCrear = 'http://localhost:9090/api/areas/crear'
-  private apurlobtenerPorId = 'http://localhost:9090/api/areas/obternerPorId'
-  private apiUrlActualizar = 'http://localhost:9090/api/areas/actualizar'
+  private url_areas = `${environment.API_URL}/api/areas/all`
+  private apiUrlSarch = `${environment.API_URL}/api/areas`
+  private apiUrlCrear = `${environment.API_URL}/api/areas/crear`
+  private apurlobtenerPorId = `${environment.API_URL}/api/areas/obternerPorId`
+  private apiUrlActualizar = `${environment.API_URL}/api/areas/actualizar`
 
 
   //para recibir el area buscada
@@ -31,14 +32,14 @@ export class AreasService {
   }
 
   habilitarArea(payload: { id_area: number }): Observable<AreaNotUndefined> {
-    const url = `http://localhost:9090/api/areas/habilitar`; // Endpoint de actualización
+    const url = `${environment.API_URL}/api/areas/habilitar`; // Endpoint de actualización
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<AreaNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
   }
 
   deleteArea(payload: { id_area: number }): Observable<AreaNotUndefined> {
-    const url = `http://localhost:9090/api/areas/estado`; // Endpoint de actualización
+    const url = `${environment.API_URL}/api/areas/estado`; // Endpoint de actualización
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<AreaNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud

@@ -2,16 +2,18 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { menu, MenuAll, proceso } from '../models/list-menus-procesos.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProcMenuService {
 
-  private baseUrlAdd = 'http://localhost:9090/api/menus';
-  private url_menus = 'http://localhost:9090/api/menus/all';
-  private url_procesos = 'http://localhost:9090/api/menus/alldtoPro';
-  private apiUrlObtenerPorId = 'http://localhost:9090/api/menus/obternerPorId';
+  private baseUrlAdd = `${environment.API_URL}/api/menus`;
+  private url_menus = `${environment.API_URL}/api/menus/all`;
+  private url_procesos = `${environment.API_URL}/api/menus/alldtoPro`;
+  private apiUrlObtenerPorId = `${environment.API_URL}/api/menus/obternerPorId`;
+  private url_procesosfiltrados = `${environment.API_URL}/api/procesos/filtrarProcesos`;
   // Para seleccionar textos según el estado
   private estadoSeleccionado = new BehaviorSubject<number>(2);
   estadoSeleccionado$ = this.estadoSeleccionado.asObservable();
@@ -51,4 +53,9 @@ actualizarEstado(id: number) {
   getMenusPorId(id: number): Observable<MenuAll> {
     return this.http.get<MenuAll>(`${this.apiUrlObtenerPorId}/${id}`);
 }
+
+getProcesosFiltrados(id: number, filtro: string): Observable<proceso[]> {
+  return this.http.get<proceso[]>(`${this.url_procesosfiltrados}/${id}/${filtro}`);	
+  }
+
 }

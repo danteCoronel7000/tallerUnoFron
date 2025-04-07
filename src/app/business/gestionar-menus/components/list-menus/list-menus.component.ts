@@ -27,22 +27,14 @@ export class ListMenusComponent {
 
   menusService = inject(MenusService);
   //variables para los pipes
-searchValue: string = ' ';
-selectEstado: number = 2;
+searchValue: string = '';
+selectEstado: string = '2';
 
 ngOnInit(): void {
   //obtenemos todos los menus
   this.getMenus();
 
-  // Suscríbete a los cambios en el servicio
-  this.menusService.menuSource$.subscribe(menus => {
-    this.menusFiltrados = menus; // Actualiza la lista de personas
-  });
 
-  // Escuchar cambios en el estado de persona seleccionado
-  this.menusService.estadoSeleccionado$.subscribe(tipo => {
-    this.filtrarMenusPorEstado(tipo);
-  });
 }
 
 constructor(private fb: FormBuilder){

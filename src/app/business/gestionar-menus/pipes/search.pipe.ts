@@ -11,8 +11,8 @@ export class SearchPipe implements PipeTransform {
     //operador ternario
     console.log(searchInput)
     //si es que existe sercharInput?.......  lo convertimos a minusculas(searchInput.toLocaleLowerCase()), sino lo dejamos como un string vacio asi nos aseguramos de que por lo menos haya un valor vacio
-    searchInput = searchInput ? searchInput.toLowerCase() : ' ';
-    return searchInput ? value.filter(menu => menu.nombre.toLowerCase().includes(searchInput)) : value;
+    const query = searchInput?.trim().toLowerCase() || '';
+    return value.filter(menu => menu.nombre.toLowerCase().includes(query));
   }
 
 }

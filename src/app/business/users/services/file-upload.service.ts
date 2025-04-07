@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType } from '@angula
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { ResponseMessage } from '../models/response-message';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { ResponseMessage } from '../models/response-message';
 export class FileUploadService {
 
 
-  private apiUrl = 'http://localhost:9090/api/media/upload'; // Cambia la URL según sea necesario
+  private apiUrl = `${environment.API_URL}/api/media/upload`; // Cambia la URL según sea necesario
 
   constructor(private http: HttpClient) {}
 

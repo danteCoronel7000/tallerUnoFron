@@ -21,9 +21,10 @@ pp: number = 1;
 searchValueRoles: string = '';
 searchValueMenus: string = '';
 
-asigNoasig: string = '2';
+asigNoasig: string = '403';
 listRoles: Rol[] = [];
 listMenus: Menu[] = [];
+listMenusFiltrados: Menu[] = [];
 listMenusSeleccionados: number[] = [];
 rolSeleccionadoPorId: RolAll | null = null;
 
@@ -46,7 +47,7 @@ getMenusAndRoles(): void {
   //obtenemos los menus
   this.menurolService.getMenus().subscribe(
     (data) => {
-      this.listMenus = data;
+      //this.listMenus = data;
     },
     (error) => {
       console.error('Error al obtener los menus:', error);
@@ -102,6 +103,31 @@ seleccionarRolPorId(id: number): void {
   this.menurolService.getRolesPorId(id).subscribe(
     (data) => {
       this.rolSeleccionadoPorId = data;
+    }
+  );
+
+  this.asigNoasig = '2';
+  //obtenemos los menus filtrados
+  this.menurolService.getMenusFiltrados(id, this.asigNoasig).subscribe(
+    (data) => {
+      this.listMenusFiltrados = data;
+      console.log('lista de roles filtrados: ', data)
+    },
+    (error) => {
+      console.error('Error al obtener los roles:', error);
+    }
+  );
+}
+
+onFiltroChage(filtro: string){
+  //obtenemos los roles filtrados
+  this.menurolService.getMenusFiltrados(this.idRolSeleccionado, filtro).subscribe(
+    (data) => {
+      this.listMenusFiltrados = data;
+      console.log('lista de roles filtrados: ', data)
+    },
+    (error) => {
+      console.error('Error al obtener los roles:', error);
     }
   );
 }

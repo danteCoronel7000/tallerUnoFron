@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { editorial, editorialNotUndefined } from '../models/list-editoriales.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditorialesService {
 
-  private url_editoriales = 'http://localhost:9090/api/editoriales/all'
-  private apiUrlSarch = 'http://localhost:9090/api/editoriales'
-  private apiUrlCrear = 'http://localhost:9090/api/editoriales/crear'
-  private apurlobtenerPorId = 'http://localhost:9090/api/editoriales/obternerPorId'
-  private apiUrlActualizar = 'http://localhost:9090/api/editoriales/actualizar'
+  private url_editoriales = `${environment.API_URL}/api/editoriales/all`
+  private apiUrlSarch = `${environment.API_URL}/api/editoriales`
+  private apiUrlCrear = `${environment.API_URL}/api/editoriales/crear`
+  private apurlobtenerPorId = `${environment.API_URL}/api/editoriales/obternerPorId`
+  private apiUrlActualizar = `${environment.API_URL}/api/editoriales/actualizar`
 
 
   //para recibir el area buscada
@@ -31,14 +32,14 @@ export class EditorialesService {
   }
 
   habilitaEditorial(payload: { id_editorial: number }): Observable<editorialNotUndefined> {
-    const url = `http://localhost:9090/api/editoriales/habilitar`; // Endpoint de actualización
+    const url = `${environment.API_URL}/api/editoriales/habilitar`; // Endpoint de actualización
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<editorialNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
   }
 
   deleteEditorial(payload: { id_editorial: number }): Observable<editorialNotUndefined> {
-    const url = `http://localhost:9090/api/editoriales/estado`; // Endpoint de actualización
+    const url = `${environment.API_URL}/api/editoriales/estado`; // Endpoint de actualización
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.httpClient.post<editorialNotUndefined>(url, payload, { headers }); // Envía el payload en el cuerpo de la solicitud
