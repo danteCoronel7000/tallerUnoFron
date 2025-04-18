@@ -1,6 +1,7 @@
-<nav class="fixed top-0 z-50 w-full bg-[#96C2DB] border-2 border-gray-200 border-dashed dark:bg-gray-800 dark:border-gray-700">
+<!-- nav-->
+<nav class="fixed custom-shadow mx-1 top-0 left-0 z-50 w-full rounded-md bg-[#F0F0F0] dark:bg-gray-800 dark:border-gray-700">
   <!--py-2 para dar margin al contenedor de las imagenes-->
-  <div class="px-3 py-2 lg:px-5 lg:pl-3">
+  <div class="px-2 py-1 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start rtl:justify-end">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
@@ -115,23 +116,20 @@
     </div>
   </div>
 </nav>
-
-<aside id="logo-sidebar"
-  class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-[#96C2DB] border-2 border-gray-200 border-dashed sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-  aria-label="Sidebar">
-  <div class="h-full pb-4 overflow-y-auto bg-[#96C2DB] dark:bg-gray-800">
+<!-- aside -->
+<aside id="logo-sidebar" class="fixed custom-shadow m-1 left-0 z-40 w-64 h-[calc(100vh-56px)] top-[56px] transition-transform -translate-x-full sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+  <div class="h-full overflow-y-auto bg-[#F0F0F0] rounded-md dark:bg-gray-800">
     <ul class="space-y-2 font-[Monospace]">
       <li *ngFor="let menu of listOfMenusByRole">
         <!-- Botón principal -->
         <button
           type="button"
-          class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg group hover:bg-[#00ABE4] dark:text-white dark:hover:bg-gray-700"
           [attr.aria-controls]="'dropdown-' + menu.id_menu"
           [attr.data-collapse-toggle]="'dropdown-' + menu.id_menu"
           (click)="toggleDropdown(menu.id_menu)"
           [ngClass]="{
-            'bg-gray-100 dark:bg-gray-700': isMenuActive(menu),
-            'focus:ring-2 focus:ring-blue-500': isMenuActive(menu)
+            'custom-blue-bg dark:bg-gray-700': isMenuActive(menu)
           }"
         >
           <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
@@ -191,13 +189,13 @@
 </aside>
 
 <div class="p-2 sm:ml-64">
-  <div class="p-2 bg-[#F0F0F0] border-2 border-gray-400 border-dashed rounded-lg dark:border-gray-700 mt-16">
+  <div class="bg-[#F0F0F0] p-2 rounded-lg dark:border-gray-700 mt-16">
     <router-outlet />
     <app-login />
   </div>
 </div>
 
-<!-- Main modal -->
+<!-- modal actualizar foto de usuario -->
 <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
   <div class="relative p-4 w-full max-w-2xl max-h-full">
