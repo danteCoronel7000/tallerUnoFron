@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -9,6 +9,12 @@ import { environment } from '../../../environments/environment';
 export class SharedService {
 
   private url_foto: string = `${environment.API_URL}/api/media`;
+
+  rolSelect = signal<any>(null);
+
+  updateRolSelect(newRolSelect: any): void {
+    this.rolSelect.set(newRolSelect);
+  }
 
   constructor(private http: HttpClient) {}
 

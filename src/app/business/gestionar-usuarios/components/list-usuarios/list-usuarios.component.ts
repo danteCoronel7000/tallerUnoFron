@@ -48,7 +48,7 @@ export default class ListUsuariosComponent {
   searchValue: string = '';
   openModalPdf: boolean = false;
   selectEstado: string = "2";
-  selectedTipo: string = '';
+  selectedTipo: string = 'todos';
 
   Administrador: string = 'administrador';
   Publico: string = 'publico';
