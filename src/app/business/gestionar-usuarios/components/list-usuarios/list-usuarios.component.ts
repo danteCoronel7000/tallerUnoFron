@@ -233,7 +233,7 @@ cerrarModalpdf() {
 async generarPDF(persona: Persona) {
   try {
     // URL de la imagen (puede ser una URL local o remota)
-    const imageUrl = persona.foto; // Asegúrate de que la URL sea válida
+    const imageUrl = persona.image?.imageUrl; // Asegúrate de que la URL sea válida
     const doc = new jsPDF();
 
     console.log('Generando PDF para:', persona.nombre);

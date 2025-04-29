@@ -106,7 +106,7 @@ cargarPersona(id: number): void {
     next: (formdata) => {
       console.log('formdata de la persona a acutalizar:', formdata); // Agrega esta línea para inspeccionar el contenido de formdata
       if (formdata) {
-        this.foto_url = formdata.foto || '';
+        this.foto_url = formdata.image?.imageUrl || '';
         this.personaForm.patchValue(formdata);
 
         // Limpiar los teléfonos actuales en el FormArray

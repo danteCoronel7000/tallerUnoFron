@@ -109,12 +109,12 @@
             class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
             <img
-              *ngIf="persona.foto"
-              src="{{ persona.foto }}"
+              *ngIf="persona.image?.imageUrl"
+              src="{{ persona.image?.imageUrl }}"
               alt="Imagen de usuario"
               class="h-12 w-12 rounded-full"
             />
-            <span *ngIf="!persona.foto">No image</span>
+            <span *ngIf="!persona.image?.imageUrl">No image</span>
           </th>
           <td class="px-4 py-2">
             {{ persona.ap }} {{ persona.am }} {{ persona.nombre }}

@@ -1,3 +1,5 @@
+import { Image } from "./image.model";
+
 export interface Personas {
     id_persona: number;
     // Agrega otros atributos de la entidad Personas si es necesario
@@ -22,7 +24,7 @@ export interface Persona {
   genero: string;
   estado: number;
   tipo_per: string;
-  foto: string | null;
+  image?: Image;
   datos: any; // You can specify a more precise type if needed
   telefonos: any[]; // You can specify a more precise type if needed
 }

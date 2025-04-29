@@ -45,7 +45,7 @@ export default class LayoutComponent{
 this.sharedService.actualizarFotoPersona(formData).subscribe({
   next: (response) => {
     console.log('Foto actualizada exitosamente:', response.url);
-    this.authService.setFotoUsuario(response.url)
+    this.authService.setFotoUsuarioLocalStorage(response.url)
   },
   error: (error) => {
     console.error('Error al actualizar la foto:', error);

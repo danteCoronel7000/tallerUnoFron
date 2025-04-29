@@ -35,7 +35,7 @@ export class AuthService {
         this.nombreCompleto = response.persona.nombre + ' ' + response.persona.ap + ' ' + response.persona.am;
         this.nombreRol = response.rolesList.map(rol => rol.nombre).join(', ');
         console.log(this.nombreRol);
-        this.photoUser = response.persona.foto
+        this.photoUser = response.persona.image?.imageUrl || ''; // Asignar la URL de la imagen
         this.id_personaLogueada = response.persona.id_persona;
         this.id_usuarioLog = response.id_usuario;
         this.loggedInUser.set(response);
@@ -44,7 +44,7 @@ export class AuthService {
   
         // Aquí es donde guardas el usuario en localStorage
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-          localStorage.setItem('photoUser', response.persona.foto);
+          localStorage.setItem('photoUser', response.persona.image?.imageUrl || '');
           localStorage.setItem('nombreCompleto', this.nombreCompleto);
           localStorage.setItem('loggedInUser', JSON.stringify(response));
           localStorage.setItem('nombreRol', this.nombreRol);
@@ -153,7 +153,7 @@ private  getToken(): string | null{
     return ''; // Valor predeterminado si no estás en el navegador
   }
 
-  setFotoUsuario(url: string): void {
+  setFotoUsuarioLocalStorage(url: string): void {
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       localStorage.setItem('photoUser', url);
     }

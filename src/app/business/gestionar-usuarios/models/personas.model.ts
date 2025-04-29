@@ -1,3 +1,5 @@
+import { Image } from "./image.model";
+
 export interface PersonasEditar{
     id_persona: number;
     nombre: string;
@@ -6,7 +8,7 @@ export interface PersonasEditar{
     genero: string;
     estado: number;
     tipo_per: string;
-    foto: string;
+    image?: Image
   }
 
   export interface ListPersonas {
@@ -15,5 +17,5 @@ export interface PersonasEditar{
     am: string;
     estado: number;
     ap: string;
-    foto: string | null;
+    image?: Image
   }

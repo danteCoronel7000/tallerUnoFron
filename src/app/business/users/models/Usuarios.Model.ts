@@ -28,7 +28,7 @@ export interface Proceso {
     genero: string;
     estado: number;
     tipo_per: string;
-    foto: string;
+    image?: Image
   }
   
   export interface Image {
